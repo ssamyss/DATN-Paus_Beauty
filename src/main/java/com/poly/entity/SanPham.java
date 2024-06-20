@@ -27,7 +27,7 @@ public class SanPham implements Serializable{
 	@Column(name = "ma_sp")
 	private Integer maSP;
 	
-	@Column(name = "ten_sp")
+	@Column(name = "ten_sp", columnDefinition = "nvarchar(max)")
 	private String tenSP;
 	
 	@Column(name = "gia")
@@ -35,6 +35,9 @@ public class SanPham implements Serializable{
 	
 	@Column(name = "ton_kho")
 	private Integer tonKho;
+	
+	@Column(name = "mo_ta", columnDefinition = "nvarchar(max)")
+	private String mota;
 	
 	@Column(name = "anh")
 	private String anh;
@@ -56,6 +59,6 @@ public class SanPham implements Serializable{
 	private ThuongHieu thuongHieu;
 	
 	@ManyToOne
-	@JoinColumn(name = "ma_pl")
-	private PhanLoai phanLoai;
+	@JoinColumn(name = "ma_lsp")
+	private LoaiSanPham loaiSanPham;
 }

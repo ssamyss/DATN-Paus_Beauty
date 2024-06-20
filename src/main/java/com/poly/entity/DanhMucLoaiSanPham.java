@@ -13,20 +13,17 @@ import jakarta.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity 
-@Table(name = "thuong_hieu")
-public class ThuongHieu implements Serializable{
+@Table(name = "danh_muc_Loai_sp")
+public class DanhMucLoaiSanPham implements Serializable{
 
 	@Id
-	@Column(name = "ma_th")
-	private Integer maTH;
+	@Column(name = "ma_dmlsp")
+	private Integer maLSP;
 	
-	@Column(name = "ten_th", columnDefinition = "nvarchar(max)")
-	private String tenTH;
-	
-	@Column(name = "anh")
-	private String anh;
+	@Column(name = "ten", columnDefinition = "nvarchar(max)")
+	private String tenLSP;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "thuongHieu")
-	private List<SanPham> sanPham;
+	@OneToMany(mappedBy = "danhMucLoaiSanPham")
+	private List<LoaiSanPham> loaiSanPham;
 }
