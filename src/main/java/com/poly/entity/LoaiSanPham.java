@@ -23,10 +23,7 @@ public class LoaiSanPham implements Serializable{
 		private Integer maPL;
 		
 		@Column(name = "ten", columnDefinition = "nvarchar(max)")
-		private String tenPL;
-		
-		@Column(name = "anh")
-		private String anh;
+		private String tenPL;	
 		
 		@JsonIgnore
 		@OneToMany(mappedBy = "loaiSanPham")
