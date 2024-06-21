@@ -42,6 +42,9 @@ public class SanPham implements Serializable{
 	@Column(name = "anh")
 	private String anh;
 	
+	@Column(name = "trang_thai")
+	private Boolean trangThai;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngay_cap_nhat")
 	private Date createDate = new Date();
