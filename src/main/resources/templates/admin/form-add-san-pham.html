@@ -146,7 +146,8 @@
 </script>
 </head>
 
-<body class="app sidebar-mini rtl">
+<body class="app sidebar-mini rtl" ng-app="app"
+	ng-controller="sanpham-ctrl" ng-init="initializeEditPage()">
 	<div th:insert="~{admin/menu.html}"></div>
 	<main class="app-content">
 		<div class="app-title">
@@ -181,49 +182,36 @@
 						<form class="row">
 							<div class="form-group col-md-3">
 								<label class="control-label">Mã sản phẩm </label> <input
-									class="form-control" type="number" placeholder="">
+									class="form-control" ng-model="form.maSP" type="number" placeholder="">
 							</div>
 							<div class="form-group col-md-3">
 								<label class="control-label">Tên sản phẩm</label> <input
-									class="form-control" type="text">
+									class="form-control" ng-model="form.tenSP" type="text">
 							</div>
 
 
 							<div class="form-group  col-md-3">
 								<label class="control-label">Số lượng</label> <input
-									class="form-control" type="number">
+									class="form-control" ng-model="form.tonKho" type="number">
 							</div>
 							<div class="form-group col-md-3 ">
 								<label for="exampleSelect1" class="control-label">Tình
-									trạng</label> <select class="form-control" id="exampleSelect1">
+									trạng</label> <select class="form-control" ng-model="form.trangThai" id="exampleSelect1">
 									<option>-- Chọn tình trạng --</option>
-									<option>Còn hàng</option>
-									<option>Hết hàng</option>
+									<option ng-value="true">Còn hàng</option>
+									<option ng-value="false">Hết hàng</option>
 								</select>
 							</div>
 							<div class="form-group col-md-3">
-								<label for="exampleSelect1" class="control-label">Danh
-									mục</label> <select class="form-control" id="exampleSelect1">
-									<option>-- Chọn danh mục --</option>
-									<option>Bàn ăn</option>
-									<option>Bàn thông minh</option>
-									<option>Tủ</option>
-									<option>Ghế gỗ</option>
-									<option>Ghế sắt</option>
-									<option>Giường người lớn</option>
-									<option>Giường trẻ em</option>
-									<option>Bàn trang điểm</option>
-									<option>Giá đỡ</option>
+								<label for="exampleSelect1" class="control-label">Loại Sản Phẩm</label> 
+								<select class="form-control" ng-model="form.loaiSanPham.maPL">
+									<option ng-repeat="c in cates" ng-value="c.maPL">{{c.tenPL}}</option>
 								</select>
 							</div>
 							<div class="form-group col-md-3 ">
-								<label for="exampleSelect1" class="control-label">Nhà
-									cung cấp</label> <select class="form-control" id="exampleSelect1">
-									<option>-- Chọn nhà cung cấp --</option>
-									<option>Phong vũ</option>
-									<option>Thế giới di động</option>
-									<option>FPT</option>
-									<option>Paus Beauty</option>
+								<label for="exampleSelect1" class="control-label">Thương hiệu</label> 
+								<select class="form-control" ng-model="form.thuongHieu.maTH">
+									<option ng-repeat="b in bras" ng-value="b.maTH">{{b.tenTH}}</option>
 								</select>
 							</div>
 							<div class="form-group col-md-3">
@@ -385,6 +373,11 @@ MODAL
 	<script th:src="@{/doc/js/bootstrap.min.js}"></script>
 	<script th:src="@{/doc/js/main.js}"></script>
 	<script th:src="@{/doc/js/plugins/pace.min.js}"></script>
+	<script th:src="@{/js/sanpham.js}"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			const inpFile = document.getElementById("inpFile");
@@ -406,14 +399,6 @@ MODAL
 					reader.readAsDataURL(file);
 				}
 			});
-		});
-	</script>
-
-	<script>
-		var myApp = angular.module("myApp", []);
-
-		myApp.controller('myCtrl', function($scope) {
-
 		});
 	</script>
 </body>

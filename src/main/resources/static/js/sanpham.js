@@ -23,12 +23,12 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	
 		$http.get("/rest/loaisanpham").then(resp => {
 			$scope.cates = resp.data;
-			console.log("Success", resp);
+			console.log("Success", resp.data);
 		});
 	
 		$http.get("/rest/thuonghieu").then(resp => {
 			$scope.bras = resp.data;
-			console.log("Success", resp);
+			console.log("Success", resp.data);
 		})
 	};
 	
