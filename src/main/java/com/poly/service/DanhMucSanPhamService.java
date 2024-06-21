@@ -10,7 +10,7 @@ public interface DanhMucSanPhamService {
 
 	DanhMucLoaiSanPham findById(int maLSP);
 
-	List<DanhMucLoaiSanPham> findByCategoryId(int cmaLSP);
+	List<DanhMucLoaiSanPham> findByDanhMucId(int cmaLSP);
 
 	DanhMucLoaiSanPham create(DanhMucLoaiSanPham danhmucsanpham);
 

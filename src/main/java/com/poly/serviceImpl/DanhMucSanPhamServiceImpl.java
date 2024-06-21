@@ -28,7 +28,7 @@ public class DanhMucSanPhamServiceImpl implements DanhMucSanPhamService {
 	}
 
 	@Override
-	public List<DanhMucLoaiSanPham> findByCategoryId(int cmaLSP) {
+	public List<DanhMucLoaiSanPham> findByDanhMucId(int cmaLSP) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -12,10 +12,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
 @Entity 
 @Table(name = "danh_muc_Loai_sp")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DanhMucLoaiSanPham implements Serializable{
 
 	@Id

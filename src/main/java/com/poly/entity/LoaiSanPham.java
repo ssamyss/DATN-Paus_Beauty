@@ -14,10 +14,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @SuppressWarnings("serial")
 @Entity 
 @Table(name = "loai_sp")
+@Data
 public class LoaiSanPham implements Serializable{
 
 		@Id
