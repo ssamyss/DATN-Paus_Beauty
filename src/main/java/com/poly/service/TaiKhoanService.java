@@ -8,14 +8,14 @@ public interface TaiKhoanService {
 
 	List<TaiKhoan> findAll();
 
-	TaiKhoan findByUserName(String TenTaiKhoan);
+	TaiKhoan findById(String tenTaiKhoan);
 
-//	List<TaiKhoan> findByAccountUserName(String cusername);
+	List<TaiKhoan> findByTaiKhoanId(String ctenTaiKhoan);
 
-	TaiKhoan create(TaiKhoan TaiKhoan);
+	TaiKhoan create(TaiKhoan taiKhoan);
 
-	TaiKhoan update(TaiKhoan TaiKhoan);
+	TaiKhoan update(TaiKhoan taiKhoan);
 
-	void delete(String TenTaiKhoan);
+	void delete(String tenTaiKhoan);
 
 }
