@@ -96,12 +96,14 @@
 									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
 									<td>{{item.trangThai}}</td>
 									<td>
-										<button ng-click="show(item)" class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+										<button ng-click="show(item)" class="btn btn-primary btn-sm trash" type="button"
+											title="Xóa">
 											<i class="fas fa-trash-alt"></i>
 										</button>
-										<button ng-click="show(item)" class="btn btn-primary btn-sm edit" type="button" title="Xem">
-											<i class="bi bi-eye-fill"></i>
-										</button>
+										<a th:href="@{/chitietdonhang/{{item.maDH}}}"><button
+												class="btn btn-primary btn-sm edit" type="button" title="Xem">
+												<i class="bi bi-eye-fill"></i>
+											</button></a>
 									</td>
 								</tr>
 							</tbody>
@@ -111,7 +113,7 @@
 			</div>
 		</div>
 	</main>
-	<script th:src="@{/js/donhang.js}"></script>
+	<script th:src="@{/admin/js/donhang.js}"></script>
 	<script>
 		//Thời Gian
 		function time() {

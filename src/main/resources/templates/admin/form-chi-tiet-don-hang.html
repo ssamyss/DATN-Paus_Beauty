@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<title>Chi tiết đơn hàng | Quản trị Admin</title>
@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body ng-app="app" ng-controller="donhang-ctrl" onload="time()" class="app sidebar-mini rtl">
+<body ng-app="app" ng-controller="donhangchitiet-ctrl" onload="time()" class="app sidebar-mini rtl">
 
 	<div th:insert="~{admin/menu.html}"></div>
 
@@ -29,7 +29,7 @@
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách đơn hàng</b></a></li>
+							sách sản phẩm trong đơn hàng</b></a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -75,37 +75,32 @@
 							<thead>
 								<tr>
 									<th width="10" scope="col"><input type="checkbox" id="all"></th>
-									<th scope="col">ID đơn hàng</th>
-									<th scope="col">Khách hàng</th>
-									<th scope="col">Số điện thoại</th>
-									<th scope="col">Địa chỉ</th>
-									<th scope="col">Tổng tiền</th>
-									<th scope="col">Ngày tạo</th>
-									<th scope="col">Tình trạng</th>
+									<th scope="col">Ảnh</th>
+									<th scope="col">Tên sản phẩm</th>
+									<th scope="col">Số lượng</th>
+									<th scope="col">Giá</th>
+									<th scope="col">Tổng giá</th>
+									<th scope="col">Mã đơn hàng</th>
 									<th scope="col">Tính năng</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in byitems">
+								<!--| filter: {donHang: {maDH: $scope.maDH}}-->
+								<tr ng-repeat="dhct in dhchitiets">
 									<td width="10"><input type="checkbox" name="check1" value="1"></td>
-									<td>{{item.maDH}}</td>
-									<td>{{item.taiKhoan.hoVaTen}}</td>
-									<td>{{item.sdt}}</td>
-									<td>{{item.diaChi}}</td>
-									<td>{{item.tongGia | currency:'':0}} VND</td>
-									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
-									<td>{{item.trangThai}}</td>
+									<td>{{dhct.sanPham.anh}}</td>
+									<td>{{dhct.sanPham.tenSP}}</td>
+									<td>{{dhct.soLuong}}</td>
+									<td>{{dhct.sanPham.gia | currency:'':0}} VND</td>
+									<td>{{dhct.gia | currency:'':0}} VND</td>
+									<td>{{dhct.donHang.maDH}}</td>
 									<td>
-										<a th:href="@{/rest/donhang/{{item.maDH}}}">
-											<button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-												<i class="fas fa-trash-alt"></i>
-											</button>
-										</a>
-										<a th:href="@{/chitietdonhang/{{item.maDH}}}">
-											<button class="btn btn-primary btn-sm edit" type="button" title="Xem">
-												<i class="bi bi-eye-fill"></i>
-											</button>
-										</a>
+										<button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+											<i class="fas fa-trash-alt"></i>
+										</button>
+										<button class="btn btn-primary btn-sm edit" type="button" title="Xem">
+											<i class="bi bi-eye-fill"></i>
+										</button>
 									</td>
 								</tr>
 							</tbody>
@@ -115,7 +110,6 @@
 			</div>
 		</div>
 	</main>
-	<script th:src="@{/js/donhang.js}"></script>
 	<script>
 		//Thời Gian
 		function time() {
@@ -158,7 +152,14 @@
 			}
 		}
 	</script>
-
+	<!--<script>
+		const urlPra = window.location;
+		const pathname = urlPra.pathname; // pathname = "/chitietdonhang/123"
+		const pathParts = pathname.split('/'); // pathParts = ["", "chitietdonhang", "123"]
+		const maDH = pathParts[2]; // maDH = "123"
+		console.log("Mã đơn hàng:", maDH);
+	</script>-->
+	<script th:src="@{/admin/js/donhangchitiet.js}"></script>
 </body>
 
 </html>

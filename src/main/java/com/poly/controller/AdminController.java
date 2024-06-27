@@ -1,7 +1,9 @@
 package com.poly.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class AdminController {
@@ -46,7 +48,8 @@ public class AdminController {
 	}
 
 	@GetMapping("/chitietdonhang/{maDH}")
-	public String chiTietDonHang() {
+	public String chiTietDonHang(Model model, @PathVariable("maDH") String maDH) {
+		
 		return "admin/form-chi-tiet-don-hang";
 	}
 }

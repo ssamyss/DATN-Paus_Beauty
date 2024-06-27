@@ -23,15 +23,6 @@ app.controller("donhang-ctrl", function($scope, $http) {
 		}).catch(error => {
 			console.error("Lỗi khi tải đơn hàng:", error);
 		});
-		$http.get("/rest/taikhoan").then(resp => {
-			$scope.accounts = resp.data;
-			$scope.items.forEach(item => {
-				item.createDate = new Date(item.createDate);
-			});
-			console.log("Tài khoản:", resp.data);
-		}).catch(error => {
-			console.error("Lỗi khi tải tài khoản:", error);
-		});
 	};
 
 	$scope.initialize();
