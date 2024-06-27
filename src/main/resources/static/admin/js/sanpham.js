@@ -1,5 +1,6 @@
 const app = angular.module("app", []);
 app.controller("sanpham-ctrl", function($scope, $http) {
+	
     $scope.form = {};
     $scope.cates = [];
     $scope.bras = [];
