@@ -45,4 +45,8 @@ public class AdminController {
 		return "admin/form-add-san-pham";
 	}
 
+	@GetMapping("/chitietdonhang/{maDH}")
+	public String chiTietDonHang() {
+		return "admin/form-chi-tiet-don-hang";
+	}
 }
