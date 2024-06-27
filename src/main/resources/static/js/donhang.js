@@ -5,6 +5,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 	};;
 	$scope.accounts = [];
 	$scope.items = [];
+	$scope.byitems = [];
 
 	$scope.reset = function() {
 		$scope.form = {
@@ -23,16 +24,20 @@ app.controller("donhang-ctrl", function($scope, $http) {
 		}).catch(error => {
 			console.error("Lỗi khi tải đơn hàng:", error);
 		});
-		$http.get("/rest/taikhoan").then(resp => {
-			$scope.accounts = resp.data;
-			$scope.items.forEach(item => {
-				item.createDate = new Date(item.createDate);
-			});
-			console.log("Tài khoản:", resp.data);
-		}).catch(error => {
-			console.error("Lỗi khi tải tài khoản:", error);
-		});
 	};
+
+	$scope.show = function(item) {
+		$scope.byitems = angular.copy(item);
+		$http.get('/rest/donhang/' + $scope.byitems.maDH).then(resp => {
+			$scope.items = resp.data;
+			
+			console.log("Đơn hàng show:", resp.data);
+			alert("Thêm mới thương hiệu thành công", resp.data);
+		}).catch(error => {
+			alert("Lỗi thêm mới!");
+			console.log("Error", error);
+		});
+	}
 
 	$scope.initialize();
 	/*$scope.reset();*/

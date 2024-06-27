@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
-	<title>Danh sách đơn hàng | Quản trị Admin</title>
+	<title>Chi tiết đơn hàng | Quản trị Admin</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,7 +86,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in items">
+								<tr ng-repeat="item in byitems">
 									<td width="10"><input type="checkbox" name="check1" value="1"></td>
 									<td>{{item.maDH}}</td>
 									<td>{{item.taiKhoan.hoVaTen}}</td>
@@ -96,12 +96,16 @@
 									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
 									<td>{{item.trangThai}}</td>
 									<td>
-										<button ng-click="show(item)" class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-											<i class="fas fa-trash-alt"></i>
-										</button>
-										<button ng-click="show(item)" class="btn btn-primary btn-sm edit" type="button" title="Xem">
-											<i class="bi bi-eye-fill"></i>
-										</button>
+										<a th:href="@{/rest/donhang/{{item.maDH}}}">
+											<button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
+												<i class="fas fa-trash-alt"></i>
+											</button>
+										</a>
+										<a th:href="@{/chitietdonhang/{{item.maDH}}}">
+											<button class="btn btn-primary btn-sm edit" type="button" title="Xem">
+												<i class="bi bi-eye-fill"></i>
+											</button>
+										</a>
 									</td>
 								</tr>
 							</tbody>
@@ -154,6 +158,7 @@
 			}
 		}
 	</script>
+
 </body>
 
 </html>
