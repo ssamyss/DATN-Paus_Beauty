@@ -181,10 +181,9 @@
 							</div>
 						</div>
 						<form class="row">
-							<div class="form-group col-md-3">
+									<div class="form-group col-md-3">
 								<label class="control-label">Mã sản phẩm </label> <input
-									class="form-control" ng-model="form.maSP" type="number"
-									placeholder="">
+									class="form-control" ng-model="form.maSP" type="number">
 							</div>
 							<div class="form-group col-md-3">
 								<label class="control-label">Tên sản phẩm</label> <input
@@ -233,7 +232,7 @@
 								<label class="control-label">Ảnh sản phẩm</label>
 								<div id="myfileupload">
 									<input type="file" id="uploadfile" name="ImageUpload"
-										onchange="readURL(this);" />
+										onchange="readURL(this);"/>
 								</div>
 								<div id="thumbbox">
 									<img height="450" width="400" alt="Thumb image" id="thumbimage"
@@ -256,8 +255,11 @@
 								</script>
 							</div>
 					</div>
-					<button class="btn btn-save" type="button">Lưu lại</button>
+					<button ng-click="create()" class="btn" type="button">Lưu lại</button>
 					<a class="btn btn-cancel" th:href="@{/dataProduct}">Hủy bỏ</a>
+							
+						</form>
+					
 				</div>
 	</main>
 
@@ -319,15 +321,7 @@ MODAL
 							<label class="control-label">Danh mục sản phẩm hiện đang
 								có</label>
 							<ul style="padding-left: 20px;">
-								<li>Bàn ăn</li>
-								<li>Bàn thông minh</li>
-								<li>Tủ</li>
-								<li>Ghế gỗ</li>
-								<li>Ghế sắt</li>
-								<li>Giường người lớn</li>
-								<li>Giường trẻ em</li>
-								<li>Bàn trang điểm</li>
-								<li>Giá đỡ</li>
+								
 							</ul>
 						</div>
 					</div>

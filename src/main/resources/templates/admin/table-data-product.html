@@ -102,11 +102,10 @@
 									<td>{{item.mota}}</td>
 									<td><span class="badge bg-success">Còn hàng</span></td>
 									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
-									<td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-											onclick="myFunction(this)">
+									<td><button ng-click="delete(item)" class="btn btn-primary btn-sm trash" type="button" title="Xóa">
 											<i class="fas fa-trash-alt"></i>
 										</button>
-										<button class="btn btn-primary btn-sm edit" type="button" title="Sửa"
+										<button ng-click="edit(item)" class="btn btn-primary btn-sm edit" type="button" title="Sửa"
 											id="show-emp" data-toggle="modal" data-target="#ModalUP">
 											<i class="fas fa-edit"></i>
 										</button>
@@ -177,7 +176,7 @@
 					</div>
 					<BR> <a href="#" style="float: right; font-weight: 600; color: #ea0000;">Chỉnh
 						sửa sản phẩm nâng cao</a> <BR> <BR>
-					<button class="btn btn-save" type="button">Lưu lại</button>
+					<button ng-click="update()" class="btn btn-save" type="button">Lưu lại</button>
 					<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
 					<BR>
 				</div>
