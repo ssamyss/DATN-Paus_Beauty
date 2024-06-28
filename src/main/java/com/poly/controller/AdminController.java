@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class AdminController {
-	@GetMapping("")
+	@GetMapping("/admin")
 	public String index() {
 		return "admin/index";
 	}
