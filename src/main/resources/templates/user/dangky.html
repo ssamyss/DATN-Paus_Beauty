@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>PAUS BEAUTY XIN CHÀO!!!</h2>
+        <h4>ĐĂNG KÝ TÀI KHOẢN</h4>
+        <p>
+            Bạn đã có tài khoản? <a th:href="@{/login}">Đăng nhập tại đây</a>
+        </p>
+        <form id="signupForm" method="post">
+            <input type="text" name="Ho" placeholder="Họ" required>
+            <input type="text" name="Ten" placeholder="Tên" required>
+            <input type="tel" name="SoDienThoai" placeholder="Số điện thoại" required>
+            <input type="email" name="Email" placeholder="Email" required>
+            <input type="password" name="MatKhau" placeholder="Mật khẩu" required>
+            <input type="submit" value="ĐĂNG KÝ">
+        </form>
+        <div id="errorMsg" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function (event) {
+            const ho = document.querySelector('input[name="Ho"]').value.trim();
+            const ten = document.querySelector('input[name="Ten"]').value.trim();
+            const soDienThoai = document.querySelector('input[name="SoDienThoai"]').value.trim();
+            const email = document.querySelector('input[name="Email"]').value.trim();
+            const matKhau = document.querySelector('input[name="MatKhau"]').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (!ho || !ten || !soDienThoai || !email || !matKhau) {
+                event.preventDefault();
+                errorMsg.textContent = 'Vui lòng không để trống các trường.';
+                return false;
+            }
+
+            // Add additional validation if necessary
+
+            // If validation succeeds, proceed with form submission
+        });
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img6.thuthuatphanmem.vn/uploads/2022/03/03/background-my-pham-hien-dai_094504423.jpg');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            width: 350px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .signup-container h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .signup-container a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .signup-container a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-container input[type="text"],
+        .signup-container input[type="tel"],
+        .signup-container input[type="email"],
+        .signup-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .signup-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            background-color: #FF3B30;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .signup-container input[type="submit"]:hover {
+            background-color: #cc3226;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+
+</body>
+
+</html>

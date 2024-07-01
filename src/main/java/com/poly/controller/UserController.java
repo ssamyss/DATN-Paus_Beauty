@@ -34,7 +34,4 @@ public class UserController {
 		model.addAttribute("sanpham", sp);
 		return "user/product-detail";
 	}
-	
-	
-	
 }

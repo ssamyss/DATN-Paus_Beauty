@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Đăng Nhập</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -12,7 +13,7 @@
 		<h2>PAUS BEAUTY XIN CHÀO!!!</h2>
 		<h4>ĐĂNG NHẬP TÀI KHOẢN</h4>
 		<p>
-			Bạn chưa có tài khoản? <a href="#">Đăng ký tại đây</a>
+			Bạn chưa có tài khoản? <a th:href="@{/register}">Đăng ký tại đây</a>
 		</p>
 		<form id="loginForm" method="post">
 			<input type="text" name="TenTaiKhoan" placeholder="Tên đăng nhập" required>
@@ -25,8 +26,8 @@
 		<div id="errorMsg" class="error"></div>
 		<p>Hoặc đăng nhập bằng</p>
 		<div class="social-login">
-			<button class="google">Google</button>
-			<button class="facebook">Facebook</button>
+			<button class="google"><i class="fab fa-google"></i> Google</button>
+			<button class="facebook"><i class="fab fa-facebook-f"></i> Facebook</button>
 		</div>
 	</div>
 
@@ -189,6 +190,10 @@
 			color: #fff;
 			font-size: 16px;
 			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
 		}
 
 		.social-login .google {
@@ -197,6 +202,10 @@
 
 		.social-login .facebook {
 			background-color: #3B5998;
+		}
+
+		.social-login i {
+			font-size: 18px;
 		}
 
 		.error {
