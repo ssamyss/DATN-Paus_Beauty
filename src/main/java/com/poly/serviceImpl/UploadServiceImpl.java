@@ -17,7 +17,7 @@ public class UploadServiceImpl implements UploadService {
 	ServletContext app;
 	
 	public File save(MultipartFile file, String folder) {
-		File dir = new File(app.getRealPath("/assets/images/" + folder));
+		File dir = new File(app.getRealPath("/admin/assets/images/" + folder));
 		if(!dir.exists()) {
 			dir.mkdirs();
 		}

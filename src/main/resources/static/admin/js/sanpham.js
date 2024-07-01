@@ -82,18 +82,33 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	};
 	
 	$scope.imageChanged = function(files) {
-		var data = new FormData();
-		data.append('file', files[0]);
-		$http.post('/rest/upload/product', data, {
-			transformRequest: angular.identity,
-			headers: { 'Content-Type': undefined }
-		}).then(resp => {
-			$scope.form.image = resp.data.name;
-		}).catch(error => {
-			alert("Lỗi tải ảnh!");
-			console.log("Error", error);
-		});
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	        $scope.$apply(function() {
+	            // Hiển thị trước ảnh đã chọn
+	            $scope.imageURL = e.target.result;
+	        });
+	    };
+	    // Đọc file ảnh
+	    reader.readAsDataURL(files[0]);
+
+	    // Gửi file ảnh lên server
+	    var data = new FormData();
+	    data.append('file', files[0]);
+	    $http.post('/rest/upload/product', data, {
+	        transformRequest: angular.identity,
+	        headers: { 'Content-Type': undefined }
+	    }).then(resp => {
+	        // Lưu đường dẫn ảnh vào biến form.anh
+	        $scope.form.anh = resp.data.name;
+	    }).catch(error => {
+	        alert("Lỗi tải ảnh!");
+	        console.log("Error", error);
+	    });
 	};
+
+
+
 
     $scope.initialize();
     $scope.reset();
