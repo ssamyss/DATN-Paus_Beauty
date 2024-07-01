@@ -66,7 +66,7 @@ public class TaiKhoan implements Serializable {
 	
 	/* @NotNull(message = "Role không được bỏ trống") */
 	@Column(name = "role")
-	private Boolean Role;
+	private boolean Role;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "taiKhoan")

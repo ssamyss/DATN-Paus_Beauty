@@ -49,7 +49,7 @@ public class SanPham implements Serializable{
 	private String anh;
 	
 	@Column(name = "trang_thai")
-	private Boolean trangThai;
+	private boolean trangThai;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngay_cap_nhat")

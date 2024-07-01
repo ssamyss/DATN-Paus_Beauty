@@ -44,7 +44,7 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post('/rest/products', item).then(resp => {
+		$http.post('/rest/sanpham', item).then(resp => {
 			$scope.items.push(resp.data);
 			$scope.reset();
 			alert("Thêm mới sản phẩm thành công");
@@ -56,8 +56,8 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put('/rest/products/' + item.id, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.id == item.id);
+		$http.put('/rest/sanpham/' + item.maSP, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.maSP == item.maSP);
 			$scope.items[index] = item;
 			alert("Cập nhật sản phẩm thành công");
 		}).catch(error => {
@@ -67,8 +67,8 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	};
 	
 	$scope.delete = function(item) {
-		$http.delete('/rest/products/' + item.id).then(resp => {
-			var index = $scope.items.findIndex(p => p.id == item.id);
+		$http.delete('/rest/sanpham/' + item.maSP, item).then(resp => {
+			var index = $scope.items.findIndex(p => p.maSP == item.maSP);
 			$scope.items.splice(index, 1);
 			$scope.reset();
 			alert("Xóa sản phẩm thành công");
@@ -106,8 +106,6 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	        console.log("Error", error);
 	    });
 	};
-
-
 
 
     $scope.initialize();
