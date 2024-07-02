@@ -1,7 +1,5 @@
 package com.poly.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +16,7 @@ public class UserController {
 	SanPhamDao spDao;
 	
 	@GetMapping("")
-	public String index(Model model) {
-		List<SanPham> sp = spDao.findAll();
-		model.addAttribute("sanpham", sp);
+	public String index() {
 		return "user/index";
 	}
 	
