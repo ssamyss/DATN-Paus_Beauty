@@ -51,4 +51,10 @@ public class LoaiSanPhamServiceImpl implements LoaiSanPhamService {
 		lspdao.deleteById(maPL);
 	}
 
+	@Override
+	public List<LoaiSanPham> findByDanhMucLoaiSanPham(Integer maLSP) {
+		// TODO Auto-generated method stub
+		return lspdao.findByDanhMucLoaiSanPham(maLSP);
+	}
+
 }

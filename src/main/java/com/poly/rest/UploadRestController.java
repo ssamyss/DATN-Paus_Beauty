@@ -22,15 +22,22 @@ public class UploadRestController {
 
 	@Autowired
 	UploadService uploadService;
-	
+
 	@PostMapping("/rest/upload/{folder}")
-	public JsonNode upload(@PathParam("file") MultipartFile file,@PathVariable("folder") String folder) {
-		File saveFile = uploadService.save(file, folder);
-		ObjectMapper mapper = new ObjectMapper();
-		ObjectNode node = mapper.createObjectNode();
-		node.put("name", saveFile.getName());
-		node.put("size", saveFile.length());
-		return node;
-		
+	public JsonNode upload(@PathParam("file") MultipartFile file, @PathVariable("folder") String folder) {
+		try {
+			File saveFile = uploadService.save(file, folder);
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode node = mapper.createObjectNode();
+			node.put("name", saveFile.getName());
+			node.put("size", saveFile.length());
+			return node;
+		} catch (RuntimeException e) {
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode node = mapper.createObjectNode();
+			node.put("error", "Lỗi khi lưu tệp: " + e.getMessage());
+			return node;
+		}
+
 	}
 }

@@ -15,21 +15,22 @@ public class UploadServiceImpl implements UploadService {
 
 	@Autowired
 	ServletContext app;
-	
+
 	public File save(MultipartFile file, String folder) {
 		File dir = new File(app.getRealPath("/admin/assets/images/" + folder));
-		if(!dir.exists()) {
+		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		String s = System.currentTimeMillis() + file.getOriginalFilename();
 		String name = Integer.toHexString(s.hashCode()) + s.substring(s.lastIndexOf("."));
 		try {
-			File saveFile = new File(dir,name);
+			File saveFile = new File(dir, name);
 			file.transferTo(saveFile);
-			System.out.println(saveFile.getAbsolutePath());
+			System.out.println("Tệp được lưu tại: " + saveFile.getAbsolutePath());
 			return saveFile;
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
+			throw new RuntimeException("Lỗi khi lưu tệp: " + e.getMessage());
 		}
 	}
 

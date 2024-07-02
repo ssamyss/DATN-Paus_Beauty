@@ -17,4 +17,5 @@ public interface LoaiSanPhamService {
 	LoaiSanPham update(LoaiSanPham loaisanpham);
 
 	void delete(int maPL);
+	List<LoaiSanPham> findByDanhMucLoaiSanPham(Integer maLSP);
 }

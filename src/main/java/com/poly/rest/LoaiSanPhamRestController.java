@@ -50,4 +50,9 @@ public class LoaiSanPhamRestController {
 		loaiSanPhamService.delete(maPL);
 	}
 	
+	@GetMapping("/by-category/{maLSP}")
+    public List<LoaiSanPham> getByCategory(@PathVariable("maLSP") Integer maLSP) {
+        return loaiSanPhamService.findByDanhMucLoaiSanPham(maLSP);
+    }
+	
 }

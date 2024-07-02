@@ -33,7 +33,7 @@ public class ThuongHieu implements Serializable{
 	private String tenTH;
 	
 	@Column(name = "anh")
-	private String anh;
+	private String anhTH;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "thuongHieu")

@@ -72,6 +72,22 @@
 .input-file-trigger i {
 	margin-right: 8px;
 }
+
+.horizontal-list {
+	list-style-type: none;
+	padding-left: 0;
+	display: flex;
+	flex-wrap: wrap;
+	/* Cho phép các mục xuống dòng khi không đủ không gian */
+}
+
+.horizontal-list li {
+	margin-right: 10px; /* Khoảng cách giữa các mục */
+	margin-bottom: 10px; /* Khoảng cách dưới */
+	background-color: #f0f0f0; /* Màu nền */
+	padding: 5px 10px; /* Khoảng cách bên trong */
+	border-radius: 5px; /* Bo tròn viền */
+}
 </style>
 </head>
 
@@ -127,9 +143,17 @@
 								</select>
 							</div>
 							<div class="form-group col-md-3">
+								<label for="exampleSelect1" class="control-label">Danh
+									Mục Sản Phẩm</label> <select class="form-control" ng-model="form.maLSP"
+									ng-change="loadProductTypes(form.maLSP)">
+									<option value disabled selected>Chọn danh mục sản phẩm</option>
+									<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
+								</select>
+							</div>
+							<div class="form-group col-md-3">
 								<label for="exampleSelect1" class="control-label">Loại
 									Sản Phẩm</label> <select class="form-control"
-									ng-model="form.loaiSanPham.maPL">
+									ng-model="form.loaiSanPham.maPL" ng-disabled="!form.maLSP">
 									<option value disabled selected>Chọn loại sản phẩm</option>
 									<option ng-repeat="c in cates" ng-value="c.maPL">{{c.tenPL}}</option>
 								</select>
@@ -169,12 +193,11 @@
 											class="fas fa-upload"></i> Chọn ảnh</label>
 									</div>
 								</div>
-
 							</div>
 							<div class="form-group col-md-12">
 								<label class="control-label">Mô tả sản phẩm</label>
 								<textarea class="form-control" ng-model="form.mota" name="mota"
-									id="mota"></textarea>
+									id="mota" type="text"></textarea>
 								<script>
 									CKEDITOR.replace('mota');
 								</script>
@@ -189,31 +212,51 @@
 				</div>
 	</main>
 
-	<!--
-  MODAL CHỨC VỤ 
--->
+	<!-- Modal thêm thương hiệu -->
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalCenterTitle"
 		data-backdrop="static" data-keyboard="false">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
-
 				<div class="modal-body">
-					<div class="row">
-						<div class="form-group  col-md-12">
-							<span class="thong-tin-thanh-toan">
-								<h5>Thêm mới thương hiệu</h5>
-							</span>
+					<form>
+						<div class="row">
+							<div class="form-group  col-md-12">
+								<span class="thong-tin-thanh-toan">
+									<h5>Thêm mới thương hiệu</h5>
+								</span>
+							</div>
+							<div class="form-group col-md-12">
+								<label class="control-label">Nhập tên thương hiệu mới</label> <input
+									class="form-control" ng-model="form.tenTH" type="text" required>
+							</div>
+							<div class="form-group col-md-12">
+								<label class="control-label">Ảnh thương hiệu</label>
+								<div style="margin-bottom: 10px;">
+									<!-- Hiển thị trước ảnh đã chọn -->
+									<div class="image-preview-container">
+										<img ng-src="{{ newBrandImageURL }}"
+											class="image-preview border border-5">
+									</div>
+								</div>
+								<div>
+									<!-- Input để chọn ảnh -->
+									<div class="input-file-container">
+										<input type="file" id="anhTH"
+											class="form-control w-50 input-file"
+											onchange="angular.element(this).scope().brandImageChanged(this.files)" />
+										<label for="anhTH" class="input-file-trigger"><i
+											class="fas fa-upload"></i> Chọn ảnh</label>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="form-group col-md-12">
-							<label class="control-label">Nhập tên thương hiệu mới</label> <input
-								class="form-control" type="text" required>
-						</div>
-					</div>
-					<br>
-					<button class="btn btn-save" type="button">Lưu lại</button>
-					<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-					<br>
+						<br>
+						<button class="btn btn-save" ng-click="createTH()" type="button">Lưu
+							lại</button>
+						<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+						<br>
+					</form>
 				</div>
 				<div class="modal-footer"></div>
 			</div>
@@ -239,13 +282,20 @@ MODAL
 							</span>
 						</div>
 						<div class="form-group col-md-12">
+							<label for="exampleSelect1" class="control-label">Danh
+									Mục Sản Phẩm</label> <select class="form-control" ng-model="form.maLSP">
+									<option value disabled selected>Chọn danh mục sản phẩm</option>
+									<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
+								</select>
+						</div>
+						<div class="form-group col-md-12">
 							<label class="control-label">Nhập tên loại sản phẩm mới</label> <input
-								class="form-control" type="text" required>
+								class="form-control" ng-model="form.tenPL" type="text" required>
 						</div>
 						<div class="form-group col-md-12">
 							<label class="control-label">Loại sản phẩm hiện đang có</label>
-							<ul style="padding-left: 20px;">
-
+							<ul class="horizontal-list">
+								<li ng-repeat="c in cates" ng-value="c.maPL">{{c.tenPL}}</li>
 							</ul>
 						</div>
 					</div>
