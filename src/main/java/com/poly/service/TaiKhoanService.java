@@ -1,5 +1,6 @@
 package com.poly.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.poly.entity.TaiKhoan;
@@ -17,5 +18,7 @@ public interface TaiKhoanService {
 	TaiKhoan update(TaiKhoan taiKhoan);
 
 	void delete(String tenTaiKhoan);
+	
+	TaiKhoan save(TaiKhoan taikhoanRequest) throws SQLException;
 
 }

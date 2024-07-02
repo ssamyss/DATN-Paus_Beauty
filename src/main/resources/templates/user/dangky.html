@@ -14,37 +14,17 @@
         <p>
             Bạn đã có tài khoản? <a th:href="@{/login}">Đăng nhập tại đây</a>
         </p>
-        <form id="signupForm" method="post">
-            <input type="text" name="Ho" placeholder="Họ" required>
-            <input type="text" name="Ten" placeholder="Tên" required>
-            <input type="tel" name="SoDienThoai" placeholder="Số điện thoại" required>
-            <input type="email" name="Email" placeholder="Email" required>
-            <input type="password" name="MatKhau" placeholder="Mật khẩu" required>
+        <form id="signupForm" method="POST" th:action="@{/register}" th:object="${taikhoanRequest}" >
+            <input  type="text" name="tenTaiKhoan" placeholder="Tài khoản" required>
+            <input  type="password" name="matKhau" placeholder="Mật khẩu" required>
+            <input  type="text" name="hoVaTen" placeholder="Họ và tên" required>
+            <input  type="email" name="email" placeholder="Email" required>
+            <input  type="text" name="DiaChi" placeholder="Địa chỉ" required>
+            <input  type="text" name="SDT" placeholder="Số điện thoại" required>
             <input type="submit" value="ĐĂNG KÝ">
         </form>
-        <div id="errorMsg" class="error"></div>
     </div>
 
-    <script>
-        document.getElementById('signupForm').addEventListener('submit', function (event) {
-            const ho = document.querySelector('input[name="Ho"]').value.trim();
-            const ten = document.querySelector('input[name="Ten"]').value.trim();
-            const soDienThoai = document.querySelector('input[name="SoDienThoai"]').value.trim();
-            const email = document.querySelector('input[name="Email"]').value.trim();
-            const matKhau = document.querySelector('input[name="MatKhau"]').value.trim();
-            const errorMsg = document.getElementById('errorMsg');
-
-            if (!ho || !ten || !soDienThoai || !email || !matKhau) {
-                event.preventDefault();
-                errorMsg.textContent = 'Vui lòng không để trống các trường.';
-                return false;
-            }
-
-            // Add additional validation if necessary
-
-            // If validation succeeds, proceed with form submission
-        });
-    </script>
 
     <style>
         body {
