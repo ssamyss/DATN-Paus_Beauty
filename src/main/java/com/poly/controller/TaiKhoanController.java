@@ -1,7 +1,5 @@
 package com.poly.controller;
 
-import javax.management.relation.Role;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,4 +71,10 @@ public class TaiKhoanController {
 		session.removeAttribute("tentaikhoan");
 		return "redirect:/login";
 	}
+	
+	@GetMapping("/register")
+	public String Register() {
+		return "user/dangki";
+	}
+	
 }
