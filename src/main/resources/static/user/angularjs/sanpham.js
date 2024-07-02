@@ -122,4 +122,5 @@ app.controller("sanpham-index", function($scope, $http) {
 	   
     $scope.initialize();
     $scope.reset();
+	
 });
