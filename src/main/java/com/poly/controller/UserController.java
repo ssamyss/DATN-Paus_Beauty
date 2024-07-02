@@ -18,9 +18,7 @@ public class UserController {
 	SanPhamDao spDao;
 	
 	@GetMapping("")
-	public String index(Model model) {
-		List<SanPham> sp = spDao.findAll();
-		model.addAttribute("sanpham", sp);
+	public String index() {
 		return "user/index";
 	}
 	
