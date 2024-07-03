@@ -19,7 +19,7 @@ public interface TaiKhoanService {
 
 	void delete(String tenTaiKhoan);
 	
-	TaiKhoan save(TaiKhoan taikhoanRequest) throws SQLException;
+	TaiKhoan save(TaiKhoan taikhoanRequest, boolean role) throws SQLException;
 	
 	String generateAndSendPIN(String email);
 	

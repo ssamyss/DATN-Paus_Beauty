@@ -26,6 +26,61 @@ public class TaiKhoanController {
 	@Autowired
 	HttpServletRequest request;
 	
+	//Đăng ký admin
+	@GetMapping("/register/admin")
+	public String register_admin(Model model) {
+		model.addAttribute("kttaikhoan", false);
+		model.addAttribute("taikhoanRequest", new TaiKhoan());
+		return "user/dangky";
+	}
+	
+	@PostMapping("/register/admin")
+    public String processSignUp_admin(@ModelAttribute  TaiKhoan taikhoan, HttpSession session, Model model) {
+        session.setAttribute("taikhoan", taikhoan);
+        try {
+        	taikhoanService.checkTenTaiKhoan( (TaiKhoan) session.getAttribute("taikhoan"));
+            String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
+            session.setAttribute("registerPIN", pin);
+            return "redirect:/verify-register-pin/admin";
+			
+		} catch (Exception e) {
+			model.addAttribute("kttaikhoan", true);
+			return "user/dangky";
+		}
+    }
+	
+	@GetMapping("/verify-register-pin/admin")
+    public String showVerifyRegisterPinForm_admin() {
+        return "user/verify-register-pin";
+    }
+	
+	@PostMapping("/verify-register-pin/admin")
+	public String processVerifyRegisterPin_admin(@RequestParam(name = "pin") String pin, HttpSession session, Model model) {
+	    // Kiểm tra xem pin có tồn tại trong request không
+	    if (pin == null || pin.isEmpty()) {
+	        model.addAttribute("error", "Invalid PIN. Please try again.");
+	        return "user/verify-register-pin";
+	    }
+
+	    String sessionPIN = (String) session.getAttribute("registerPIN");
+	    if (sessionPIN != null && sessionPIN.equals(pin)) {
+	        TaiKhoan taikhoan = (TaiKhoan) session.getAttribute("taikhoan");
+	        try {
+	            taikhoanService.save(taikhoan, true);
+	            session.removeAttribute("registerPIN");
+	            session.removeAttribute("taikhoan");
+	            return "redirect:/register-success";
+	        } catch (SQLException e) {
+	            // Xử lý ngoại lệ SQL nếu cần thiết
+	            model.addAttribute("error", "Error saving user. Please try again later.");
+	            return "user/register";
+	        }
+	    } else {
+	        model.addAttribute("error", "Invalid PIN. Please try again.");
+	        return "user/verify-register-pin";
+	    }
+	}
+	
 	//Đăng ký
 	@GetMapping("/register")
 	public String Register(Model model) {
@@ -83,7 +138,7 @@ public class TaiKhoanController {
 	    if (sessionPIN != null && sessionPIN.equals(pin)) {
 	        TaiKhoan taikhoan = (TaiKhoan) session.getAttribute("taikhoan");
 	        try {
-	            taikhoanService.save(taikhoan);
+	            taikhoanService.save(taikhoan, false);
 	            session.removeAttribute("registerPIN");
 	            session.removeAttribute("taikhoan");
 	            return "redirect:/register-success";

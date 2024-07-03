@@ -70,10 +70,10 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 
 	@Override
 	@Transactional(rollbackOn = { Throwable.class })
-	public TaiKhoan save(TaiKhoan taikhoanRequest) throws SQLException {
+	public TaiKhoan save(TaiKhoan taikhoanRequest, boolean role) throws SQLException {
 
 		TaiKhoan TaiKhoanDao = taikhoanRequest;
-		taikhoanRequest.setRole(false);
+		taikhoanRequest.setRole(role);
 		taikhoanRequest.setMatKhau(bcrypt.encode(taikhoanRequest.getMatKhau()));
 
 		return dhdao.saveAndFlush(TaiKhoanDao);
