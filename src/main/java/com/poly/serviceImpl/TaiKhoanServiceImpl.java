@@ -2,8 +2,11 @@ package com.poly.serviceImpl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +21,17 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
 
 	private final BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 	
+	private final JavaMailSender javaMailSender;
+	
 	@Autowired
 	TaiKhoanDao dhdao;
 	
-
+	@Autowired
+    public TaiKhoanServiceImpl(JavaMailSender javaMailSender, TaiKhoanDao dhdao) {
+        this.javaMailSender = javaMailSender;
+        this.dhdao = dhdao;
+    }
+	
 	@Override
 	public List<TaiKhoan> findAll() {
 		// TODO Auto-generated method stub
@@ -67,4 +77,26 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
 
 		return dhdao.saveAndFlush(TaiKhoanDao);
 	}
+	
+	
+
+	 @Override
+	    public String generateAndSendPIN(String email) {
+	        String pin = generateRandomPIN();
+	        sendEmail(email, "Your PIN for password reset", "Your PIN is: " + pin);
+	        return pin;
+	    }
+
+	    private void sendEmail(String to, String subject, String text) {
+	        SimpleMailMessage message = new SimpleMailMessage();
+	        message.setTo(to);
+	        message.setSubject(subject);
+	        message.setText(text);
+	        javaMailSender.send(message);
+	    }
+	    private String generateRandomPIN() {
+	        Random random = new Random();
+	        int pin = 1000 + random.nextInt(9000);
+	        return String.valueOf(pin);
+	    }
 }

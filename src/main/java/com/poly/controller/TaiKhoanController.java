@@ -33,19 +33,65 @@ public class TaiKhoanController {
 		return "user/dangky";
 	}
 	
+//	@PostMapping("/register")
+//    public String doPostRegister(@ModelAttribute("taikhoanRequest") TaiKhoan taikhoanRequest, HttpSession session) {
+//        try {
+//            TaiKhoan taikhoan = taikhoanService.save(taikhoanRequest);
+//            if (taikhoan != null) {
+//            	session.setAttribute("tentaikhoan", taikhoan);             
+//                return "redirect:/"; 
+//            } else {
+//                return "redirect:/register";
+//            }
+//        } catch (SQLException e) {
+//            return "redirect:/register";
+//        }
+//    }
+	
+
 	@PostMapping("/register")
-    public String doPostRegister(@ModelAttribute("taikhoanRequest") TaiKhoan taikhoanRequest, HttpSession session) {
-        try {
-            TaiKhoan taikhoan = taikhoanService.save(taikhoanRequest);
-            if (taikhoan != null) {
-            	session.setAttribute("tentaikhoan", taikhoan);             
-                return "redirect:/"; 
-            } else {
-                return "redirect:/register";
-            }
-        } catch (SQLException e) {
-            return "redirect:/register";
-        }
+    public String processSignUp(@ModelAttribute  TaiKhoan taikhoan, HttpSession session) {
+        session.setAttribute("taikhoan", taikhoan);
+        String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
+        session.setAttribute("registerPIN", pin);
+        return "redirect:/verify-register-pin";
+    }
+	
+	@GetMapping("/verify-register-pin")
+    public String showVerifyRegisterPinForm() {
+        return "user/verify-register-pin";
+    }
+	
+	@PostMapping("/verify-register-pin")
+	public String processVerifyRegisterPin(@RequestParam(name = "pin") String pin, HttpSession session, Model model) {
+	    // Kiểm tra xem pin có tồn tại trong request không
+	    if (pin == null || pin.isEmpty()) {
+	        model.addAttribute("error", "Invalid PIN. Please try again.");
+	        return "user/verify-register-pin";
+	    }
+
+	    String sessionPIN = (String) session.getAttribute("registerPIN");
+	    if (sessionPIN != null && sessionPIN.equals(pin)) {
+	        TaiKhoan taikhoan = (TaiKhoan) session.getAttribute("taikhoan");
+	        try {
+	            taikhoanService.save(taikhoan);
+	            session.removeAttribute("registerPIN");
+	            session.removeAttribute("taikhoan");
+	            return "redirect:/register-success";
+	        } catch (SQLException e) {
+	            // Xử lý ngoại lệ SQL nếu cần thiết
+	            model.addAttribute("error", "Error saving user. Please try again later.");
+	            return "user/verify-register-pin";
+	        }
+	    } else {
+	        model.addAttribute("error", "Invalid PIN. Please try again.");
+	        return "user/verify-register-pin";
+	    }
+	}
+	
+	@GetMapping("/register-success")
+    public String showRegisterSuccess() {
+        return "user/register-success";
     }
 	
 	
