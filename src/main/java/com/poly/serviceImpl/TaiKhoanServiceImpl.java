@@ -17,21 +17,21 @@ import com.poly.service.TaiKhoanService;
 import jakarta.transaction.Transactional;
 
 @Service
-public class TaiKhoanServiceImpl implements TaiKhoanService{
+public class TaiKhoanServiceImpl implements TaiKhoanService {
 
 	private final BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-	
+
 	private final JavaMailSender javaMailSender;
-	
+
 	@Autowired
 	TaiKhoanDao dhdao;
-	
+
 	@Autowired
-    public TaiKhoanServiceImpl(JavaMailSender javaMailSender, TaiKhoanDao dhdao) {
-        this.javaMailSender = javaMailSender;
-        this.dhdao = dhdao;
-    }
-	
+	public TaiKhoanServiceImpl(JavaMailSender javaMailSender, TaiKhoanDao dhdao) {
+		this.javaMailSender = javaMailSender;
+		this.dhdao = dhdao;
+	}
+
 	@Override
 	public List<TaiKhoan> findAll() {
 		// TODO Auto-generated method stub
@@ -55,6 +55,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
 		// TODO Auto-generated method stub
 		return dhdao.save(taiKhoan);
 	}
+
 	@Override
 	public TaiKhoan update(TaiKhoan taiKhoan) {
 		// TODO Auto-generated method stub
@@ -77,26 +78,34 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
 
 		return dhdao.saveAndFlush(TaiKhoanDao);
 	}
-	
-	
 
-	 @Override
-	    public String generateAndSendPIN(String email) {
-	        String pin = generateRandomPIN();
-	        sendEmail(email, "Your PIN for password reset", "Your PIN is: " + pin);
-	        return pin;
-	    }
+	@Override
+	public String generateAndSendPIN(String email) {
+		String pin = generateRandomPIN();
+		sendEmail(email, "Your PIN for password reset", "Your PIN is: " + pin);
+		return pin;
+	}
 
-	    private void sendEmail(String to, String subject, String text) {
-	        SimpleMailMessage message = new SimpleMailMessage();
-	        message.setTo(to);
-	        message.setSubject(subject);
-	        message.setText(text);
-	        javaMailSender.send(message);
-	    }
-	    private String generateRandomPIN() {
-	        Random random = new Random();
-	        int pin = 1000 + random.nextInt(9000);
-	        return String.valueOf(pin);
-	    }
+	private void sendEmail(String to, String subject, String text) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(to);
+		message.setSubject(subject);
+		message.setText(text);
+		javaMailSender.send(message);
+	}
+
+	private String generateRandomPIN() {
+		Random random = new Random();
+		int pin = 1000 + random.nextInt(9000);
+		return String.valueOf(pin);
+	}
+	
+	@Override
+	@Transactional(rollbackOn = { Throwable.class })
+	public void checkTenTaiKhoan(TaiKhoan taikhoanRequest) throws SQLException {
+		if (dhdao.existsById(taikhoanRequest.getTenTaiKhoan())) {
+			throw new SQLException("Tên tài khoản đã tồn tại");
+		}
+	}
+
 }

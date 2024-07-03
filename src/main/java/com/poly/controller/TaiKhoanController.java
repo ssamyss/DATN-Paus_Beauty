@@ -29,6 +29,7 @@ public class TaiKhoanController {
 	//Đăng ký
 	@GetMapping("/register")
 	public String Register(Model model) {
+		model.addAttribute("kttaikhoan", false);
 		model.addAttribute("taikhoanRequest", new TaiKhoan());
 		return "user/dangky";
 	}
@@ -50,11 +51,19 @@ public class TaiKhoanController {
 	
 
 	@PostMapping("/register")
-    public String processSignUp(@ModelAttribute  TaiKhoan taikhoan, HttpSession session) {
+    public String processSignUp(@ModelAttribute  TaiKhoan taikhoan, HttpSession session, Model model) {
         session.setAttribute("taikhoan", taikhoan);
-        String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
-        session.setAttribute("registerPIN", pin);
-        return "redirect:/verify-register-pin";
+        try {
+        	taikhoanService.checkTenTaiKhoan( (TaiKhoan) session.getAttribute("taikhoan"));
+            String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
+            session.setAttribute("registerPIN", pin);
+            return "redirect:/verify-register-pin";
+			
+		} catch (Exception e) {
+			model.addAttribute("kttaikhoan", true);
+			return "user/dangky";
+		}
+        
     }
 	
 	@GetMapping("/verify-register-pin")
@@ -81,7 +90,7 @@ public class TaiKhoanController {
 	        } catch (SQLException e) {
 	            // Xử lý ngoại lệ SQL nếu cần thiết
 	            model.addAttribute("error", "Error saving user. Please try again later.");
-	            return "user/verify-register-pin";
+	            return "user/register";
 	        }
 	    } else {
 	        model.addAttribute("error", "Invalid PIN. Please try again.");

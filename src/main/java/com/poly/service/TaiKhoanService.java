@@ -22,5 +22,7 @@ public interface TaiKhoanService {
 	TaiKhoan save(TaiKhoan taikhoanRequest) throws SQLException;
 	
 	String generateAndSendPIN(String email);
+	
+	void checkTenTaiKhoan(TaiKhoan taikhoanRequest) throws SQLException;
 
 }

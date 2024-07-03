@@ -15,6 +15,7 @@
             Bạn đã có tài khoản? <a th:href="@{/login}">Đăng nhập tại đây</a>
         </p>
         <form id="signupForm" method="POST" th:action="@{/register}" th:object="${taikhoanRequest}" >
+			<div th:if="${kttaikhoan}"><i>Tên tài khoản đã tồn tại</i></div>
             <input  type="text" name="tenTaiKhoan" placeholder="Tài khoản" required>
             <input  type="password" name="matKhau" placeholder="Mật khẩu" required>
             <input  type="text" name="hoVaTen" placeholder="Họ và tên" required>
