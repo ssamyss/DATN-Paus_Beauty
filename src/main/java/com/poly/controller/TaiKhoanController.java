@@ -31,7 +31,7 @@ public class TaiKhoanController {
 	public String register_admin(Model model) {
 		model.addAttribute("kttaikhoan", false);
 		model.addAttribute("taikhoanRequest", new TaiKhoan());
-		return "user/dangky";
+		return "user/dangkyadmin";
 	}
 	
 	@PostMapping("/register/admin")
@@ -41,17 +41,18 @@ public class TaiKhoanController {
         	taikhoanService.checkTenTaiKhoan( (TaiKhoan) session.getAttribute("taikhoan"));
             String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
             session.setAttribute("registerPIN", pin);
+            
             return "redirect:/verify-register-pin/admin";
 			
 		} catch (Exception e) {
 			model.addAttribute("kttaikhoan", true);
-			return "user/dangky";
+			return "user/dangkyadmin";
 		}
     }
 	
 	@GetMapping("/verify-register-pin/admin")
     public String showVerifyRegisterPinForm_admin() {
-        return "user/verify-register-pin";
+        return "user/verify-register-pin-admin";
     }
 	
 	@PostMapping("/verify-register-pin/admin")
@@ -59,7 +60,7 @@ public class TaiKhoanController {
 	    // Kiểm tra xem pin có tồn tại trong request không
 	    if (pin == null || pin.isEmpty()) {
 	        model.addAttribute("error", "Invalid PIN. Please try again.");
-	        return "user/verify-register-pin";
+	        return "user/verify-register-pin-admin";
 	    }
 
 	    String sessionPIN = (String) session.getAttribute("registerPIN");
@@ -77,7 +78,7 @@ public class TaiKhoanController {
 	        }
 	    } else {
 	        model.addAttribute("error", "Invalid PIN. Please try again.");
-	        return "user/verify-register-pin";
+	        return "user/verify-register-pin-admin";
 	    }
 	}
 	

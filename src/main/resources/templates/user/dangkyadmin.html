@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>PAUS BEAUTY XIN CHÀO!!!</h2>
+        <h4>ĐĂNG KÝ TÀI KHOẢN</h4>
+        <p>
+            Bạn đã có tài khoản? <a th:href="@{/login}">Đăng nhập tại đây</a>
+        </p>
+        <form id="signupForm" method="POST" th:action="@{/register/admin}" th:object="${taikhoanRequest}" >
+			<div th:if="${kttaikhoan}"><i>Tên tài khoản đã tồn tại</i></div>
+            <input  type="text" name="tenTaiKhoan" placeholder="Tài khoản" required>
+            <input  type="password" name="matKhau" placeholder="Mật khẩu" required>
+            <input  type="text" name="hoVaTen" placeholder="Họ và tên" required>
+            <input  type="email" name="email" placeholder="Email" required>
+            <input  type="text" name="DiaChi" placeholder="Địa chỉ" required>
+            <input  type="text" name="SDT" placeholder="Số điện thoại" required>
+            <input type="submit" value="ĐĂNG KÝ">
+        </form>
+    </div>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img6.thuthuatphanmem.vn/uploads/2022/03/03/background-my-pham-hien-dai_094504423.jpg');
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            width: 350px;
+            padding: 30px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .signup-container h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .signup-container a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .signup-container a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-container input[type="text"],
+        .signup-container input[type="tel"],
+        .signup-container input[type="email"],
+        .signup-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .signup-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            background-color: #FF3B30;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .signup-container input[type="submit"]:hover {
+            background-color: #cc3226;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+
+</body>
+
+</html>

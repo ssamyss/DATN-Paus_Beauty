@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Verify PIN</title>
+    <!-- Add your CSS and JS dependencies here -->
+</head>
+<body>
+<div class="container">
+    <h1>Verify PIN</h1>
+    <form method="post" action="/verify-register-pin/admin">
+        <!-- PIN input -->
+        <div data-mdb-input-init class="form-outline mb-4">
+            <input type="text" name="pin" placeholder="Enter PIN" class="form-control"/>
+            <label class="form-label" for="pin">PIN</label>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" name="Submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Verify</button>
+
+        <!-- Error message -->
+        <div th:if="${error}" th:text="${error}" class="text-danger"></div>
+    </form>
+</div>
+</body>
+</html>
