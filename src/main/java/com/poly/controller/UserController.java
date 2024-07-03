@@ -1,5 +1,7 @@
 package com.poly.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,13 @@ public class UserController {
 		return "user/index";
 	}
 	
+	@GetMapping("/product")
+	public String index(Model model) {
+		List<SanPham> sp = spDao.findAll();
+		model.addAttribute("sanpham", sp);
+		return "user/sanpham";
+	}
+	
 	@GetMapping("/detail/{id}")
 	public String productDetail(Model model, @PathVariable("id") Integer maSP) {
 		SanPham sp = spDao.findById(maSP).orElse(null);
@@ -29,5 +38,15 @@ public class UserController {
 		}
 		model.addAttribute("sanpham", sp);
 		return "user/product-detail";
+	}
+	
+	@GetMapping("/about")
+	public String about() {
+		return "user/about";
+	}
+	
+	@GetMapping("/contact")
+	public String contact() {
+		return "user/contact";
 	}
 }
