@@ -178,10 +178,14 @@
 								<label class="control-label">Ảnh sản phẩm</label>
 								<div style="margin-bottom: 10px;">
 									<!-- Hiển thị trước ảnh đã chọn -->
-									<div class="image-preview-container">
+									<div class="image-preview-container" ng-show="!imageURL">
+										<img class="image-preview border border-5">
+									</div>
+									<div class="image-preview-container" ng-show="imageURL">
 										<img ng-src="{{ imageURL }}"
 											class="image-preview border border-5">
 									</div>
+
 								</div>
 								<div>
 									<!-- Input để chọn ảnh -->
@@ -283,10 +287,10 @@ MODAL
 						</div>
 						<div class="form-group col-md-12">
 							<label for="exampleSelect1" class="control-label">Danh
-									Mục Sản Phẩm</label> <select class="form-control" ng-model="form.maLSP">
-									<option value disabled selected>Chọn danh mục sản phẩm</option>
-									<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
-								</select>
+								Mục Sản Phẩm</label> <select class="form-control" ng-model="form.maLSP">
+								<option value disabled selected>Chọn danh mục sản phẩm</option>
+								<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
+							</select>
 						</div>
 						<div class="form-group col-md-12">
 							<label class="control-label">Nhập tên loại sản phẩm mới</label> <input

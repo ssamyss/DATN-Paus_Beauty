@@ -6,11 +6,14 @@ app.controller("sanpham-ctrl", function($scope, $http) {
     $scope.bras = [];
     $scope.items = [];
 
-    $scope.reset = function() {
-        $scope.form = {
-            createDate: new Date(),
-        };
-    };
+	$scope.reset = function() {
+	    $scope.form = {
+	        createDate: new Date(),
+	        moTa: '',
+	        // Các trường khác của form
+	    };
+	    $scope.imageURL = ''; // Đặt lại đường dẫn ảnh về trống để không hiển thị ảnh
+	};
 
     $scope.initialize = function() {
         // Load sản phẩm
@@ -33,12 +36,12 @@ app.controller("sanpham-ctrl", function($scope, $http) {
         });
 
         // Load loại sản phẩm
-        $http.get("/rest/loaisanpham").then(resp => {
+/*        $http.get("/rest/loaisanpham").then(resp => {
             $scope.cates = resp.data;
             console.log("Loại sản phẩm:", resp.data);
         }).catch(error => {
             console.error("Lỗi khi tải loại sản phẩm:", error);
-        });
+        });*/
 
         // Load thương hiệu
         $http.get("/rest/thuonghieu").then(resp => {
