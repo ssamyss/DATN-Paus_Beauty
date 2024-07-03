@@ -124,7 +124,7 @@ app.controller("sanpham-ctrl", function($scope, $http) {
         // Gửi file ảnh lên server
         var data = new FormData();
         data.append('file', files[0]);
-        $http.post('/rest/upload/product', data, {
+        $http.post('/rest/upload/sanpham', data, {
             transformRequest: angular.identity,
             headers: { 'Content-Type': undefined }
         }).then(resp => {

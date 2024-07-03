@@ -39,6 +39,14 @@ app.controller("sanpham-index", function($scope, $http) {
         }).catch(error => {
             console.error("Lỗi khi tải loại sản phẩm:", error);
         });
+		
+		// Load thương hiệu
+		$http.get("/rest/thuonghieu").then(resp => {
+		    $scope.bras = resp.data;
+		    console.log("Thương hiệu:", resp.data);
+		}).catch(error => {
+		    console.error("Lỗi khi tải thương hiệu:", error);
+		});
 
        
     };
