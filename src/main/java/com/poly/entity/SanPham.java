@@ -70,6 +70,4 @@ public class SanPham implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "ma_lsp")
 	private LoaiSanPham loaiSanPham;
-
-
 }

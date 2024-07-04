@@ -17,24 +17,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
-@Entity 
+@Entity
 @Table(name = "thuong_hieu")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ThuongHieu implements Serializable{
+public class ThuongHieu implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ma_th")
 	private Integer maTH;
-	
+
 	@Column(name = "ten_th", columnDefinition = "nvarchar(max)")
 	private String tenTH;
-	
+
 	@Column(name = "anh")
 	private String anhTH;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "thuongHieu")
 	private List<SanPham> sanPham;

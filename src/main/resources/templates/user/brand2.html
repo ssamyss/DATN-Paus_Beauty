@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Paus Beauty - Giới Thiệu</title>
+<title>Blog Detail</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -64,13 +64,31 @@
 				<nav class="limiter-menu-desktop container">
 
 					<!-- Logo desktop -->
-					<a th:href="@{/}" class="logo"> <img
-						th:src="@{/user/images/icons/logo-01.png}" alt="IMG-LOGO">
+					<a href="#" class="logo"> <img src="images/icons/logo-01.png"
+						alt="IMG-LOGO">
 					</a>
 
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
-						<span th:insert="~{user/common/header.html}"></span>
+						<ul class="main-menu">
+							<li class="active-menu"><a href="index.html">Trang chủ</a>
+								<ul class="sub-menu">
+									<li><a href="index.html">Trang chủ 1</a></li>
+									<li><a href="home-02.html">Trang chủ 2</a></li>
+									<li><a href="home-03.html">Trang chủ 3</a></li>
+								</ul></li>
+
+							<li><a href="product.html">Cửa hàng</a></li>
+
+							<li class="label1"><a href="shoping-cart.html">Thanh
+									toán</a></li>
+
+							<li><a href="blog.html">Bài viết</a></li>
+
+							<li><a href="about.html">Về tôi</a></li>
+
+							<li><a href="contact.html">Liên hệ</a></li>
+						</ul>
 					</div>
 
 					<!-- Icon header -->
@@ -146,6 +164,28 @@
 							href="#" class="flex-c-m p-lr-10 trans-04"> VND </a>
 					</div>
 				</li>
+			</ul>
+
+			<ul class="main-menu-m">
+				<li><a href="index.html">Trang chủ</a>
+					<ul class="sub-menu-m">
+						<li><a href="index.html">Trang chủ 1</a></li>
+						<li><a href="home-02.html">Trang chủ 2</a></li>
+						<li><a href="home-03.html">Trang chủ 3</a></li>
+					</ul> <span class="arrow-main-menu-m"> <i
+						class="fa fa-angle-right" aria-hidden="true"></i>
+				</span></li>
+
+				<li><a href="product.html">Của hàng</a></li>
+
+				<li><a href="shoping-cart.html" class="label1 rs1"
+					data-label1="hot">Đặc trưng</a></li>
+
+				<li><a href="blog.html">Bài viết</a></li>
+
+				<li><a href="about.html">Về chúng tôi</a></li>
+
+				<li><a href="contact.html">Liên hệ</a></li>
 			</ul>
 		</div>
 
@@ -239,68 +279,206 @@
 	</div>
 
 
-	<!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92"
-		style="background-image: url('images/bg-01.jpg');">
-		<h2 class="ltext-105 cl0 txt-center">Về chúng tôi</h2>
-	</section>
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+				Trang chủ <i class="fa fa-angle-right m-l-9 m-r-10"
+				aria-hidden="true"></i>
+			</a> <a href="blog.html" class="stext-109 cl8 hov-cl1 trans-04"> Bài
+				viết <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a> <span class="stext-109 cl4"> Phối đồ nam đi sự kiện thanh
+				lịch với áo vest sáng màu và quần jean </span>
+		</div>
+	</div>
 
 
 	<!-- Content page -->
-	<section class="bg0 p-t-75 p-b-120">
+	<section class="bg0 p-t-52 p-b-20">
 		<div class="container">
-			<div class="row p-b-148">
-				<div class="col-md-7 col-lg-8">
-					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
-						<h3 class="mtext-111 cl2 p-b-16">Về Paus Beauty</h3>
-						<p class="stext-113 cl6 p-b-26">Chào mừng bạn đến với Paus
-							Beauty, nơi chúng tôi mang đến sự hoàn hảo cho làn da của bạn.</p>
-
-						<h3 class="mtext-111 cl2 p-b-16">Sứ mệnh của chúng tôi</h3>
-						<p class="stext-113 cl6 p-b-26">Tại Paus Beauty, chúng tôi tin
-							rằng làn da là vẻ đẹp tự nhiên của mỗi người. Sứ mệnh của chúng
-							tôi là cung cấp những sản phẩm mỹ phẩm chất lượng cao, được chọn
-							lọc kỹ lưỡng từ các thương hiệu uy tín trên khắp thế giới. Chúng
-							tôi cam kết đem đến cho khách hàng những trải nghiệm mua sắm thú
-							vị và sự hài lòng tuyệt đối.</p>
-					</div>
-				</div>
-
-				<div class="col-11 col-md-5 col-lg-4 m-lr-auto">
-					<div class="how-bor1 ">
-						<div class="hov-img0">
-							<img th:src="@{/user/images/about-01.jpg}" alt="IMG">
-						</div>
-					</div>
-				</div>
-			</div>
-
 			<div class="row">
-				<div class="order-md-2 col-md-7 col-lg-8 p-b-30">
-					<div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
-						<h3 class="mtext-111 cl2 p-b-16">Đội ngũ của chúng tôi</h3>
-						<p class="stext-115 cl6 p-b-26">Đội ngũ tại Paus Beauty là
-							những người đam mê về làm đẹp và luôn sẵn sàng tư vấn cho bạn về
-							cách chăm sóc da hiệu quả nhất. Chúng tôi luôn nỗ lực để mang đến
-							cho bạn những thông tin và sản phẩm mới nhất trong ngành mỹ phẩm.</p>
+				<div class="col-md-8 col-lg-9 p-b-80">
+					<div class="p-r-45 p-r-0-lg">
+						<!--  -->
+						<div class="wrap-pic-w how-pos5-parent">
+							<img src="images/blog-04.jpg" alt="IMG-BLOG">
 
-						<h3 class="mtext-111 cl2 p-b-16">Cam kết của chúng tôi</h3>
-						<p class="stext-113 cl6 p-b-26">Chúng tôi cam kết chỉ bán
-							những sản phẩm đã được kiểm định chất lượng và an toàn. Với mỗi
-							sản phẩm Paus Beauty, bạn có thể hoàn toàn yên tâm về nguồn gốc
-							và chất lượng.</p>
+							<div class="flex-col-c-m size-123 bg9 how-pos5">
+								<span class="ltext-107 cl2 txt-center"> 22 </span>
 
-						<div class="bor16 p-l-29 p-b-9 m-t-22">
-							<p class="stext-114 cl6 p-r-40 p-b-11">Hãy cùng Paus Beauty
-								khám phá và chăm sóc làn da của bạn một cách tinh tế nhất!</p>
+							</div>
+						</div>
+
+						<div class="p-t-32">
+							<h4 class="p-b-15">
+								<a href="blog-detail.html"
+									class="ltext-108 cl2 hov-cl1 trans-04"> 8 cách mặc váy đầy
+									cảm hứng trong mùa đông </a>
+							</h4>
+
+							<p class="stext-117 cl6">Mùa đông không chỉ là lúc chúng ta
+								bước vào cánh cửa với những chiếc áo ấm, mà đây còn là cơ hội để
+								các cô gái thể hiện cá tính và gu thời trang riêng của mình. Làm
+								sao để có được những outfit không chỉ giữ ấm, mà còn tỏa sáng
+								tạo giữa những ngày đông ảm đạm. Thời trang GUMAC sẽ chỉ cho bạn
+								những tips phối đồ mùa đông cho nữ cực kỳ THỜI TRANG nhưng vẫn
+								đảm bảo nàng được giữ ấm trong những ngày đông lạnh.</p>
+
+							<div class="flex-w flex-sb-m p-t-18">
+								<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
+									<span> <span class="cl4">Đăng bởi</span> Quản trị viên <span
+										class="cl12 m-l-4 m-r-6">|</span>
+								</span> <span> 8 Bình luận </span>
+								</span> <a href="blog-detail.html"
+									class="stext-101 cl2 hov-cl1 trans-04 m-tb-10"> Đọc tiếp <i
+									class="fa fa-long-arrow-right m-l-9"></i>
+								</a>
+							</div>
+						</div>
+
+						<div class="flex-w flex-t p-t-16">
+							<span class="size-216 stext-116 cl8 p-t-4"> Nhãn </span>
+
+							<div class="flex-w size-217">
+								<a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Đường phố </a>
+
+
+							</div>
+						</div>
+
+						<!--  -->
+						<div class="p-t-40">
+							<h5 class="mtext-113 cl2 p-b-12">Bình luận</h5>
+
+							<p class="stext-107 cl6 p-b-40">Để bình luận được công bố.
+								Vùi lòng để lại email</p>
+
+							<form>
+								<div class="bor19 m-b-20">
+									<textarea class="stext-111 cl2 plh3 size-124 p-lr-18 p-tb-15"
+										name="cmt" placeholder="Bình luận..."></textarea>
+								</div>
+
+								<div class="bor19 size-218 m-b-20">
+									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text"
+										name="name" placeholder="Tên *">
+								</div>
+
+								<div class="bor19 size-218 m-b-20">
+									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text"
+										name="email" placeholder="Email *">
+								</div>
+
+								<div class="bor19 size-218 m-b-30">
+									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text"
+										name="web" placeholder="Website">
+								</div>
+
+								<button
+									class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
+									Bình luận</button>
+							</form>
 						</div>
 					</div>
 				</div>
 
-				<div class="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
-					<div class="how-bor2">
-						<div class="hov-img0">
-							<img th:src="@{/user/images/about-02.jpg}" alt="IMG">
+				<div class="col-md-4 col-lg-3 p-b-80">
+					<div class="side-menu">
+						<div class="bor17 of-hidden pos-relative">
+							<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55"
+								type="text" name="search" placeholder="Tìm kiếm ...">
+
+							<button
+								class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
+								<i class="zmdi zmdi-search"></i>
+							</button>
+						</div>
+
+						<div class="p-t-55">
+							<h4 class="mtext-112 cl2 p-b-33">Thể loại</h4>
+
+							<ul>
+								<li class="bor18"><a href="#"
+									class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
+										Thời trang </a></li>
+
+								<li class="bor18"><a href="#"
+									class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
+										Xinh đẹp </a></li>
+
+								<li class="bor18"><a href="#"
+									class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
+										Thời trang đường phố </a></li>
+
+								<li class="bor18"><a href="#"
+									class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
+										Du lịch </a></li>
+
+								<li class="bor18"><a href="#"
+									class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
+										Dự tiệc </a></li>
+							</ul>
+						</div>
+
+						<div class="p-t-65">
+							<h4 class="mtext-112 cl2 p-b-33">Sản phẩm nổi bật</h4>
+
+							<ul>
+								<li class="flex-w flex-t p-b-30"><a href="#"
+									class="wrao-pic-w size-214 hov-ovelay1 m-r-20"> <img
+										src="images/product-min-01.jpg" alt="PRODUCT">
+								</a>
+
+									<div class="size-215 flex-col-t p-t-8">
+										<a href="#" class="stext-116 cl8 hov-cl1 trans-04"> Áo
+											khoác thời thượng </a> <span class="stext-116 cl6 p-t-20">
+											99.00 VND </span>
+									</div></li>
+
+								<li class="flex-w flex-t p-b-30"><a href="#"
+									class="wrao-pic-w size-214 hov-ovelay1 m-r-20"> <img
+										src="images/product-min-02.jpg" alt="PRODUCT">
+								</a>
+
+									<div class="size-215 flex-col-t p-t-8">
+										<a href="#" class="stext-116 cl8 hov-cl1 trans-04"> Áo
+											khoác hoàng tử </a> <span class="stext-116 cl6 p-t-20">
+											99.00 VND </span>
+									</div></li>
+
+								<li class="flex-w flex-t p-b-30"><a href="#"
+									class="wrao-pic-w size-214 hov-ovelay1 m-r-20"> <img
+										src="images/product-min-03.jpg" alt="PRODUCT">
+								</a>
+
+									<div class="size-215 flex-col-t p-t-8">
+										<a href="#" class="stext-116 cl8 hov-cl1 trans-04"> Áo len
+											nam tính </a> <span class="stext-116 cl6 p-t-20"> 99.00
+											VND </span>
+									</div></li>
+							</ul>
+						</div>
+
+
+						<div class="p-t-50">
+							<h4 class="mtext-112 cl2 p-b-27">Nhãn</h4>
+
+							<div class="flex-w m-r--5">
+								<a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Thời trang </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Cuộc sống </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Nam tính </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Đường phố </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Xã hội </a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -389,20 +567,23 @@
 			<div class="p-t-40">
 				<div class="flex-c-m flex-w p-b-18">
 					<a href="#" class="m-all-1"> <img
-						th:src="@{/user/images/icons/icon-pay-01.png}" alt="ICON-PAY">
+						src="images/icons/icon-pay-01.png" alt="ICON-PAY">
 					</a> <a href="#" class="m-all-1"> <img
-						th:src="@{/user/images/icons/icon-pay-02.png}" alt="ICON-PAY">
+						src="images/icons/icon-pay-02.png" alt="ICON-PAY">
 					</a> <a href="#" class="m-all-1"> <img
-						th:src="@{/user/images/icons/icon-pay-03.png}" alt="ICON-PAY">
+						src="images/icons/icon-pay-03.png" alt="ICON-PAY">
 					</a> <a href="#" class="m-all-1"> <img
-						th:src="@{/user/images/icons/icon-pay-04.png}" alt="ICON-PAY">
+						src="images/icons/icon-pay-04.png" alt="ICON-PAY">
 					</a> <a href="#" class="m-all-1"> <img
-						th:src="@{/user/images/icons/icon-pay-05.png}" alt="ICON-PAY">
+						src="images/icons/icon-pay-05.png" alt="ICON-PAY">
 					</a>
 				</div>
+
+
 			</div>
 		</div>
 	</footer>
+
 
 
 	<!-- Back to top -->
@@ -413,45 +594,43 @@
 	</div>
 
 	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/jquery/jquery-3.2.1.min.js}"></script>
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/animsition/js/animsition.min.js}"></script>
+	<script src="vendor/animsition/js/animsition.min.js"></script>
 	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/bootstrap/js/popper.js}"></script>
-	<script th:src="@{/user/vendor/bootstrap/js/bootstrap.min.js}"></script>
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/select2/select2.min.js}"></script>
+	<script src="vendor/select2/select2.min.js"></script>
 	<script>
-		$(".js-select2").each(function() {
+		$(".js-select2").each(function(){
 			$(this).select2({
-				minimumResultsForSearch : 20,
-				dropdownParent : $(this).next('.dropDownSelect2')
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
 			});
 		})
 	</script>
 	<!--===============================================================================================-->
-	<script
-		th:src="@{/user/vendor/MagnificPopup/jquery.magnific-popup.min.js}"></script>
+	<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 	<!--===============================================================================================-->
-	<script
-		th:src="@{/user/vendor/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script>
-		$('.js-pscroll').each(function() {
-			$(this).css('position', 'relative');
-			$(this).css('overflow', 'hidden');
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
 			var ps = new PerfectScrollbar(this, {
-				wheelSpeed : 1,
-				scrollingThreshold : 1000,
-				wheelPropagation : false,
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
 			});
 
-			$(window).on('resize', function() {
+			$(window).on('resize', function(){
 				ps.update();
 			})
 		});
 	</script>
 	<!--===============================================================================================-->
-	<script th:src="@{/user/js/main.js}"></script>
+	<script src="js/main.js"></script>
 
 </body>
 </html>
