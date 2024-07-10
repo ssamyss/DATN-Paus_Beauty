@@ -105,19 +105,12 @@
 	<!-- Content page -->
 	<div>
 		<h3 class="text-center custom-brand-title">THƯƠNG HIỆU</h3>
-		<div class="container mt-5">
-			<div class="row">
-				<!-- Sử dụng Thymeleaf để duyệt qua các thương hiệu -->
-				<div th:each="brand : ${brands}"
-					class="col-md-2 mb-4 brand-container">
-					<a th:href="@{/brand2/{name}(name=${brand.tenTH})}"> <img
-						th:src="@{/user/images/brands/{image}(image=${brand.anhTH})}"
-						class="img-fluid brand-image"
-						alt="Hình ảnh của [[${brand.tenTH}]]">
-					</a>
-					<h4 class="brand-name" th:text="${brand.tenTH}"></h4>
-				</div>
-			</div>
+		<div th:each="brand : ${brands}" class="col-md-2 mb-4 brand-container">
+			<a th:href="@{/brand2/{maTH}(maTH=${brand.maTH})}"> <img
+				th:src="@{/user/images/brands/{image}(image=${brand.anhTH})}"
+				class="img-fluid brand-image" alt="Hình ảnh của [[${brand.tenTH}]]">
+			</a>
+			<h4 class="brand-name" th:text="${brand.tenTH}"></h4>
 		</div>
 	</div>
 

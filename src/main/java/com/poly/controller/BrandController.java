@@ -1,6 +1,7 @@
 package com.poly.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,10 @@ public class BrandController {
 
 	@Autowired
 	SanPhamDao sdao;
-	
+
 	@Autowired
 	GioHangService gService;
-	
+
 	@GetMapping("/brand")
 	public String brand(Model model) {
 		List<ThuongHieu> brands = tdao.findAll();
@@ -32,9 +33,28 @@ public class BrandController {
 		model.addAttribute("count", gService.gettotalCount());
 		return "user/brand";
 	}
-	
-	@GetMapping("/productBrand")
-	public String pBrand() {
-		return "user/brand2";
+
+	@GetMapping("/brand2/{maTH}")
+	public String chiTietThuongHieu(@PathVariable("maTH") String maTH, Model model) {
+		try {
+			Integer maTHInteger = Integer.parseInt(maTH);
+			Optional<ThuongHieu> optThuongHieu = tdao.findById(maTHInteger);
+			if (optThuongHieu.isPresent()) {
+				ThuongHieu thuongHieu = optThuongHieu.get();
+				List<SanPham> sanPhams = thuongHieu.getSanPham();
+				int count = sanPhams.size();
+
+				model.addAttribute("thuongHieu", thuongHieu);
+				model.addAttribute("sanPhams", sanPhams);
+				model.addAttribute("count", count);
+
+				return "user/brand2";
+			} else {
+				return "redirect:/brand2"; 
+			}
+		} catch (NumberFormatException e) {
+			return "redirect:/brand2"; 
+		}
 	}
+
 }
