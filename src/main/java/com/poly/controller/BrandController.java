@@ -30,7 +30,6 @@ public class BrandController {
 	public String brand(Model model) {
 		List<ThuongHieu> brands = tdao.findAll();
 		model.addAttribute("brands", brands);
-		model.addAttribute("count", gService.gettotalCount());
 		return "user/brand";
 	}
 
@@ -46,7 +45,6 @@ public class BrandController {
 
 				model.addAttribute("thuongHieu", thuongHieu);
 				model.addAttribute("sanPhams", sanPhams);
-				model.addAttribute("count", count);
 
 				return "user/brand2";
 			} else {
