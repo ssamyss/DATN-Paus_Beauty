@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -28,11 +30,13 @@ import lombok.NoArgsConstructor;
 public class GioHang implements Serializable{
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer maGH;
+	
 	@ManyToOne
 	@JoinColumn(name = "ten_tai_khoan")
 	private TaiKhoan taiKhoan;
-	
-	@Id
+
 	@ManyToOne
 	@JoinColumn(name = "ma_sp")
 	private SanPham sanPham;

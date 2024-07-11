@@ -8,7 +8,7 @@ public interface GioHangService {
 	
 	List<GioHang> findAll();
 
-	GioHang findById(String taiKhoan);
+	GioHang findById(Integer maGH);
 
 	List<GioHang> findByDonHangId(String cmaDH) ;
 
@@ -16,5 +16,5 @@ public interface GioHangService {
 
 	GioHang update(GioHang giohang);
 
-	void delete(String maDH);
+	void delete(Integer maGH);
 }
