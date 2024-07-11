@@ -22,9 +22,9 @@ public class GioHangServiceImpl implements GioHangService {
 	}
 
 	@Override
-	public GioHang findById(String maDH) {
+	public GioHang findById(Integer maGH) {
 		// TODO Auto-generated method stub
-		return ghdao.findById(maDH).get();
+		return ghdao.findById(maGH).get();
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class GioHangServiceImpl implements GioHangService {
 	}
 
 	@Override
-	public void delete(String maDH) {
+	public void delete(Integer maGH) {
 		// TODO Auto-generated method stub
-		ghdao.deleteById(maDH);
+		ghdao.deleteById(maGH);
 	}
 
 

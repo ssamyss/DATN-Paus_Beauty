@@ -28,11 +28,12 @@ import lombok.NoArgsConstructor;
 public class GioHang implements Serializable{
 
 	@Id
+	private Integer maGH;
+	
 	@ManyToOne
 	@JoinColumn(name = "ten_tai_khoan")
 	private TaiKhoan taiKhoan;
-	
-	@Id
+
 	@ManyToOne
 	@JoinColumn(name = "ma_sp")
 	private SanPham sanPham;

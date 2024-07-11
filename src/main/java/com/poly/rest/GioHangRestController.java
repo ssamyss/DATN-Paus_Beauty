@@ -27,9 +27,9 @@ public class GioHangRestController {
 		return giohangService.findAll();
 	}
 
-	@GetMapping("{taiKhoan}")
-	public GioHang getOne(@PathVariable("taiKhoan") String taiKhoan) {
-		return giohangService.findById(taiKhoan);
+	@GetMapping("{giohangid}")
+	public GioHang getOne(@PathVariable("taiKhoan") Integer maGH) {
+		return giohangService.findById(maGH);
 	}
 
 	@PostMapping()
@@ -37,14 +37,14 @@ public class GioHangRestController {
 		return giohangService.create(giohang);
 	}
 
-	@PutMapping("{taiKhoan}")
-	public GioHang update(@PathVariable("taiKhoan") String taiKhoan, @RequestBody GioHang giohang) {
+	@PutMapping("{giohangid}")
+	public GioHang update(@PathVariable("giohangid") Integer maGH, @RequestBody GioHang giohang) {
 		return giohangService.update(giohang);
 	}
 
-	@DeleteMapping("{taiKhoan}")
-	public void delete(@PathVariable("taiKhoan") String taiKhoan) {
-		giohangService.delete(taiKhoan);
+	@DeleteMapping("{giohangid}")
+	public void delete(@PathVariable("taiKhoan") Integer maGH) {
+		giohangService.delete(maGH);
 	}
 
 }
