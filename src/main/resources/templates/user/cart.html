@@ -9,7 +9,7 @@
 <body>
     <!-- Shoping Cart -->
     <span th:insert="~{user/common/header.html}"></span>
-    <form ng-app="app" ng-controller="sanpham-index" class="bg0 p-t-75 p-b-85">
+    <form ng-app="app" ng-controller="giohang-ctrl" class="bg0 p-t-75 p-b-85">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -27,30 +27,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="sanPham in sanPham" class="table_row">
+                                    <tr ng-repeat="sanPham in giohang" class="table_row">
                                         <td class="column-1">
                                             <div class="how-itemcart1">
                                                 <img ng-src="/user/images/chekhuyetdiem.jpg" alt="IMG">
                                             </div>
                                         </td>
-                                        <td class="column-2">{{ sanPham.tenSP }}</td>
-                                        <td class="column-3">{{ sanPham.gia }}</td>
+                                        <td class="column-2">{{ sanPham.sanPham.tenSP }}</td>
+                                        <td class="column-3">{{ sanPham.sanPham.gia }}</td>
                                         <td class="column-4">
                                             <div>
                                                 <div class="row">
                                                     <div class="col-md-1">
-                                                        <a ng-click="tru(sanPham.maSP)" style="text-decoration: none;">-</a>
+                                                        <a ng-click="tru(sanPham)" style="text-decoration: none;">-</a>
                                                     </div>
                                                     <div class="col-md-1">
                                                         <span>{{ sanPham.soLuong }}</span>
                                                     </div>
                                                     <div class="col-md-1">
-                                                        <a ng-click="cong(sanPham.maSP)" style="text-decoration: none;">+</a>
+                                                        <a ng-click="cong(sanPham)" style="text-decoration: none;">+</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="column-5">{{ sanPham.gia * sanPham.soLuong }}</td>
+                                        <td class="column-5">{{ sanPham.sanPham.gia * sanPham.soLuong }}</td>
                                         <td class="column-5"><a ng-click="xoa(sanPham.maSP)" style="margin-left: 1px;" class="close">&times;</a></td>
 
                                     </tr>
@@ -148,8 +148,8 @@
     </form>
     <span th:insert="~{user/common/footer.html}"></span>
     <!-- AngularJS -->
-    <script th:src="@{/user/angularjs/sanpham.js}"></script>
-
+    <script th:src="@{/user/angularjs/giohang.js}"></script>
+	abc1
     <!-- link -->
     <div th:insert="~{user/link/scriptIndex.html}"></div>
 </body>

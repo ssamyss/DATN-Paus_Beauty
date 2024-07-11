@@ -10,7 +10,7 @@ public interface GioHangService {
 
 	GioHang findById(Integer maGH);
 
-	List<GioHang> findByDonHangId(String cmaDH) ;
+	List<GioHang> getGioHangByTenTaiKhoan(String ctenTaiKhoan);
 
 	GioHang create(GioHang giohang);
 

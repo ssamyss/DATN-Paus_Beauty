@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.poly.dao.GioHangDao;
 import com.poly.entity.GioHang;
+import com.poly.entity.TaiKhoan;
 import com.poly.service.GioHangService;
 
 @Service
@@ -28,9 +29,11 @@ public class GioHangServiceImpl implements GioHangService {
 	}
 
 	@Override
-	public List<GioHang> findByDonHangId(String cmaDH) {
+	public List<GioHang> getGioHangByTenTaiKhoan(String tenTaiKhoan) {
 		// TODO Auto-generated method stub
-		return null;
+		TaiKhoan taikhoan = new TaiKhoan();
+		taikhoan.setTenTaiKhoan(tenTaiKhoan);
+		return ghdao.findByTaiKhoan(taikhoan);
 	}
 
 	@Override

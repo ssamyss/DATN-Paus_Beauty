@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.poly.dao.SanPhamDao;
 import com.poly.entity.SanPham;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 	
@@ -18,7 +20,8 @@ public class UserController {
 	SanPhamDao spDao;
 	
 	@GetMapping("")
-	public String index() {
+	public String index(Model model, HttpSession session) {
+		model.addAttribute("tentaikhoan", session.getAttribute("tentaikhoan"));
 		return "user/index";
 	}
 	

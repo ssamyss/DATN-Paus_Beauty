@@ -31,6 +31,11 @@ public class GioHangRestController {
 	public GioHang getOne(@PathVariable("taiKhoan") Integer maGH) {
 		return giohangService.findById(maGH);
 	}
+	
+	@GetMapping("/byttk/{tentaikhoan}")
+	public List<GioHang> getGioHangByTenTaiKhoan(@PathVariable String tentaikhoan){
+		return giohangService.getGioHangByTenTaiKhoan(tentaikhoan);
+	}
 
 	@PostMapping()
 	public GioHang create(@RequestBody GioHang giohang) {
