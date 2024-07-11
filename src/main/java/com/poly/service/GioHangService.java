@@ -1,16 +1,20 @@
 package com.poly.service;
 
-import java.util.Collection;
-import com.poly.entity.VPGioHang;
+import java.util.List;
+
+import com.poly.entity.GioHang;
 
 public interface GioHangService {
-	void remove(int id);
-	void add(VPGioHang item);
-	double getAmount();
-	Collection<VPGioHang> getAllItems();
-	void clear();
-	VPGioHang update(int proId, int qty);
-	VPGioHang plus(int id);
-	VPGioHang minus(int id);
-	int gettotalCount();
+	
+	List<GioHang> findAll();
+
+	GioHang findById(String taiKhoan);
+
+	List<GioHang> findByDonHangId(String cmaDH) ;
+
+	GioHang create(GioHang giohang);
+
+	GioHang update(GioHang giohang);
+
+	void delete(String maDH);
 }

@@ -1,102 +1,55 @@
 package com.poly.serviceImpl;
 
-import java.util.Collection;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.poly.entity.VPGioHang;
+import com.poly.dao.GioHangDao;
+import com.poly.entity.GioHang;
 import com.poly.service.GioHangService;
 
 @Service
 public class GioHangServiceImpl implements GioHangService {
-Map<Integer, VPGioHang> maps = new HashMap<>(); //gio hang
 	
-	@Override
-	public void remove(int id) {
-		maps.remove(id);
-		
+	@Autowired
+	GioHangDao ghdao;
+
+    @Override
+	public List<GioHang> findAll() {
+		// TODO Auto-generated method stub
+		return ghdao.findAll();
 	}
 
 	@Override
-	public void add(VPGioHang item) {
-		VPGioHang cartItem = maps.get(item.getMaSP());
-		if (cartItem == null) {
-			maps.put(item.getMaSP(), item);
-		}
-		else
-		{
-			cartItem.setQty(cartItem.getQty() +1);
-		}
-		
+	public GioHang findById(String maDH) {
+		// TODO Auto-generated method stub
+		return ghdao.findById(maDH).get();
 	}
 
 	@Override
-	public double getAmount() {
-		return maps.values().stream()
-				.mapToDouble(item -> item.getQty() * item.getGia())
-				.sum();		
+	public List<GioHang> findByDonHangId(String cmaDH) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public int gettotalCount() {
-	    int totalCount = 0;
-	    for (VPGioHang cartItem : maps.values()) 
-	    {
-	        totalCount += cartItem.getQty();
-	    }
-	    return totalCount;
+	public GioHang create(GioHang giohang) {
+		// TODO Auto-generated method stub
+		return ghdao.save(giohang);
 	}
 
 	@Override
-	public Collection<VPGioHang> getAllItems() {
-		return maps.values();
+	public GioHang update(GioHang giohang) {
+		// TODO Auto-generated method stub
+		return ghdao.save(giohang);
 	}
 
 	@Override
-	public void clear() {
-		maps.clear();	
+	public void delete(String maDH) {
+		// TODO Auto-generated method stub
+		ghdao.deleteById(maDH);
 	}
 
-	@Override
-	public VPGioHang update(int id, int qty) {
-		VPGioHang cartItem = maps.get(id);
-		cartItem.setQty(qty);
-		return cartItem;
-	}
-	
-	@Override
-	public VPGioHang plus(int id) {
-		VPGioHang cartItem = maps.get(id);
-	    int qty = cartItem.getQty();
-	    int tonKho = cartItem.getTonKho();
 
-	    // Kiểm tra nếu số lượng đã đạt tối đa
-	    if (qty < tonKho) {
-	        cartItem.setQty(qty + 1);
-	    } else {
-	        // Nếu vượt quá số lượng tonkho, bạn có thể thực hiện xử lý hoặc thông báo tùy thuộc vào yêu cầu của bạn.
-	        // Ở đây, tôi đơn giản là không thay đổi giá trị qty nếu đã vượt quá giới hạn.
-	        // Bạn có thể thay đổi phần này tùy thuộc vào yêu cầu cụ thể của bạn..
-	        System.out.println("Số lượng đã vượt quá giới hạn.");
-	    }
-
-	    return cartItem;
-	}
-
-	@Override
-	public VPGioHang minus(int id) {
-		VPGioHang cartItem = maps.get(id);
-	    int qty = cartItem.getQty();
-	    if (qty < 1) {
-	    	maps.remove(id);
-		}
-	    else
-	    {
-	    cartItem.setQty(qty - 1);
-	    }
-	    return cartItem;
-	}
 }
