@@ -1,8 +1,9 @@
 const app = angular.module("app", []);
-app.controller("giohang-ctrl", function($scope, $http, $location) {
+app.controller("giohang-ctrl", function($scope, $http) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.giohang = [];
+	$scope.dem = 0;
 
 	$scope.reset = function() {
 		$scope.form = {
@@ -11,13 +12,18 @@ app.controller("giohang-ctrl", function($scope, $http, $location) {
 	};
 
 	$scope.initialize = function() {
-		$http.get('/rest/giohang/byttk/' + $location.absUrl().split("/")[4]).then(resp => {
-			$scope.giohang = resp.data;
-			$scope.giohang.forEach(item => {
-				item.createDate = new Date(item.createDate);
+		//Load tài khoản đăng nhập
+		$http.get("rest/taikhoan/tentaikhoan").then(resp => {
+			$scope.tentaikhoan = resp.data;
+			//Load số lượng sản phẩm trong giỏ hàng
+			$http.get('/rest/giohang/byttk/' + $scope.tentaikhoan.tenTaiKhoan).then(resp => {
+				$scope.giohang = resp.data;
+				$scope.dem = $scope.giohang.length;
+			}).catch(error => {
+				alert("Lỗi khi tải giỏ hàng!");
 			});
 		}).catch(error => {
-			alert("Lỗi khi tải giỏ hàng!");
+			console.error("Lỗi khi tải tên tài khoản :", error);
 		});
 	};
 
@@ -37,7 +43,8 @@ app.controller("giohang-ctrl", function($scope, $http, $location) {
 	$scope.tru = function(item) {
 		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
 			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
-			$scope.giohang[index].soLuong = item.soLuong - 1;
+			item.soLuong = item.soLuong - 1;
+	        $scope.items[index] = angular.copy(item);
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
 			console.log("Error", error);
@@ -46,8 +53,7 @@ app.controller("giohang-ctrl", function($scope, $http, $location) {
 
 	$scope.cong = function(item) {
 		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
-			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
-			$scope.giohang[index].soLuong = item.soLuong + 1;
+			item.soLuong = item.soLuong + 1;
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
 			console.log("Error", error);

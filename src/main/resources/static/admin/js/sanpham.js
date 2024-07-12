@@ -36,12 +36,12 @@ app.controller("sanpham-ctrl", function($scope, $http) {
         });
 
         // Load loại sản phẩm
-/*        $http.get("/rest/loaisanpham").then(resp => {
+        $http.get("/rest/loaisanpham").then(resp => {
             $scope.cates = resp.data;
             console.log("Loại sản phẩm:", resp.data);
         }).catch(error => {
             console.error("Lỗi khi tải loại sản phẩm:", error);
-        });*/
+        });
 
         // Load thương hiệu
         $http.get("/rest/thuonghieu").then(resp => {
@@ -193,7 +193,16 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	       }
 	       return str;
 	   };
-
+	   
+	   $scope.themGH = function(item) {
+        $http.post('/rest/giohang', item).then(resp => {
+            $scope.giohang.push(resp.data);
+            alert("Sản phẩm đã được thêm vào giỏ hàng");
+        }).catch(error => {
+            alert("Lỗi thêm sản phẩm!");
+            console.log("Error", error);
+        });
+    };
 
     $scope.initialize();
     $scope.reset();

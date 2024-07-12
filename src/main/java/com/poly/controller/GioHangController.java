@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class GioHangController {
 	// giỏ hàng
-	@GetMapping("/cart/{tentaikhoan}")
+	@GetMapping("/cart")
 	public String home() {
 		return "user/cart";
 	}

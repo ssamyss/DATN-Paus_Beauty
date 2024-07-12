@@ -11,27 +11,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.poly.dao.SanPhamDao;
 import com.poly.entity.SanPham;
 
-import jakarta.servlet.http.HttpSession;
-
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	SanPhamDao spDao;
-	
+
 	@GetMapping("")
-	public String index(Model model, HttpSession session) {
-		model.addAttribute("tentaikhoan", session.getAttribute("tentaikhoan"));
+	public String index() {
 		return "user/index";
 	}
-	
+
 	@GetMapping("/product")
 	public String index(Model model) {
 		List<SanPham> sp = spDao.findAll();
 		model.addAttribute("sanpham", sp);
 		return "user/sanpham";
 	}
-	
+
 	@GetMapping("/detail/{id}")
 	public String productDetail(Model model, @PathVariable("id") Integer maSP) {
 		SanPham sp = spDao.findById(maSP).orElse(null);
@@ -42,12 +39,12 @@ public class UserController {
 		model.addAttribute("sanpham", sp);
 		return "user/product-detail";
 	}
-	
+
 	@GetMapping("/about")
 	public String about() {
 		return "user/about";
 	}
-	
+
 	@GetMapping("/contact")
 	public String contact() {
 		return "user/contact";

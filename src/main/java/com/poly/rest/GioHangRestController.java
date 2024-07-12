@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.entity.GioHang;
+import com.poly.entity.SanPham;
 import com.poly.service.GioHangService;
+import com.poly.service.TaiKhoanService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/rest/giohang")
@@ -21,6 +25,9 @@ public class GioHangRestController {
 	
 	@Autowired
 	GioHangService giohangService;
+	
+	@Autowired
+	TaiKhoanService taikhoanService;
 
 	@GetMapping()
 	public List<GioHang> getAll() {
@@ -38,7 +45,12 @@ public class GioHangRestController {
 	}
 
 	@PostMapping()
-	public GioHang create(@RequestBody GioHang giohang) {
+	public GioHang create(@RequestBody SanPham sanpham, HttpSession session) {
+		GioHang giohang = new GioHang();
+		String tentaikhoan = (String) session.getAttribute("tentaikhoan");
+		giohang.setSoLuong(1);
+		giohang.setTaiKhoan(taikhoanService.findById(tentaikhoan));
+		giohang.setSanPham(sanpham);
 		return giohangService.create(giohang);
 	}
 
