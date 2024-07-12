@@ -1,5 +1,5 @@
 const app = angular.module("app", []);
-app.controller("sanpham-index", function($scope, $http) {
+app.controller("sanpham-index", function($scope, $http, $location) {
 	$scope.form = {};
 	$scope.dmucsp = [];
 	$scope.cates = [];
@@ -9,9 +9,7 @@ app.controller("sanpham-index", function($scope, $http) {
 	$scope.dem = 0;
 
 	$scope.reset = function() {
-		$scope.form = {
-			createDate: new Date(),
-		};
+		$scope.form = {};
 	};
 
 	$scope.initialize = function() {
@@ -64,7 +62,7 @@ app.controller("sanpham-index", function($scope, $http) {
 				alert("Lỗi khi tải giỏ hàng!");
 			});
 		}).catch(error => {
-			console.error("Lỗi khi tải tên tài khoản :", error);
+			console.error(error);
 		});
 
 	};
@@ -104,20 +102,6 @@ app.controller("sanpham-index", function($scope, $http) {
 		});
 	};
 
-	//Thương hiệu
-
-	$scope.createTH = function() {
-		var item = angular.copy($scope.form);
-		$http.post('/rest/thuonghieu', item).then(resp => {
-			$scope.items.push(resp.data);
-			$scope.reset();
-			alert("Thêm mới thương hiệu thành công");
-		}).catch(error => {
-			alert("Lỗi thêm mới!");
-			console.log("Error", error);
-		});
-	};
-
 	$scope.brandImageChanged = function(files) {
 		var reader = new FileReader();
 		reader.onload = function(e) {
@@ -143,6 +127,17 @@ app.controller("sanpham-index", function($scope, $http) {
 		}).catch(error => {
 			alert("Lỗi tải ảnh!");
 			console.log("Error", error);
+		});
+	};
+
+	$scope.themGH = function(item) {
+		$http.post('/rest/giohang', item).then(resp => {
+			$scope.giohang.push(resp.data);
+			$('.js-modal1').removeClass('show-modal1');
+			alert("Thêm sp vào giỏ hàng thành công!");
+			$scope.reset();
+		}).catch(error => {
+			console.error("Lỗi khi thêm sp vào giỏ hàng: ", error);
 		});
 	};
 
