@@ -27,6 +27,8 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 
 <body ng-app="app" ng-controller="sanpham-ctrl" onload="time()"
@@ -54,9 +56,13 @@
 							</div>
 							<div class="col-sm-2">
 								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
-									title="Nhập" onclick="myFunction(this)"><i
-									class="fas fa-file-upload"></i> Tải từ file</a>
+									title="Nhập"
+									onclick="document.getElementById('fileInput').click()"><i
+									class="fas fa-file-upload"></i> Tải từ file</a> <input
+									id="fileInput" type="file" style="display: none"
+									onchange="angular.element(this).scope().import(this.files)">
 							</div>
+
 
 							<div class="col-sm-2">
 								<a class="btn btn-delete btn-sm print-file" type="button"
@@ -217,8 +223,8 @@ MODAL
 	<script th:src="@{/admin/doc/js/popper.min.js}"></script>
 	<script th:src="@{/admin/doc/js/bootstrap.min.js}"></script>
 	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="src/jquery.table2excel.js"></script>
+		src="/ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="/src/jquery.table2excel.js"></script>
 	<script th:src="@{/admin/doc/js/main.js}"></script>
 	<!-- The javascript plugin to display page loading on top -->
 	<script th:src="@{/admin/doc/js/plugins/pace.min.js}"></script>
