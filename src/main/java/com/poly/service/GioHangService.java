@@ -19,4 +19,6 @@ public interface GioHangService {
 	void delete(Integer maGH);
 
 	List<GioHang> selectGioHang(GioHang giohang);
+	
+	public Double tongTien(String tenTaiKhoan);
 }

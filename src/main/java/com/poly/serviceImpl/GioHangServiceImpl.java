@@ -58,4 +58,9 @@ public class GioHangServiceImpl implements GioHangService {
 	public List<GioHang> selectGioHang(GioHang giohang) {
 		return ghdao.selectGioHang(giohang.getTaiKhoan().getTenTaiKhoan(), giohang.getSanPham().getMaSP());
 	}
+	
+	@Override
+	public Double tongTien(String tenTaiKhoan) {
+		return ghdao.tongTien(tenTaiKhoan);
+	}
 }

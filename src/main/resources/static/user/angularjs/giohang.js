@@ -3,6 +3,7 @@ app.controller("giohang-ctrl", function($scope, $http) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.giohang = [];
+	$scope.tongtien = 0;
 	$scope.dem = 0;
 
 	$scope.reset = function() {
@@ -25,6 +26,14 @@ app.controller("giohang-ctrl", function($scope, $http) {
 		}).catch(error => {
 			console.error("Lỗi khi tải tên tài khoản :", error);
 		});
+		//Load tổng tiền
+		$http.get('/rest/giohang/tongtien').then(resp => {
+			console.log(resp.data);
+			$scope.tongtien = resp.data;
+		}).catch(error => {
+			alert("Lỗi khi tải tổng tiền!");
+		});
+		console.log($scope.tongtien);
 	};
 
 	$scope.create = function(item) {
@@ -44,7 +53,7 @@ app.controller("giohang-ctrl", function($scope, $http) {
 		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
 			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
 			item.soLuong = item.soLuong - 1;
-	        $scope.items[index] = angular.copy(item);
+			$scope.items[index] = angular.copy(item);
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
 			console.log("Error", error);

@@ -52,6 +52,12 @@ public class GioHangRestController {
 	public List<GioHang> getGioHangByTenTaiKhoan(@PathVariable String tentaikhoan){
 		return giohangService.getGioHangByTenTaiKhoan(tentaikhoan);
 	}
+	
+	@GetMapping("/tongtien")
+	public Double tongTien(HttpSession session) {
+		String tentaikhoan = (String) session.getAttribute("tentaikhoan");
+		return giohangService.tongTien(tentaikhoan);
+	}
 
 	@PostMapping()
 	public GioHang create(@RequestBody SanPham sanpham, HttpSession session) {
