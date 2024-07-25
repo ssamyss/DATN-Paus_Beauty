@@ -50,7 +50,7 @@
 						<i class="zmdi zmdi-shopping-cart"></i>
 					</div>
 					<div th:if="${session.tentaikhoan != null}" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-						data-notify="{{dem}}">
+						data-notify="{{ dem }}">
 						<i class="zmdi zmdi-shopping-cart"></i>
 					</div>
 
@@ -68,15 +68,14 @@
 							</div>
 
 							<div class="header-cart-content flex-w js-pscroll">
-								<ul class="header-cart-wrapitem w-full">
+								<ul class="header-cart-wrapitem w-full" ng-repeat="sp in giohang">
 									<li class="header-cart-item flex-w flex-t m-b-12">
 										<div class="header-cart-item-img">
 											<img src="https://image.hsv-tech.io/987x0/bbx/common/591b466e-ced1-47d2-87b0-124aef903804.webp"
 												alt="IMG">
 										</div>
-
 										<div class="header-cart-item-txt p-t-8">
-											<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">ádsad </a>
+											<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">{{ sp.sanPham.tenSP}} </a>
 										</div>
 									</li>
 								</ul>

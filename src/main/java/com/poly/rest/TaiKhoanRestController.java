@@ -30,15 +30,19 @@ public class TaiKhoanRestController {
 	// Lấy tài khoản đang dùng
 	@GetMapping("/tentaikhoan")
 	ResponseEntity<TaiKhoan> gettaikhoan(HttpSession session) {
-		ResponseEntity<TaiKhoan> responseEntity;
-		String tenTaiKhoan = (String) session.getAttribute("tentaikhoan");
-		TaiKhoan taiKhoan = taiKhoanService.findById(tenTaiKhoan);
-		if (tenTaiKhoan != null) {
-			responseEntity = ResponseEntity.ok(taiKhoan);
-		} else {
-			responseEntity = ResponseEntity.notFound().build();
+		try {
+			ResponseEntity<TaiKhoan> responseEntity;
+			String tenTaiKhoan = (String) session.getAttribute("tentaikhoan");
+			TaiKhoan taiKhoan = taiKhoanService.findById(tenTaiKhoan);
+			if (tenTaiKhoan != null) {
+				responseEntity = ResponseEntity.ok(taiKhoan);
+			} else {
+				responseEntity = ResponseEntity.notFound().build();
+			}
+			return responseEntity;
+		} catch (Exception e) {
+			return null;
 		}
-		return responseEntity;
 	}
 
 	@GetMapping()

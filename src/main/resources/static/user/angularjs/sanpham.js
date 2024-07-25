@@ -6,6 +6,7 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 	$scope.bras = [];
 	$scope.items = [];
 	$scope.tentaikhoan = [];
+	$scope.giohang = [];
 	$scope.dem = 0;
 
 	$scope.reset = function() {
@@ -19,7 +20,6 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 			$scope.items.forEach(item => {
 				item.createDate = new Date(item.createDate);
 			});
-			console.log("Sản phẩm:", resp.data);
 		}).catch(error => {
 			console.error("Lỗi khi tải sản phẩm:", error);
 		});
@@ -27,7 +27,6 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		// Load danh mục sản phẩm
 		$http.get("/rest/danhmucsanpham").then(resp => {
 			$scope.dmucsp = resp.data;
-			console.log("Danh mục sản phẩm:", resp.data);
 		}).catch(error => {
 			console.error("Lỗi khi tải danh mục sản phẩm:", error);
 		});
@@ -35,7 +34,6 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		// Load loại sản phẩm
 		$http.get("/rest/loaisanpham").then(resp => {
 			$scope.cates = resp.data;
-			console.log("Loại sản phẩm:", resp.data);
 		}).catch(error => {
 			console.error("Lỗi khi tải loại sản phẩm:", error);
 		});
@@ -43,7 +41,6 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		// Load thương hiệu
 		$http.get("/rest/thuonghieu").then(resp => {
 			$scope.bras = resp.data;
-			console.log("Thương hiệu:", resp.data);
 		}).catch(error => {
 			console.error("Lỗi khi tải thương hiệu:", error);
 		});
@@ -131,13 +128,31 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 	};
 
 	$scope.themGH = function(item) {
-		$http.post('/rest/giohang', item).then(resp => {
-			$scope.giohang.push(resp.data);
-			$('.js-modal1').removeClass('show-modal1');
-			alert("Thêm sp vào giỏ hàng thành công!");
-			$scope.reset();
+		$http.post('/rest/giohang/ghtontai', item).then(resp => {
+			$scope.ghtontai = resp.data;
+			var count = $scope.ghtontai.length;
+			if (count == 0) {
+				$http.post('/rest/giohang', item).then(resp => {
+					$scope.giohang.push(resp.data);
+					$('.js-modal1').removeClass('show-modal1');
+					alert("Thêm sp vào giỏ hàng thành công!");
+					$scope.reset();
+				}).catch(error => {
+					console.error("Lỗi khi thêm mới sp vào giỏ hàng: ", error);
+				});
+			} else {
+				$http.put('/rest/giohang/create2/' + $scope.ghtontai[0].maGH, $scope.ghtontai[0]).then(resp => {
+					// Update the item in the items array
+					var index = $scope.giohang.findIndex(p => p.maGH == $scope.ghtontai[0].maGH);
+					$scope.giohang[index].soLuong = $scope.giohang[index].soLuong + 1;
+					$('.js-modal1').removeClass('show-modal1');
+					alert("Thêm sp vào giỏ hàng thành công!");
+				}).catch(error => {
+					console.error("Lỗi khi thêm sp vào giỏ hàng: ", error);
+				});
+			}
 		}).catch(error => {
-			console.error("Lỗi khi thêm sp vào giỏ hàng: ", error);
+			console.error("Lỗi khi lấy giỏ hàng tồn tại: ", error);
 		});
 	};
 

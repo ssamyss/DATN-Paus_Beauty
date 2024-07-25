@@ -34,9 +34,18 @@ public class GioHangRestController {
 		return giohangService.findAll();
 	}
 
-	@GetMapping("{giohangid}")
-	public GioHang getOne(@PathVariable("taiKhoan") Integer maGH) {
+	@GetMapping("{maGH}")
+	public GioHang getOne(@PathVariable("maGH") Integer maGH) {
 		return giohangService.findById(maGH);
+	}
+	
+	@PostMapping("/ghtontai")
+	public List<GioHang> add(@RequestBody SanPham sanpham, HttpSession session) {
+		GioHang giohang = new GioHang();
+		String tentaikhoan = (String) session.getAttribute("tentaikhoan");
+		giohang.setTaiKhoan(taikhoanService.findById(tentaikhoan));
+		giohang.setSanPham(sanpham);
+		return giohangService.selectGioHang(giohang);
 	}
 	
 	@GetMapping("/byttk/{tentaikhoan}")
@@ -53,9 +62,14 @@ public class GioHangRestController {
 		giohang.setSanPham(sanpham);
 		return giohangService.create(giohang);
 	}
+	
+	@PutMapping("/create2/{maGH}")
+	public GioHang create2(@PathVariable("maGH") Integer maGH, @RequestBody GioHang giohang) {
+		return giohangService.update(giohang);
+	}
 
-	@PutMapping("{giohangid}")
-	public GioHang update(@PathVariable("giohangid") Integer maGH, @RequestBody GioHang giohang) {
+	@PutMapping("{maGH}")
+	public GioHang update(@PathVariable("maGH") Integer maGH, @RequestBody GioHang giohang) {
 		return giohangService.update(giohang);
 	}
 

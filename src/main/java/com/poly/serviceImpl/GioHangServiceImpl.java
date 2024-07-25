@@ -54,5 +54,8 @@ public class GioHangServiceImpl implements GioHangService {
 		ghdao.deleteById(maGH);
 	}
 
-
+	@Override
+	public List<GioHang> selectGioHang(GioHang giohang) {
+		return ghdao.selectGioHang(giohang.getTaiKhoan().getTenTaiKhoan(), giohang.getSanPham().getMaSP());
+	}
 }

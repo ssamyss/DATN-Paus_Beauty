@@ -5,7 +5,7 @@ import java.util.List;
 import com.poly.entity.GioHang;
 
 public interface GioHangService {
-	
+
 	List<GioHang> findAll();
 
 	GioHang findById(Integer maGH);
@@ -17,4 +17,6 @@ public interface GioHangService {
 	GioHang update(GioHang giohang);
 
 	void delete(Integer maGH);
+
+	List<GioHang> selectGioHang(GioHang giohang);
 }
