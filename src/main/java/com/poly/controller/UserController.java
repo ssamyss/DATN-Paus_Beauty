@@ -49,4 +49,14 @@ public class UserController {
 	public String contact() {
 		return "user/contact";
 	}
+	
+	@GetMapping("/quydinhchung")
+	public String quyDinhChung() {
+		return "user/quydinhchung";
+	}
+	
+	@GetMapping("/doitra")
+	public String doiTra() {
+		return "user/doitra";
+	}
 }
