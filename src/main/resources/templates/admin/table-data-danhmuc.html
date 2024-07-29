@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Danh sách sản phẩm | Quản trị Admin</title>
+<title>Danh sách danh mục | Quản trị Admin</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,24 +62,7 @@
 							<div class="col-sm-2">
 
 								<a class="btn btn-add btn-sm" th:href="@{/sanpham}" title="Thêm"><i
-									class="fas fa-plus"></i> Tạo mới sản phẩm</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
-									title="Nhập"
-									onclick="document.getElementById('fileInput').click()"><i
-									class="fas fa-file-upload"></i> Tải từ file</a> <input
-									id="fileInput" type="file" style="display: none"
-									onchange="angular.element(this).scope().import(this.files)">
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-excel btn-sm" href="" title="In"><i
-									class="fas fa-file-excel"></i> Xuất Excel</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm pdf-file" type="button"
-									title="In" onclick="myFunction(this)"><i
-									class="fas fa-file-pdf"></i> Xuất PDF</a>
+									class="fas fa-plus"></i> Tạo mới danh mục</a>
 							</div>
 							<div class="col-sm-2">
 								<a class="btn btn-delete btn-sm" type="button" title="Xóa"

@@ -16,4 +16,5 @@ public interface SanPhamService {
 	SanPham update(SanPham sanpham);
 
 	void delete(int maSP);
+	void deleteAll();
 }

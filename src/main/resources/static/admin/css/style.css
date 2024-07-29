@@ -289,7 +289,7 @@ ul li ul.dropdown li{
   border-bottom: 1px solid black;
   font-weight: bold;
   cursor: pointer;
-  *cursor: hand;
+  
 }
 .pagination{
   float: right;

@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Main CSS-->
-<link rel="stylesheet" type="text/css" th:href="@{/admin/doc/css/main.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/admin/doc/css/main.css}">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 <!-- or -->
@@ -26,7 +27,8 @@
 
 </head>
 
-<body onload="time()" class="app sidebar-mini rtl">
+<body onload="time()" class="app sidebar-mini rtl" ng-app="app"
+	ng-controller="baocao-ctrl">
 	<div th:insert="~{admin/menu.html}"></div>
 	<main class="app-content">
 		<div class="row">
@@ -45,9 +47,10 @@
 				<div class="widget-small primary coloured-icon">
 					<i class='icon  bx bxs-user fa-3x'></i>
 					<div class="info">
-						<h4>Tổng Nhân viên</h4>
+						<h4>Tổng Tài Khoản</h4>
 						<p>
-							<b>26 nhân viên</b>
+							<b th:text="${account_count}"></b>
+							<b>Tài Khoản</b>
 						</p>
 					</div>
 				</div>
@@ -58,7 +61,8 @@
 					<div class="info">
 						<h4>Tổng sản phẩm</h4>
 						<p>
-							<b>8580 sản phẩm</b>
+							<b th:text="${product_count}"></b>
+							<b>Sản Phẩm</b>
 						</p>
 					</div>
 				</div>
@@ -69,18 +73,18 @@
 					<div class="info">
 						<h4>Tổng đơn hàng</h4>
 						<p>
-							<b>457 đơn hàng</b>
+							<b th:text="${order_count}"></b>
 						</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6 col-lg-3">
 				<div class="widget-small danger coloured-icon">
-					<i class='icon fa-3x bx bxs-info-circle'></i>
+					<i class='icon fa-3x bx bxs-receipt'></i>
 					<div class="info">
-						<h4>Bị cấm</h4>
+						<h4>Đơn hàng hủy</h4>
 						<p>
-							<b>4 nhân viên</b>
+							<b>2 đơn hàng</b>
 						</p>
 					</div>
 				</div>
@@ -99,34 +103,12 @@
 				</div>
 			</div>
 			<div class="col-md-6 col-lg-3">
-				<div class="widget-small info coloured-icon">
-					<i class='icon fa-3x bx bxs-user-badge'></i>
-					<div class="info">
-						<h4>Nhân viên mới</h4>
-						<p>
-							<b>3 nhân viên</b>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3">
 				<div class="widget-small warning coloured-icon">
 					<i class='icon fa-3x bx bxs-tag-x'></i>
 					<div class="info">
 						<h4>Hết hàng</h4>
 						<p>
 							<b>1 sản phẩm</b>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3">
-				<div class="widget-small danger coloured-icon">
-					<i class='icon fa-3x bx bxs-receipt'></i>
-					<div class="info">
-						<h4>Đơn hàng hủy</h4>
-						<p>
-							<b>2 đơn hàng</b>
 						</p>
 					</div>
 				</div>
@@ -151,33 +133,15 @@
 							<tbody>
 								<tr>
 									<td>71309005</td>
-									<td>Bàn ăn gỗ Theresa</td>
+									<td>Kem Lót Trang Điểm Dear</td>
 									<td>5.600.000 đ</td>
-									<td>Bàn ăn</td>
+									<td>Trang điểm</td>
 								</tr>
 								<tr>
 									<td>62304003</td>
-									<td>Bàn ăn Vitali mặt đá</td>
+									<td>Kem Che Khuyết Điểm Maybelline</td>
 									<td>33.235.000 đ</td>
-									<td>Bàn ăn</td>
-								</tr>
-								<tr>
-									<td>72109004</td>
-									<td>Ghế làm việc Zuno</td>
-									<td>3.800.000 đ</td>
-									<td>Ghế gỗ</td>
-								</tr>
-								<tr>
-									<td>83826226</td>
-									<td>Tủ ly - tủ bát</td>
-									<td>2.450.000 đ</td>
-									<td>Tủ</td>
-								</tr>
-								<tr>
-									<td>71304041</td>
-									<td>Bàn ăn mở rộng Vegas</td>
-									<td>21.550.000 đ</td>
-									<td>Bàn thông minh</td>
+									<td>Trang điểm</td>
 								</tr>
 							</tbody>
 						</table>
@@ -373,7 +337,8 @@
 	<!-- The javascript plugin to display page loading on top-->
 	<script src="js/plugins/pace.min.js"></script>
 	<!-- Page specific javascripts-->
-	<script type="text/javascript" th:src="@{/admin/doc/js/plugins/chart.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/admin/doc/js/plugins/chart.js}"></script>
 	<script type="text/javascript">
 		var data = {
 			labels : [ "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5",
@@ -430,6 +395,48 @@
 		myApp.controller('myCtrl', function($scope) {
 
 		});
+	</script>
+		$('#sampleTable').DataTable();
+	<script type="text/javascript">
+		//Thời Gian
+		function time() {
+			var today = new Date();
+			var weekday = new Array(7);
+			weekday[0] = "Chủ Nhật";
+			weekday[1] = "Thứ Hai";
+			weekday[2] = "Thứ Ba";
+			weekday[3] = "Thứ Tư";
+			weekday[4] = "Thứ Năm";
+			weekday[5] = "Thứ Sáu";
+			weekday[6] = "Thứ Bảy";
+			var day = weekday[today.getDay()];
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1;
+			var yyyy = today.getFullYear();
+			var h = today.getHours();
+			var m = today.getMinutes();
+			var s = today.getSeconds();
+			m = checkTime(m);
+			s = checkTime(s);
+			nowTime = h + " giờ " + m + " phút " + s + " giây";
+			if (dd < 10) {
+				dd = '0' + dd
+			}
+			if (mm < 10) {
+				mm = '0' + mm
+			}
+			today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+			tmp = '<span class="date"> ' + today + ' - ' + nowTime + '</span>';
+			document.getElementById("clock").innerHTML = tmp;
+			clocktime = setTimeout("time()", "1000", "Javascript");
+
+			function checkTime(i) {
+				if (i < 10) {
+					i = "0" + i;
+				}
+				return i;
+			}
+		}
 	</script>
 </body>
 

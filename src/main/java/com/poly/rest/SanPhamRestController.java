@@ -49,4 +49,8 @@ public class SanPhamRestController {
 		sanPhamService.delete(maSP);
 	}
 	
+	@DeleteMapping()
+    public void deleteAll() {
+        sanPhamService.deleteAll();
+    }
 }

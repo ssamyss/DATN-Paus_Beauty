@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Paus Beauty - Trang Chủ</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Paus Beauty - Sản Phẩm</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
@@ -17,42 +20,109 @@
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" th:href="@{/user/css/util.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/user/css/main.css}">
-<style>
-.color-options .badge {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    border-radius: 50%;
-    margin-right: 10px;
-}
+  <style>
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
 
-.card {
-    transition: transform 0.2s;
-}
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
 
-.card:hover {
-    transform: scale(1.05);
-}
+        .hover-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            padding: 10px 15px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
 
-.navbar-brand {
-    font-weight: bold;
-    color: white;
-}
+        .product-card:hover .hover-text {
+            opacity: 1;
+        }
 
-.card-img-top {
-    max-height: 200px;
-    object-fit: contain;
-}
-</style>
+        .card-img-top {
+            max-height: 200px;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
 
+        .product-card:hover .card-img-top {
+            opacity: 0.8;
+        }
+
+        .modal-content {
+            border-radius: 8px;
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: bold;
+        }
+
+        .modal-body img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .modal-footer {
+            border-top: none;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+        }
+
+        .btn-primary {
+            background-color: #ff9a9e;
+            border-color: #ff9a9e;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff758c;
+            border-color: #ff758c;
+        }
+
+        .product-details {
+            margin-top: 20px;
+        }
+
+        .product-details h4 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .product-details .price {
+            font-size: 20px;
+            color: #ff758c;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body ng-app="app" ng-controller="sanpham-index">
+    <!-- Header -->
+    <span th:insert="~{user/common/header.html}"></span>
 
-	<!-- Header -->
-	<span th:insert="~{user/common/header.html}"></span>
-
-	<!-- Product -->
-  <main class="container mt-4">
+    <!-- Product -->
+    <main class="container mt-4">
         <div class="row">
             <aside class="col-lg-3 mb-4">
                 <div class="card mb-4">
@@ -102,11 +172,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 mb-4" ng-repeat="item in items">
-                        <div class="card h-100">
+                        <div class="card h-100 product-card">
                             <img ng-src="/assets/images/sanpham/{{item.anh}}" class="card-img-top" alt="Product 1">
                             <div class="card-body text-center">
                                 <h5 class="card-title">{{item.tenSP}}</h5>
                                 <p class="text-danger font-weight-bold">{{item.gia | currency:'':0}} VND</p>
+                            </div>
+                            <div class="hover-text"  ng-click="openQuickView(item)" data-toggle="modal" data-target="#quickViewModal">
+                                Xem nhanh
                             </div>
                         </div>
                     </div>
@@ -114,20 +187,51 @@
             </section>
         </div>
     </main>
-	<!-- Back to top -->
-	<div class="btn-back-to-top" id="myBtn">
-		<span class="symbol-btn-back-to-top"> <i
-			class="zmdi zmdi-chevron-up"></i>
-		</span>
-	</div>
+    
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
+        <span class="symbol-btn-back-to-top"> <i class="zmdi zmdi-chevron-up"></i></span>
+    </div>
 
-	<!-- Footer -->
-	<div th:insert="~{user/common/footer.html}"></div>
-		<script th:src="@{/user/angularjs/sanpham.js}"></script>
+    <!-- Footer -->
+    <div th:insert="~{user/common/footer.html}"></div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Quick View Modal -->
+    <div class="modal fade" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quickViewModalLabel">Quick View</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img ng-src="/assets/images/sanpham/{{form.anh}}" alt="Product Image" class="img-fluid">
+                            </div>
+                            <div class="col-md-6 product-details">
+                                <h4>{{form.tenSP}}</h4>
+                                <p class="price">Giá: {{form.gia |
+								currency:'':0}} VND</p>
+                                <!-- Add more product details here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Thêm vào giỏ hàng</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script th:src="@{/user/angularjs/sanpham.js}"></script>
 </body>
 </html>

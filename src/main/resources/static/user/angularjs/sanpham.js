@@ -64,6 +64,12 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 
 	};
 
+	$scope.openQuickView = function(item) {
+		$scope.form = angular.copy(item);
+		$('#quickViewModal').modal('show');
+	};
+
+
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
 		$('.js-modal1').addClass('show-modal1');

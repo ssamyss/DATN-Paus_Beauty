@@ -1,20 +1,40 @@
 package com.poly.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.poly.dao.DonHangDao;
+import com.poly.dao.SanPhamDao;
+import com.poly.dao.TaiKhoanDao;
+
 @Controller
 public class AdminController {
+	
+	@Autowired
+	SanPhamDao spdao;
+	
+	@Autowired
+	DonHangDao dhdao;
+	
+	@Autowired
+	TaiKhoanDao tkdao;
+	
+	
 	@GetMapping("/admin")
-	public String index() {
+	public String index(Model model) {
+		model.addAttribute("product_count", spdao.getCountSP());
+		model.addAttribute("order_count", dhdao.getCountDH());
+		model.addAttribute("account_count", tkdao.getCountTK());
+		model.addAttribute("tonkho_count", spdao.getCountTonKho());
 		return "admin/index";
 	}
 
-	@GetMapping("/dataTable")
+	@GetMapping("/dataDanhmuc")
 	public String dataTable() {
-		return "admin/table-data-table";
+		return "admin/table-data-danhmuc";
 	}
 
 	@GetMapping("/dataProduct")
@@ -28,7 +48,11 @@ public class AdminController {
 	}
 
 	@GetMapping("/baocao")
-	public String baoCao() {
+	public String baoCao(Model model ) {
+		model.addAttribute("product_count", spdao.getCountSP());
+		model.addAttribute("order_count", dhdao.getCountDH());
+		model.addAttribute("account_count", tkdao.getCountTK());
+		model.addAttribute("tonkho_count", spdao.getCountTonKho());
 		return "admin/quan-ly-bao-cao";
 	}
 
@@ -37,9 +61,9 @@ public class AdminController {
 		return "admin/form-add-don-hang";
 	}
 
-	@GetMapping("/nhanvien")
+	@GetMapping("/danhmuc")
 	public String nhanVien() {
-		return "admin/form-add-nhan-vien";
+		return "admin/form-add-catelogy";
 	}
 
 	@GetMapping("/sanpham")

@@ -9,7 +9,7 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	$scope.reset = function() {
 		$scope.form = {
 			createDate: new Date(),
-			moTa: null,
+			moTa: ''
 			// Các trường khác của form
 		};
 		$scope.imageURL = ''; // Đặt lại đường dẫn ảnh về trống để không hiển thị ảnh
@@ -72,11 +72,20 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 		// Cập nhật giá trị CKEditor vào ng-model
 		$scope.form.mota = CKEDITOR.instances.mota.getData();
 
+		// Xử lý mô tả để loại bỏ các thẻ <p>
+		$scope.form.mota = CKEDITOR.instances.mota.getData().replace(/<\/?[^>]+(>|$)/g, "");
 		var item = angular.copy($scope.form);
 		$http.post('/rest/sanpham', item).then(resp => {
 			$scope.items.push(resp.data);
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công',
+				text: 'Thêm sản phẩm thành công!',
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#28a745'
+			});
+			CKEDITOR.instances.mota.setData('');
 			$scope.reset();
-			alert("Thêm mới sản phẩm thành công");
 		}).catch(error => {
 			alert("Lỗi thêm mới!");
 			console.log("Error", error);
@@ -84,32 +93,108 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	};
 
 	$scope.update = function() {
-		var item = angular.copy($scope.form);
-		$http.put('/rest/sanpham/' + item.maSP, item).then(resp => {
-			// Update the item in the items array
-			var index = $scope.items.findIndex(p => p.maSP == item.maSP);
-			$scope.items[index] = angular.copy(item);
-			$('#ModalUP').modal('hide'); // Hide the modal after successful update
-			alert("Cập nhật sản phẩm thành công");
-		}).catch(error => {
-			alert("Lỗi cập nhật!");
-			console.log("Error", error);
+		Swal.fire({
+			title: 'Xác nhận',
+			text: "Bạn có chắc chắn muốn cập nhật sản phẩm không?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Cập nhật',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				if ($scope.form.tonKho === 0) {
+					$scope.form.trangThai = false;
+				} else {
+					$scope.form.trangThai = true;
+				}
+				$scope.form.createDate = new Date().toISOString();
+				var item = angular.copy($scope.form);
+				$http.put('/rest/sanpham/' + item.maSP, item).then(resp => {
+					var index = $scope.items.findIndex(p => p.maSP == item.maSP);
+					$scope.items[index] = angular.copy(item);
+					$('#ModalUP').modal('hide');
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Cập nhật sản phẩm thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+				}).catch(error => {
+					alert("Lỗi cập nhật!");
+					console.log("Error", error);
+				});
+			}
 		});
 	};
 
 
-	$scope.delete = function(item) {
-		$http.delete('/rest/sanpham/' + item.maSP, item).then(resp => {
-			var index = $scope.items.findIndex(p => p.maSP == item.maSP);
-			$scope.items.splice(index, 1);
-			$scope.reset();
-			alert("Xóa sản phẩm thành công");
+	//xóa tất cả sản phẩm
+	$scope.deleteAll = function() {
+		Swal.fire({
+			title: 'Xác nhận',
+			text: "Bạn có chắc chắn muốn xóa tất cả sản phẩm không?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Xóa',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Call the delete function if the user confirms
+				$http.delete('/rest/sanpham').then(resp => {
+					$scope.items = []; // Clear the local list of items
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Sản phẩm đã được xóa thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+					$scope.initialize(); // Refresh the data to ensure UI is updated
+				}).catch(error => {
+					alert("Lỗi khi xóa tất cả sản phẩm!");
+					console.log("Error", error);
+				});
+			}
+		});
+	};
 
-			// Gọi lại hàm để cập nhật dữ liệu từ server
-			$scope.initialize();
-		}).catch(error => {
-			alert("Lỗi xóa dữ liệu!");
-			console.log("Error", error);
+
+	//xóa sản phẩm theo mã sản phẩm
+	$scope.delete = function(item) {
+		Swal.fire({
+			title: 'Xác nhận',
+			text: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Xóa',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Call the delete function if the user confirms
+				$http.delete('/rest/sanpham/' + item.maSP, item).then(resp => {
+					var index = $scope.items.findIndex(p => p.maSP == item.maSP);
+					$scope.items.splice(index, 1);
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Sản phẩm đã được xóa thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+					$scope.reset();
+					$scope.initialize();
+				}).catch(error => {
+					alert("Lỗi xóa dữ liệu!");
+					console.log("Error", error);
+				});
+			}
 		});
 	};
 
@@ -185,6 +270,7 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 		});
 	};
 
+	// Lấy 5 chữ đầu
 	$scope.getFirstFiveWords = function(str) {
 		if (!str) return '';
 		var words = str.split(' ');
@@ -204,6 +290,8 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 		});
 	};
 
+
+	// Thêm dữ liệu từ file Excel
 	$scope.import = function(files) {
 		var reader = new FileReader();
 		reader.onloadend = async () => {
@@ -241,12 +329,49 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 			// Show success notification after all rows have been processed
 			setTimeout(() => {
 				if (successCount > 0) {
-					swal("Thành công", "Tải từ file thành công", "success");
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Thêm sản phẩm thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
 				}
 			}, 1000); // Delay to ensure all requests are processed
 		};
 		reader.readAsArrayBuffer(files[0]);
 	};
+	
+	$scope.pager = {
+			page:0,
+			size:5,
+			get items(){
+				var start =this.page*this.size;
+				return $scope.items.slice(start,start+this.size);
+			},
+			get count(){
+				return Math.ceil(1.0*$scope.items.length/this.size);
+			},
+			first(){
+				this.page=0;
+			},
+			prev(){
+				this.page--;
+				if(this.page<0){
+					this.last();
+				}
+			},
+			next(){
+				this.page++;
+				if(this.page >= this.count){
+					this.first();
+				}
+			},
+			last(){
+				this.page =  this.count -1;
+			}
+
+		}
 
 	$scope.initialize();
 	$scope.reset();

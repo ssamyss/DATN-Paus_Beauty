@@ -51,4 +51,9 @@ public class SanPhamServiceImpl implements SanPhamService {
 		spdao.deleteById(maSP);
 	}
 
+	@Override
+	public void deleteAll() {
+		// TODO Auto-generated method stub
+		spdao.deleteAll();
+	}
 }

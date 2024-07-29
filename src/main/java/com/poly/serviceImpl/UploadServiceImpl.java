@@ -19,35 +19,35 @@ import jakarta.servlet.ServletContext;
 @Service
 public class UploadServiceImpl implements UploadService {
 
-	 private static final String UPLOAD_DIR = "assets/images/";
+	// Set the upload directory relative to your project or an absolute path
+	private static final String UPLOAD_DIR = "src/main/resources/static/assets/images/";
 
-	    @Autowired
-	    private ResourceLoader resourceLoader;
+	@Override
+	public File save(MultipartFile file, String folder) {
+		try {
+			// Construct the path to the directory
+			Path uploadPath = Paths.get(UPLOAD_DIR, folder);
 
-	    public File save(MultipartFile file, String folder) {
-	        try {
-	            // Đường dẫn thư mục tĩnh
-	            String staticPath = resourceLoader.getResource("classpath:/static/").getFile().getAbsolutePath();
+			// Create directories if they do not exist
+			if (!Files.exists(uploadPath)) {
+				Files.createDirectories(uploadPath);
+			}
 
-	            // Tạo đường dẫn đến thư mục lưu trữ ảnh
-	            Path uploadPath = Paths.get(staticPath, UPLOAD_DIR, folder);
-	            Files.createDirectories(uploadPath);
+			// Clean and create a unique filename
+			String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+			String fileName = System.currentTimeMillis() + "-" + originalFileName;
 
-	            // Tạo tên tệp duy nhất
-	            String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-	            String fileName = System.currentTimeMillis() + "-" + originalFileName;
+			// Construct the file path and save the file
+			Path filePath = uploadPath.resolve(fileName).normalize();
+			Files.copy(file.getInputStream(), filePath);
 
-	            // Lưu file
-	            Path filePath = uploadPath.resolve(fileName).normalize();
-	            Files.copy(file.getInputStream(), filePath);
-
-	            // Trả về tệp đã lưu
-	            File saveFile = filePath.toFile();
-	            System.out.println("Tệp được lưu tại: " + saveFile.getAbsolutePath());
-	            return saveFile;
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            throw new RuntimeException("Lỗi khi lưu tệp: " + e.getMessage());
-	        }
-	    }
+			// Return the saved file
+			File saveFile = filePath.toFile();
+			System.out.println("File saved at: " + saveFile.getAbsolutePath());
+			return saveFile;
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error saving file: " + e.getMessage());
+		}
+	}
 }
