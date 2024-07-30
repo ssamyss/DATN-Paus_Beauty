@@ -20,6 +20,7 @@ app.controller("giohang-ctrl", function($scope, $http) {
 			$http.get('/rest/giohang/byttk/' + $scope.tentaikhoan.tenTaiKhoan).then(resp => {
 				$scope.giohang = resp.data;
 				$scope.dem = $scope.giohang.length;
+				$scope.tong();
 			}).catch(error => {
 				alert("Lỗi khi tải giỏ hàng!");
 			});
@@ -27,13 +28,19 @@ app.controller("giohang-ctrl", function($scope, $http) {
 			console.error("Lỗi khi tải tên tài khoản :", error);
 		});
 		//Load tổng tiền
-		$http.get('/rest/giohang/tongtien').then(resp => {
-			console.log(resp.data);
+		/*$http.get('/rest/giohang/tongtien').then(resp => {
 			$scope.tongtien = resp.data;
 		}).catch(error => {
 			alert("Lỗi khi tải tổng tiền!");
-		});
-		console.log($scope.tongtien);
+		});*/
+
+	};
+
+	$scope.tong = function() {
+		$scope.tongtien = 0;
+		for (let i = 0; i < $scope.dem; i++) {
+			$scope.tongtien = $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong + $scope.tongtien;
+		}
 	};
 
 	$scope.create = function(item) {
@@ -45,28 +52,27 @@ app.controller("giohang-ctrl", function($scope, $http) {
 			alert("Thêm mới thương hiệu thành công");
 		}).catch(error => {
 			alert("Lỗi thêm mới!");
-			console.log("Error", error);
 		});
 	};
 
 	$scope.tru = function(item) {
 		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
 			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
-			item.soLuong = item.soLuong - 1;
-			$scope.items[index] = angular.copy(item);
+			$scope.giohang[index].soLuong = $scope.giohang[index].soLuong - 1;
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
-			console.log("Error", error);
 		});
+		$scope.tong();
 	};
 
 	$scope.cong = function(item) {
 		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
-			item.soLuong = item.soLuong + 1;
+			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
+			$scope.giohang[index].soLuong = $scope.giohang[index].soLuong + 1;
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
-			console.log("Error", error);
 		});
+		$scope.tong();
 	};
 
 	$scope.initialize();

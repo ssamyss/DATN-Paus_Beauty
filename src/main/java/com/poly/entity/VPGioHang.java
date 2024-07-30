@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class VPGioHang {
 	private Integer maSP;
 	private String tenSP;
-	private Double gia;
+	private Long gia;
 	private Integer tonKho;
 	private String mota;
 	private String anh;
