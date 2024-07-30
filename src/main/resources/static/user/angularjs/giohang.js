@@ -27,13 +27,6 @@ app.controller("giohang-ctrl", function($scope, $http) {
 		}).catch(error => {
 			console.error("Lỗi khi tải tên tài khoản :", error);
 		});
-		//Load tổng tiền
-		/*$http.get('/rest/giohang/tongtien').then(resp => {
-			$scope.tongtien = resp.data;
-		}).catch(error => {
-			alert("Lỗi khi tải tổng tiền!");
-		});*/
-
 	};
 
 	$scope.tong = function() {

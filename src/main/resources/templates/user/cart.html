@@ -9,6 +9,7 @@
 <body ng-app="app" ng-controller="giohang-ctrl">
     <!-- Shoping Cart -->
     <span th:insert="~{user/common/header.html}"></span>
+    
     <form class="bg0 p-t-75 p-b-85" method="post" action="/cart">
         <div class="container">
             <div class="row">
@@ -66,11 +67,11 @@
 
                         <div class="flex-w flex-t bor12 p-b-13">
                             <div class="size-208">
-                                <span class="stext-110 cl2"> Tổng tiền: </span>
+                                <span class="stext-110 cl2" style="font-size: 20px;"> Tổng tiền: </span>
                             </div>
 
                             <div class="size-209">
-                                <span class="formatted-price" style="font-size: 30px;">{{ tongtien | currency:'':0 }} VNĐ</span> 
+                                <span class="formatted-price" style="font-size: 20px;">{{ tongtien | currency:'':0 }} VNĐ</span> 
                             </div>
                         </div>
 

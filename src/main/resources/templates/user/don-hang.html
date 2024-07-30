@@ -4,78 +4,82 @@
 <head>
 	<title>Paus Beauty - Đơn hàng</title>
 	<meta charset="UTF-8">
-	<link th:insert="~{user/link/link.html}">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Main CSS-->
-	<link rel="stylesheet" type="text/css" th:href="@{/doc/css/main.css}">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-	<!-- or -->
-	<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-	<!-- Font-icon css-->
-	<link rel="stylesheet" type="text/css"
-		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+	<link th:insert="~{user/link/link.html}">
 </head>
 
-<body class="app sidebar-mini rtl" ng-app="app" ng-controller="donhang-ctrl">
+<body ng-app="app" ng-controller="donhang-ctrl">
 
 	<span th:insert="~{user/common/header.html}"></span>
 
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
-			<div class="col-lg-10 col-xl-7 m-b-50">
-				<span style="font-weight: bold; font-size: 25px; color: black;">Thông tin đơn hàng</span>
-			</div>
 			<div class="row">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+					<div class="m-l-15"><span style="font-weight: bold; font-size: 25px; color: black;">Thông tin đơn
+							hàng</span>
+					</div>
+					<br>
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<div class="wrap-table-shopping-cart">
-							<table class="table-shopping-cart">
-								<thead>
-									<tr>
-										<th class="column-1">Ảnh</th>
-										<th class="column-2">Tên sản phẩm</th>
-										<th class="column-3">Giá</th>
-										<th class="column-4">Số lượng</th>
-										<th class="column-5">Tiền</th>
-										<th class="column-6"></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="sanPham in giohang" class="table_row">
-										<td class="column-1">
-											<div class="how-itemcart1">
-												<img ng-src="/user/images/chekhuyetdiem.jpg" alt="IMG">
-											</div>
-										</td>
-										<td class="column-2">{{ sanPham.sanPham.tenSP }}</td>
-										<td class="column-3">{{ sanPham.sanPham.gia | currency:'':0 }}</td>
-										<td class="column-4">
-											<div>
-												<div class="row">
-													<div class="col-md-1">
-														<button ng-click="tru(sanPham)">-</button>
-													</div>
-													<div class="col-md-1">
-														<span>{{ sanPham.soLuong }}</span>
-													</div>
-													<div class="col-md-1">
-														<button ng-click="cong(sanPham)">+</button>
-													</div>
-												</div>
-											</div>
-										</td>
-										<td class="column-5">{{ sanPham.sanPham.gia * sanPham.soLuong }}</td>
-										<td class="column-5"><a ng-click="xoa(sanPham.maSP)" style="margin-left: 1px;"
-												class="close">&times;</a></td>
+						<div><span style="font-weight: bold; font-size: 20px; color: black;">Thông tin khách hàng</span>
+						</div>
 
-									</tr>
-								</tbody>
-							</table>
+						<div class="tt-container">
+							<div>
+								<input type="text" name="name" placeholder="Họ và tên" required>
+							</div>
+							<div>
+								<input type="text" name="sdt" placeholder="Số điện thoại" required>
+								<input type="text" name="email" placeholder="Email" required>
+							</div>
+						</div>
+
+						<div><span style="font-weight: bold; font-size: 20px; color: black;">Thông tin nhận hàng</span>
+						</div>
+
+						<div class="tt-container">
+							<div>
+								<input type="text" name="diachi" placeholder="Địa chỉ" required>
+							</div>
+							<div>
+								<input type="text" name="sdt" placeholder="Tòa nhà, số nhà, tên đường" required>
+								<input type="text" name="email" placeholder="Tên địa chỉ (vd: Văn phòng, Số nhà, ...)"
+									required>
+							</div>
+						</div>
+
+						<div><span style="font-weight: bold; font-size: 20px; color: black;">Phương thức thanh
+								toán</span>
+						</div>
+
+						<div class="tt-container">
+							<div class="radiobox">
+								<input type="radio" name="pttt" value="1">
+								<label class="" for="" style="font-size: 15px; color: black;">Trả
+									tiền mặt khi nhận hàng</label>
+							</div>
+							<div class="radiobox">
+								<input type="radio" name="pttt" value="2">
+								<label class="" for="" style="font-size: 15px; color: black;">Thanh
+									toán VN Pay</label>
+							</div>
+						</div>
+
+						<div><span style="font-weight: bold; font-size: 20px; color: black;">Phương thức vận
+								chuyển</span>
+						</div>
+
+						<div class="tt-container">
+							<div class="radiobox">
+								<input type="radio" name="ptcv" value="1">
+								<label class="" for="" style="font-size: 15px; color: black;">Giao
+									hàng tiêu chuẩn (3 - 6 ngày) (Giao giờ hành chính)</label>
+							</div>
+							<div class="radiobox">
+								<input type="radio" name="ptcv" value="2">
+								<label class="" for="" style="font-size: 15px; color: black;">Giao
+									hàng trong 24h</label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -86,71 +90,17 @@
 
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208">
-								<span class="stext-110 cl2"> Tổng tiền: </span>
+								<span class="stext-110 cl2" style="font-size: 20px;"> Tổng tiền: </span>
 							</div>
 
 							<div class="size-209">
-								<span class="formatted-price" style="font-size: 30px;">{{ tongtien | currency:'':0 }}
+								<span class="formatted-price" style="font-size: 20px;">{{ tongtien | currency:'':0 }}
 									VNĐ</span>
 							</div>
 						</div>
 
-						<!--<div class="flex-w flex-t bor12 p-t-15 p-b-30">
-                            <div class="size-208 w-full-ssm">
-                                <span class="stext-110 cl2"> Vận chuyển: </span>
-                            </div>
-
-                            <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
-                                <p class="stext-111 cl6 p-t-2">Giao hàng nhanh (phí 20,000)</p>
-
-                                <div class="p-t-15">
-                                    <span class="stext-112 cl8"> Địa chỉ </span>
-
-                                    <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                        <select class="js-select2" name="time">
-                                            <option>Thành phố</option>
-                                            <option>Hà Nội</option>
-                                            <option>Bắc Ninh</option>
-                                            <option>Bắc Giang</option>
-                                            <option>Hưng Yên</option>
-                                            <option>Vĩnh Phúc</option>
-                                            <option>Phú Thọ</option>
-                                            <option>Hà Nam</option>
-                                            <option>Ninh Bình</option>
-                                            <option>Nam Định</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                    <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                        <select class="js-select2" name="time">
-                                            <option>Quận/ Huyện</option>
-                                            <option>Thanh Xuân</option>
-                                            <option>Cầu Giấy</option>
-                                            <option>Đống Đa</option>
-                                            <option>Hà Đông</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                    <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                        <select class="js-select2" name="time">
-                                            <option>Phường/ Xã</option>
-                                            <option>Thanh Xuân</option>
-                                            <option>Cầu Giấy</option>
-                                            <option>Đống Đa</option>
-                                            <option>Hà Đông</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-
-                                    <div class="bor8 bg0 m-b-22">
-                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Địa chỉ chi tiết">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-
 						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Tiếp tục
+							Xác nhận
 						</button>
 					</div>
 				</div>
@@ -161,6 +111,31 @@
 
 	<!-- AngularJS -->
 	<script th:src="@{/user/angularjs/donhang.js}"></script>
+	<!-- link -->
+	<div th:insert="~{user/link/scriptIndex.html}"></div>
+
+	<style>
+		.tt-container input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.tt-container .radiobox {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+		
+		.radiobox input[type="radio"],
+		.radiobox label {
+			display: inline-block;
+		}
+	</style>
 
 </body>
 
