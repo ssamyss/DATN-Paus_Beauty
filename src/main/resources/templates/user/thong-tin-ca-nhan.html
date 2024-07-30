@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Paus Beauty - Thông Tin Cá Nhân</title>
+	<link th:insert="~{user/link/link.html}">
+</head>
+
+<body ng-app="app" ng-controller="thongtincanhan-ctrl">
+
+	<span th:insert="~{user/common/header.html}"></span>
+	<center>
+	<div class="signup-container">
+		<h1>Thông tin cá nhân</h1>
+		<br>
+
+		<form id="signupForm" method="POST" th:action="@{/register}" th:object="${taikhoanRequest}">
+			<input type="text" name="tenTaiKhoan" value="{{ taikhoan.tenTaiKhoan }}" required disabled>
+			<div>
+				<input type="text" name="hoVaTen" value="{{ taikhoan.hoVaTen }}" required disabled>
+			</div>
+			<div class="tt-con">
+				<input type="email" name="email" value="{{ taikhoan.email }}" required disabled>
+				
+			</div>
+			<div class="tt-con">
+				<input type="text" name="DiaChi" value="{{ taikhoan.diaChi }}" required disabled>
+				
+			</div>
+			<div class="tt-con">
+				<input type="text" name="SDT" value="{{ taikhoan.sdt }}" required disabled>
+				
+			</div>
+		</form>
+	</div>
+	</center>
+	<span th:insert="~{user/common/footer.html}"></span>
+	<!-- AngularJS -->
+	<script th:src="@{/user/angularjs/thongtincanhan.js}"></script>
+	<!-- link -->
+	<div th:insert="~{user/link/scriptIndex.html}"></div>
+
+
+	<style>
+		.signup-container {
+			width: 70%;
+			padding: 30px;
+			background: #fff;
+			border-radius: 8px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			margin-top: 50px;
+			margin-bottom: 30px;
+		}
+
+		.signup-container h2 {
+			margin-bottom: 20px;
+			font-size: 20px;
+			color: #333;
+		}
+
+		.signup-container a {
+			color: #007BFF;
+			text-decoration: none;
+		}
+
+		.signup-container a:hover {
+			text-decoration: underline;
+		}
+
+		.signup-container input[type="text"],
+		.signup-container input[type="tel"],
+		.signup-container input[type="email"],
+		.signup-container input[type="password"] {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.signup-container input[type="submit"] {
+			width: 100%;
+			padding: 10px;
+			margin: 20px 0;
+			background-color: #FF3B30;
+			border: none;
+			border-radius: 4px;
+			color: #fff;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		.signup-container input[type="submit"]:hover {
+			background-color: #cc3226;
+		}
+
+
+	</style>
+</body>
+
+<!--		.tt-con input, 
+		.tt-con{
+			de
+		}-->
+</html>

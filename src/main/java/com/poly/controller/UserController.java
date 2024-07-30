@@ -65,4 +65,9 @@ public class UserController {
 	public String doiTra() {
 		return "user/doitra";
 	}
+	
+	@GetMapping("/thong-tin-ca-nhan")
+	public String thongTin() {
+		return "user/thong-tin-ca-nhan";
+	}
 }
