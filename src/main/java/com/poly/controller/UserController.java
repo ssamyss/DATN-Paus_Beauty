@@ -3,10 +3,14 @@ package com.poly.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poly.dao.SanPhamDao;
 import com.poly.entity.SanPham;
@@ -23,9 +27,11 @@ public class UserController {
 	}
 
 	@GetMapping("/product")
-	public String index(Model model) {
-		List<SanPham> sp = spDao.findAll();
-		model.addAttribute("sanpham", sp);
+	public String productList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+		int pageSize = 8;
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		Page<SanPham> sanphamPage = spDao.findAll(pageable);
+		model.addAttribute("sanphamPage", sanphamPage);
 		return "user/sanpham";
 	}
 
@@ -48,5 +54,15 @@ public class UserController {
 	@GetMapping("/contact")
 	public String contact() {
 		return "user/contact";
+	}
+
+	@GetMapping("/quydinhchung")
+	public String quyDinhChung() {
+		return "user/quydinhchung";
+	}
+
+	@GetMapping("/doitra")
+	public String doiTra() {
+		return "user/doitra";
 	}
 }
