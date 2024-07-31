@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ThanhToanController {
 
-	@GetMapping("thanhtoan")
+	@GetMapping("/don-hang")
 	public String form() {
-		return "user/thanh-toan";
+		return "user/don-hang";
 	}
 	
 }

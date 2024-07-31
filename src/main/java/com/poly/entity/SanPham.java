@@ -37,7 +37,7 @@ public class SanPham implements Serializable{
 	private String tenSP;
 	
 	@Column(name = "gia")
-	private Double gia;
+	private Long gia;
 	
 	@Column(name = "ton_kho")
 	private Integer tonKho;

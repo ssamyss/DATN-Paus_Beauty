@@ -6,8 +6,7 @@
 				<!-- Logo desktop -->
 				<a th:href="@{/}" class="logo"> <img
 					th:src="@{/user/images/icons/logo.png}" alt="IMG-LOGO"> <a
-					th:href="@{/}" class="logo">
-				</a> <!-- Menu desktop -->
+					th:href="@{/}" class="logo"> </a> <!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li><a th:href="@{/}">Trang Chủ</a></li>
@@ -55,48 +54,67 @@
 						<div class="wrap-header-cart js-panel-cart">
 							<div class="s-full js-hide-cart"></div>
 
-							<div class="header-cart flex-col-l p-l-65 p-r-25">
-								<div class="header-cart-title flex-w flex-sb-m p-b-8">
-									<span class="mtext-103 cl2"> Giỏ hàng của bạn </span>
-
-									<div
-										class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-										<i class="zmdi zmdi-close"></i>
-									</div>
+							<!-- Icon header -->
+							<div class="wrap-icon-header flex-w flex-r-m">
+								<div th:if="${session.tentaikhoan != null}"
+									class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 main-menu">
+									<li class="active-menu"><i class="bi bi-person-fill"></i>
+										<ul class="sub-menu">
+											<li><a th:href="@{/thong-tin-ca-nhan}">Thông Tin</a></li>
+											<li><a th:href="@{/}">Thông Tin</a></li>
+											<li><a th:href="@{/logout}">Đăng Xuất</a></li>
+										</ul></li>
 								</div>
-
-								<div class="header-cart-content flex-w js-pscroll">
-									<ul class="header-cart-wrapitem w-full"
-										ng-repeat="sp in giohang">
-										<li class="header-cart-item flex-w flex-t m-b-12">
-											<div class="header-cart-item-img">
-												<img
-													src="https://image.hsv-tech.io/987x0/bbx/common/591b466e-ced1-47d2-87b0-124aef903804.webp"
-													alt="IMG">
-											</div>
-											<div class="header-cart-item-txt p-t-8">
-												<a href="#"
-													class="header-cart-item-name m-b-18 hov-cl1 trans-04">{{
-													sp.sanPham.tenSP}} </a>
-											</div>
-										</li>
-									</ul>
-
-									<div class="w-full">
-										<div class="header-cart-total w-full p-tb-40">Tổng tiền:
-											1.507.000đ</div>
-									</div>
+								<div th:if="${session.tentaikhoan == null}"
+									class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 main-menu">
+									<li class="active-menu"><i class="bi bi-person-fill"></i>
+										<ul class="sub-menu">
+											<li><a th:href="@{/login}">Đăng Nhập</a></li>
+											<li><a th:href="@{/register}">Đăng Ký</a></li>
+										</ul></li>
 								</div>
-								<div class="header-cart-buttons flex-w w-full">
-									<a th:href="@{/cart}"
-										class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-										Xem giỏ hàng </a> <a
-										class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-										Thanh toán </a>
+								<div class="header-cart flex-col-l p-l-65 p-r-25">
+									<div class="header-cart-title flex-w flex-sb-m p-b-8">
+										<span class="mtext-103 cl2"> Giỏ hàng của bạn </span>
+
+										<div
+											class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+											<i class="zmdi zmdi-close"></i>
+										</div>
+									</div>
+
+									<div class="header-cart-content flex-w js-pscroll">
+										<ul class="header-cart-wrapitem w-full"
+											ng-repeat="sp in giohang">
+											<li class="header-cart-item flex-w flex-t m-b-12">
+												<div class="header-cart-item-img">
+													<img
+														src="https://image.hsv-tech.io/987x0/bbx/common/591b466e-ced1-47d2-87b0-124aef903804.webp"
+														alt="IMG">
+												</div>
+												<div class="header-cart-item-txt p-t-8">
+													<a href="#"
+														class="header-cart-item-name m-b-18 hov-cl1 trans-04">{{
+														sp.sanPham.tenSP}} </a>
+												</div>
+											</li>
+										</ul>
+
+										<div class="w-full">
+											<div class="header-cart-total w-full p-tb-40">Tổng
+												tiền: 1.507.000đ</div>
+										</div>
+									</div>
+									<div class="header-cart-buttons flex-w w-full">
+										<a th:href="@{/cart}"
+											class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+											Xem giỏ hàng </a> <a
+											class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+											Thanh toán </a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 		</div>
-	</div>
 </header>
