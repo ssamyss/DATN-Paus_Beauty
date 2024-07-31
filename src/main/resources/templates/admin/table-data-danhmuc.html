@@ -37,11 +37,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <link rel="stylesheet" type="text/css"
-	th:href="@{/admin/css/dssanpham.css}">
+	th:href="@{/admin/css/dmsanpham.css}">
 
 </head>
 
-<body ng-app="app" ng-controller="sanpham-ctrl" onload="time()"
+<body ng-app="app" ng-controller="danhmuc-ctrl" onload="time()"
 	class="app sidebar-mini rtl">
 
 	<div th:insert="~{admin/menu.html}"></div>
@@ -50,7 +50,7 @@
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách sản phẩm</b></a></li>
+							sách loại sản phẩm</b></a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -58,56 +58,40 @@
 			<div class="col-md-12">
 				<div class="tile">
 					<div class="tile-body">
-						<div class="row element-button">
-							<div class="col-sm-2">
-
-								<a class="btn btn-add btn-sm" th:href="@{/sanpham}" title="Thêm"><i
-									class="fas fa-plus"></i> Tạo mới danh mục</a>
+						<div class="row element-button mb-3">
+							<div class="col-sm-6 col-md-2 mb-2">
+								<a class="btn btn-add btn-sm btn-primary w-100"
+									data-toggle="modal" data-target="#addProductCategoryModal"
+									title="Thêm"><i class="fas fa-plus"></i> Thêm loại sản phẩm</a>
 							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm" type="button" title="Xóa"
+							<div class="col-sm-6 col-md-2 mb-2">
+								<a class="btn btn-add btn-sm btn-primary w-100"
+									data-toggle="modal" data-target="#addBrandModal" title="Thêm"><i
+									class="fas fa-plus"></i> Thêm thương hiệu</a>
+							</div>
+							<div class="col-sm-6 col-md-2 mb-2">
+								<a class="btn btn-delete btn-sm w-100" type="button" title="Xóa"
 									ng-click="deleteAll()"><i class="fas fa-trash-alt"></i> Xóa
-									tất cả </a>
+									tất cả</a>
 							</div>
 						</div>
+						<h2 class="table-title">Danh sách loại sản phẩm</h2>
 						<table class="table table-hover table-bordered" id="sampleTable">
 							<thead>
 								<tr>
-									<th>Tên sản phẩm</th>
-									<th>Ảnh</th>
-									<th>Tồn kho</th>
-									<th>Giá tiền</th>
-									<th>Loại sản phẩm</th>
-									<th>Thương hiệu</th>
-									<th>Tình trạng</th>
-									<th>Ngày cập nhật</th>
-									<th>Chức năng</th>
+									<th class="col-danhmuc">Danh mục</th>
+									<th class="col-tenloaisp">Tên loại sản phẩm</th>
+									<th class="col-chucnang">Chức năng</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items">
-									<td>{{ getFirstFiveWords(item.tenSP) }}</td>
-									<td><img ng-src="/assets/images/sanpham/{{item.anh}}"
-										alt="{{item.tenSP}}" style="width: 100px; height: auto;" /></td>
-									<td>{{item.tonKho}}</td>
-									<td>{{item.gia | currency:'':0}} VND</td>
-									<td>{{item.loaiSanPham.tenPL}}</td>
-									<td>{{item.thuongHieu.tenTH}}</td>
-									<td><span class="badge bg-success"
-										ng-if="item.trangThai === true">Còn hàng</span> <span
-										class="badge bg-danger" ng-if="item.trangThai === false">Hết
-											hàng</span></td>
-									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
+								<tr ng-repeat="item in pager.cates">
+									<td>{{item.danhMucLoaiSanPham.tenLSP}}</td>
+									<td>{{item.tenPL}}</td>
 									<td>
 										<button ng-click="delete(item)"
-											class="btn btn-primary btn-sm trash" type="button"
-											title="Xóa">
+											class="btn btn-danger btn-sm trash" type="button" title="Xóa">
 											<i class="fas fa-trash-alt"></i>
-										</button>
-										<button ng-click="edit(item)"
-											class="btn btn-primary btn-sm edit" type="button" title="Sửa"
-											id="show-emp" data-toggle="modal" data-target="#ModalUP">
-											<i class="fas fa-edit"></i>
 										</button>
 									</td>
 								</tr>
@@ -131,86 +115,147 @@
 								</li>
 							</ul>
 						</nav>
+						<hr class="element-button mb-3">
+						<h2 class="table-title">Danh sách thương hiệu</h2>
+						<table class="table table-hover table-bordered" id="sampleTable">
+							<thead>
+								<tr>
+									<th class="col-anhTH">Ảnh</th>
+									<th class="col-tenloaisp">Tên thương hiệu</th>
+									<th class="col-chucnang">Chức năng</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in pagers.bras">
+									<td><img ng-src="/assets/images/thuonghieu/{{item.anhTH}}"
+										style="width: 100px; height: auto;" /></td>
+									<td>{{item.tenTH}}</td>
+									<td>
+										<button ng-click="delete(item)"
+											class="btn btn-danger btn-sm trash" type="button" title="Xóa">
+											<i class="fas fa-trash-alt"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- Pagination for Brands -->
+						<nav aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+								<li class="page-item">
+									<button ng-click="pagers.first()" class="page-link">First</button>
+								</li>
+								<li class="page-item">
+									<button ng-click="pagers.prev()" class="page-link">Previous</button>
+								</li>
+								<li class="page-item"><span style="color: black;"
+									class="page-link">{{pagers.page + 1}} of
+										{{pagers.count}}</span></li>
+								<li class="page-item">
+									<button ng-click="pagers.next()" class="page-link">Next</button>
+								</li>
+								<li class="page-item">
+									<button ng-click="pagers.last()" class="page-link">Last</button>
+								</li>
+							</ul>
+						</nav>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
-	<!-- Modal -->
-	<div class="modal fade" id="ModalUP" tabindex="-1" role="dialog"
-		aria-hidden="true" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered modal-lg"
-			role="document">
+
+	<!-- Add Product Category Modal -->
+	<div class="modal fade" id="addProductCategoryModal" tabindex="-1"
+		role="dialog" aria-labelledby="addProductCategoryModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header bg-primary text-white">
-					<h5 class="modal-title">Chỉnh sửa thông tin sản phẩm cơ bản</h5>
-					<button type="button" class="close text-white" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="maSP" class="control-label font-weight-bold">Mã
-										sản phẩm</label> <input id="maSP" class="form-control" type="number"
-										ng-model="form.maSP" readonly>
-								</div>
-								<div class="form-group">
-									<label for="tenSP" class="control-label font-weight-bold">Tên
-										sản phẩm</label> <input id="tenSP" class="form-control" type="text"
-										ng-model="form.tenSP" readonly>
-								</div>
-								<div class="form-group">
-									<label for="tonKho" class="control-label font-weight-bold">Số
-										lượng</label> <input id="tonKho" class="form-control" type="number"
-										ng-model="form.tonKho" required>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="gia" class="control-label font-weight-bold">Giá
-										bán</label> <input id="gia" class="form-control" type="text"
-										ng-model="form.gia">
-								</div>
-								<div class="form-group">
-									<label for="maPL" class="control-label font-weight-bold">Loại
-										sản phẩm</label> <select id="maPL" class="form-control"
-										ng-model="form.loaiSanPham.maPL" disabled>
-										<option value="" disabled selected>Chọn loại sản phẩm</option>
-										<option ng-repeat="c in cates" ng-value="c.maPL">{{c.tenPL}}</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="maTH" class="control-label font-weight-bold">Thương
-										hiệu</label> <select id="maTH" class="form-control"
-										ng-model="form.thuongHieu.maTH">
-										<option value="" disabled selected>Chọn thương hiệu</option>
-										<option ng-repeat="b in bras" ng-value="b.maTH">{{b.tenTH}}</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-12">
-								<div class="form-group">
-									<label for="mota" class="control-label font-weight-bold">Mô
-										tả sản phẩm</label>
-									<textarea id="mota" class="form-control" ng-model="form.mota"></textarea>
-								</div>
-							</div>
-						</div>
+				<form action="">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addProductCategoryModalLabel">Thêm
+							loại sản phẩm</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
-					<div class="modal-footer">
-						<button ng-click="update()" class="btn btn-primary" type="button">Lưu
-							lại</button>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Hủy bỏ</button>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="categorySelect">Danh Mục Sản Phẩm</label> <select
+								class="form-control" id="categorySelect"
+								ng-model="form.danhMucLoaiSanPham.maLSP"
+								ng-change="loadProductTypes(form.maLSP)" required>
+								<option value disabled selected>Chọn danh mục sản phẩm</option>
+								<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="productCategoryName">Tên loại sản phẩm</label> <input
+								type="text" class="form-control" id="productCategoryName"
+								ng-model="form.tenPL" required>
+						</div>
+						<button class="btn btn-save" type="button">Lưu lại</button>
+						<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<!-- Add Brand Modal -->
+	<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog"
+		aria-labelledby="addBrandModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="">
+					<div class="modal-header">
+						<h5 class="modal-title" id="addBrandModalLabel">Thêm thương
+							hiệu</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="control-label">Nhập tên thương hiệu mới</label> <input
+								class="form-control" ng-model="form.tenTH" type="text" required>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Ảnh sản phẩm</label>
+							<div style="margin-bottom: 10px;">
+								<!-- Hiển thị trước ảnh đã chọn -->
+								<div class="image-preview-container" ng-show="!imageURL">
+									<img class="image-preview border border-5">
+								</div>
+								<div class="image-preview-container" ng-show="imageURL">
+									<img ng-src="{{imageURL}}"
+										class="image-preview border border-5">
+								</div>
+
+							</div>
+							<div>
+								<!-- Input để chọn ảnh -->
+								<div class="input-file-container">
+									<input type="file" id="anhTH"
+										class="form-control w-50 input-file"
+										onchange="angular.element(this).scope().imageChanged(this.files)" />
+									<label for="anhTH" class="input-file-trigger"><i
+										class="fas fa-upload"></i> Chọn ảnh</label>
+								</div>
+							</div>
+						</div>
+						<button class="btn btn-save" ng-click="createTH()" type="button">Lưu</button>
+						<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
 
 	<!-- Essential javascripts for application to work-->
 	<script th:src="@{/admin/doc/js/jquery-3.2.1.min.js}"></script>
@@ -272,7 +317,7 @@
 			}
 		}
 	</script>
-	<script th:src="@{/admin/js/sanpham.js}"></script>
+	<script th:src="@{/admin/js/danhmuc.js}"></script>
 </body>
 
 </html>

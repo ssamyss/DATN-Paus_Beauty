@@ -5,7 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Main CSS-->
-<link rel="stylesheet" type="text/css" th:href="@{/admin/doc/css/main.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/admin/doc/css/main.css}">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>
@@ -26,7 +27,8 @@
 	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 	<aside class="app-sidebar">
 		<div class="app-sidebar__user">
-			<img class="app-sidebar__user-avatar" src="https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-1/440415209_1620552845368987_2750180453414901523_n.jpg?stp=dst-jpg_p160x160&_nc_cat=100&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=DXi3hCZ9JLoQ7kNvgHITk-j&_nc_ht=scontent.fsgn8-3.fna&oh=00_AYCUOTmsgdAsyDrcxq4okWYhnxRzKCjsIw8NGN_Yu6k93w&oe=66AC3304"
+			<img class="app-sidebar__user-avatar"
+				src="https://scontent.fsgn8-3.fna.fbcdn.net/v/t39.30808-1/440415209_1620552845368987_2750180453414901523_n.jpg?stp=dst-jpg_p160x160&_nc_cat=100&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=DXi3hCZ9JLoQ7kNvgHITk-j&_nc_ht=scontent.fsgn8-3.fna&oh=00_AYCUOTmsgdAsyDrcxq4okWYhnxRzKCjsIw8NGN_Yu6k93w&oe=66AC3304"
 				width="50px" alt="User Image">
 			<div>
 				<p class="app-sidebar__user-name">
@@ -60,8 +62,8 @@
 	</aside>
 	<!-- Script for highlighting current menu item -->
 	<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const menuItems = document.querySelectorAll(".app-menu__item");
+		document.addEventListener("DOMContentLoaded", function() {
+  		const menuItems = document.querySelectorAll(".app-menu__item");
 
   menuItems.forEach(item => {
     item.addEventListener("click", function() {

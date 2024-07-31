@@ -1,0 +1,60 @@
+.image-preview-container {
+	width: 250px;
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+}
+
+.image-preview {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.input-file-container {
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	padding: 6px 12px;
+}
+
+.input-file {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.input-file-trigger {
+	display: inline-block;
+	padding: 8px 16px;
+	background-color: #007bff;
+	color: white;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.input-file-trigger i {
+	margin-right: 8px;
+}
+
+.horizontal-list {
+	list-style-type: none;
+	padding-left: 0;
+	display: flex;
+	flex-wrap: wrap;
+	/* Cho phép các mục xuống dòng khi không đủ không gian */
+}
+
+.horizontal-list li {
+	margin-right: 10px; /* Khoảng cách giữa các mục */
+	margin-bottom: 10px; /* Khoảng cách dưới */
+	background-color: #f0f0f0; /* Màu nền */
+	padding: 5px 10px; /* Khoảng cách bên trong */
+	border-radius: 5px; /* Bo tròn viền */
+}

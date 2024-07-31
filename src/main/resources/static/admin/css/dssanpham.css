@@ -1,0 +1,241 @@
+.modal-header {
+	background-color: #007bff;
+	color: #fff;
+}
+
+.modal-title {
+	font-weight: bold;
+}
+
+.modal-body {
+	padding: 1.5rem;
+}
+
+.form-group label {
+	font-weight: 500;
+}
+
+.form-control {
+	border-radius: 0.25rem;
+	box-shadow: none;
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-control:focus {
+	border-color: #80bdff;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+	transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btn-primary:hover {
+	background-color: #0056b3;
+	border-color: #004085;
+}
+
+.btn-secondary {
+	background-color: #6c757d;
+	border-color: #6c757d;
+	transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btn-secondary:hover {
+	background-color: red;
+	border-color: #545b62;
+}
+
+.close {
+	color: #fff;
+	opacity: 0.75;
+	transition: opacity 0.15s;
+}
+
+.close:hover {
+	opacity: 1;
+}
+
+/* General Styles */
+body {
+	    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+.app-content {
+	padding: 20px;
+	background-color: #f8f9fa;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb-item.active a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.app-title {
+    margin-bottom: 20px;
+}
+
+.app-title ul {
+    padding: 0;
+    list-style: none;
+}
+
+.app-title #clock {
+    float: right;
+    font-size: 1.2em;
+    color: #6c757d;
+}
+
+/* Tile Styles */
+.tile {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	padding: 15px;
+}
+
+.tile-body {
+	padding: 15px;
+}
+
+.element-button .btn {
+	border-radius: 5px;
+	margin: 0 5px;
+	font-size: 14px;
+}
+
+.btn-add {
+	background-color: #28a745;
+	color: #fff;
+}
+
+.btn-add:hover {
+	background-color: #218838;
+}
+
+.btn-delete {
+	background-color: #dc3545;
+	color: #fff;
+}
+
+.btn-delete:hover {
+	background-color: #c82333;
+}
+
+.btn-excel {
+	background-color: #17a2b8;
+	color: #fff;
+}
+
+.btn-excel:hover {
+	background-color: #138496;
+}
+
+.pdf-file {
+	background-color: #6f42c1;
+	color: #fff;
+}
+
+.pdf-file:hover {
+	background-color: #5a2a7f;
+}
+
+/* Table Styles */
+.table {
+	margin-bottom: 0;
+}
+
+/* Table Header Styles */
+.table thead th {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+    text-align: center; /* Center-align text */
+    padding: 12px; /* Add padding for spacing */
+    font-size: 16px; /* Larger font size for headers */
+    font-weight: bold; /* Make text bold */
+    border-bottom: 2px solid #0056b3; /* Add a darker border for separation */
+}
+
+/* Table Header Hover Effect */
+.table thead th:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    cursor: pointer; /* Show a pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+/* Table Header Text Wrapping */
+.table thead th {
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+}
+
+
+.table tbody td {
+	vertical-align: middle;
+}
+
+.table img {
+	border-radius: 5px;
+}
+
+/* Pagination Styles */
+.pagination {
+	margin: 20px 0;
+}
+
+.page-item .page-link {
+	border-radius: 5px;
+	margin: 0 2px;
+	padding: 8px 12px;
+	font-size: 14px;
+	color: #007bff;
+}
+
+.page-item .page-link:hover {
+	background-color: #e9ecef;
+}
+
+.page-item .page-link:focus {
+	box-shadow: none;
+}
+
+/* Responsive Design */
+@media ( max-width : 768px) {
+	.element-button .col-sm-2 {
+		margin-bottom: 10px;
+	}
+	.table img {
+		width: 80px;
+	}
+	.pagination .page-link {
+		padding: 6px 8px;
+		font-size: 12px;
+	}
+}
+
+@media ( max-width : 576px) {
+	.element-button .col-sm-2 {
+		width: 100%;
+		text-align: center;
+	}
+	.table img {
+		width: 60px;
+	}
+	.pagination .page-link {
+		padding: 4px 6px;
+		font-size: 10px;
+	}
+}

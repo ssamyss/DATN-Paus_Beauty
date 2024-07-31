@@ -18,5 +18,8 @@ public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 	@Query("SELECT count(o) FROM SanPham o WHERE o.tonKho < 5")
     Integer getCountTonKho();
 	
+	@Query("SELECT count(o) FROM SanPham o WHERE o.tonKho =0")
+    Integer getCounthHetSP();
+	
 	Page<SanPham> findAll(Pageable pageable);
 }

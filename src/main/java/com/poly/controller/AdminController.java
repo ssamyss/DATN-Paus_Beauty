@@ -53,6 +53,7 @@ public class AdminController {
 		model.addAttribute("order_count", dhdao.getCountDH());
 		model.addAttribute("account_count", tkdao.getCountTK());
 		model.addAttribute("tonkho_count", spdao.getCountTonKho());
+		model.addAttribute("spHetHang_count", spdao.getCounthHetSP());
 		return "admin/quan-ly-bao-cao";
 	}
 
@@ -61,10 +62,6 @@ public class AdminController {
 		return "admin/form-add-don-hang";
 	}
 
-	@GetMapping("/danhmuc")
-	public String nhanVien() {
-		return "admin/form-add-catelogy";
-	}
 
 	@GetMapping("/sanpham")
 	public String sanPham() {
