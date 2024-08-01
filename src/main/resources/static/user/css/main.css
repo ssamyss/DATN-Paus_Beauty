@@ -1890,6 +1890,7 @@ input.num-product::-webkit-inner-spin-button {
 .table-shopping-cart .column-2 {
   width: 220px;
   font-size: 15px;
+  padding-right: 25px;
 }
 
 .table-shopping-cart .column-3 {

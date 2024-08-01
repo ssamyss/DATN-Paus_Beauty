@@ -1,5 +1,5 @@
 const app = angular.module("app", []);
-app.controller("giohang-ctrl", function($scope, $http) {
+app.controller("giohang-ctrl", function($scope, $http, $window) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.giohang = [];
@@ -67,6 +67,10 @@ app.controller("giohang-ctrl", function($scope, $http) {
 		});
 		$scope.tong();
 	};
+	
+	$scope.goToPage = function() {
+        $window.location.href = '/don-hang';
+    };
 
 	$scope.initialize();
 	$scope.reset();

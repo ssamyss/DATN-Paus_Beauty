@@ -26,24 +26,17 @@
 
 						<div class="tt-container">
 							<div>
-								<input type="text" name="name" placeholder="Họ và tên" required>
+								<input type="text" name="name" placeholder="Họ và tên" value="{{ taikhoan.hoVaTen }}"
+									required>
 							</div>
 							<div>
-								<input type="text" name="sdt" placeholder="Số điện thoại" required>
-								<input type="text" name="email" placeholder="Email" required>
-							</div>
-						</div>
-
-						<div><span style="font-weight: bold; font-size: 20px; color: black;">Thông tin nhận hàng</span>
-						</div>
-
-						<div class="tt-container">
-							<div>
-								<input type="text" name="diachi" placeholder="Địa chỉ" required>
+								<input type="text" name="sdt" placeholder="Số điện thoại" value="{{ taikhoan.sdt }}"
+									required>
+								<input type="text" name="email" placeholder="Email" value="{{ taikhoan.email }}"
+									required>
 							</div>
 							<div>
-								<input type="text" name="sdt" placeholder="Tòa nhà, số nhà, tên đường" required>
-								<input type="text" name="email" placeholder="Tên địa chỉ (vd: Văn phòng, Số nhà, ...)"
+								<input type="text" name="diachi" placeholder="Địa chỉ" value="{{ taikhoan.diaChi }}"
 									required>
 							</div>
 						</div>
@@ -54,12 +47,12 @@
 
 						<div class="tt-container">
 							<div class="radiobox">
-								<input type="radio" name="pttt" value="1">
+								<input type="radio" name="pttt" value="1" required>
 								<label class="" for="" style="font-size: 15px; color: black;">Trả
 									tiền mặt khi nhận hàng</label>
 							</div>
 							<div class="radiobox">
-								<input type="radio" name="pttt" value="2">
+								<input type="radio" name="pttt" value="2" required>
 								<label class="" for="" style="font-size: 15px; color: black;">Thanh
 									toán VN Pay</label>
 							</div>
@@ -71,12 +64,12 @@
 
 						<div class="tt-container">
 							<div class="radiobox">
-								<input type="radio" name="ptcv" value="1">
+								<input type="radio" name="ptcv" value="1" ng-click="vanchuyen(1)" required>
 								<label class="" for="" style="font-size: 15px; color: black;">Giao
 									hàng tiêu chuẩn (3 - 6 ngày) (Giao giờ hành chính)</label>
 							</div>
 							<div class="radiobox">
-								<input type="radio" name="ptcv" value="2">
+								<input type="radio" name="ptcv" value="2" ng-click="vanchuyen(2)" required>
 								<label class="" for="" style="font-size: 15px; color: black;">Giao
 									hàng trong 24h</label>
 							</div>
@@ -88,6 +81,23 @@
 					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm shadow">
 						<h4 class="mtext-109 cl2 p-b-30">Thông tin đơn hàng</h4>
 
+						<div ng-repeat="sanPham in giohang">
+							<div class="row">
+								<div class="how-itemcart1 anh col col-3">
+									<img ng-src="/user/images/chekhuyetdiem.jpg" alt="IMG">
+								</div>
+								<div class="tenSP col">
+									{{ sanPham.sanPham.tenSP }}
+								</div>
+							</div>
+						</div>
+
+						<div class="">
+							<span class="" style="font-size: 15px;"> Phí vận chuyển: </span>
+							<span class="formatted-price" style="font-size: 15px;">{{ pvc | currency:'':0 }}
+								VNĐ</span>
+						</div>
+						<br>
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208">
 								<span class="stext-110 cl2" style="font-size: 20px;"> Tổng tiền: </span>
@@ -99,7 +109,7 @@
 							</div>
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						<button ng-click="goTo()" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 							Xác nhận
 						</button>
 					</div>
@@ -108,7 +118,7 @@
 		</div>
 	</form>
 
-
+	<span th:insert="~{user/common/footer.html}"></span>
 	<!-- AngularJS -->
 	<script th:src="@{/user/angularjs/donhang.js}"></script>
 	<!-- link -->
@@ -130,15 +140,26 @@
 			border: 1px solid #ccc;
 			border-radius: 4px;
 		}
-		
+
 		.radiobox input[type="radio"],
 		.radiobox label {
 			display: inline-block;
 		}
-		
+
 		.shadow {
 			box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 			border-radius: 5%;
+		}
+
+		.anh,
+		.tenSP,
+		.slSP {
+			display: inline-block;
+			margin-bottom: 10px;
+		}
+
+		.tenSP {
+			margin-right: 20px;
 		}
 	</style>
 

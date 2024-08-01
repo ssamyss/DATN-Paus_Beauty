@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ThanhToanController {
 
 	@GetMapping("/don-hang")
-	public String form() {
+	public String donhang() {
 		return "user/don-hang";
 	}
 	
+	@GetMapping("/hoa-don")
+	public String hoadon() {
+		return "user/hoa-don";
+	}
 }

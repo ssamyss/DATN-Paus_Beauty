@@ -37,7 +37,7 @@ public class DonHang implements Serializable{
 	private String maDH;
 	
 	@Column(name = "tong_gia")
-	private Double tongGia;
+	private Long tongGia;
 	
 //	@NotBlank(message = "Vui lòng nhập số điện thoại")
 //	@Size(min = 10, max = 10, message = "Số điện thoại phải có 10 chữ số")
