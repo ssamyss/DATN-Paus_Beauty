@@ -7,7 +7,6 @@
 <link th:insert="~{user/link/link.html}">
 <style>
 </style>
-
 </head>
 <body ng-app="app" ng-controller="sanpham-index" class="animsition">
 
@@ -20,16 +19,13 @@
 			<div class="slick1">
 				<div class="item-slick1"
 					style="background-image: url(user/images/slide1.png);"></div>
-
 				<div class="item-slick1"
 					style="background-image: url(user/images/slide2.png);"></div>
-
 				<div class="item-slick1"
 					style="background-image: url(user/images/slide3.png);"></div>
 			</div>
 		</div>
 	</section>
-
 
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-140">
@@ -40,25 +36,19 @@
 
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					<button
-						class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
-						data-filter="*">Tất cả sản phẩm</button>
+					<!-- Button for all products -->
+					<a href="/product"
+						class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1">Tất
+						cả sản phẩm</a>
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-						data-filter=".women">Trang điểm</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-						data-filter=".men">Chăm sóc da</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-						data-filter=".bag">Chăm sóc tóc</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-						data-filter=".shoes">Chăm sóc cơ thể</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-						data-filter=".watches">Dụng cụ</button>
+					<!-- Button for each category -->
+					<th:block th:each="category : ${categories}">
+						<a th:href="@{/(category=${category.maLSP})}"
+							class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+							th:text="${category.tenLSP}"></a>
+					</th:block>
 				</div>
+
 
 				<div class="flex-w flex-c-m m-tb-10">
 					<div
@@ -73,20 +63,17 @@
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
 					<div class="bor8 dis-flex p-l-15">
-						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-							<i class="zmdi zmdi-search"></i>
-						</button>
-
-						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
-							name="search-product" placeholder="Search">
+						<form action="/search" method="get">
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
+								name="keyword" placeholder="Search">
+						</form>
 					</div>
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row" id="product-list">
 				<div ng-repeat="item in items"
 					class="col-sm-6 col-md-4 col-lg-3 p-b-35">
-					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
 							<img ng-src="/assets/images/sanpham/{{item.anh}}"
@@ -94,27 +81,22 @@
 								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Xem </a>
 						</div>
-
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<td>{{item.tenSP}}</td>
-									<td>{{item.gia | currency:'':0}} VND</td>
-								</span>
+								<td>{{item.gia | currency:'':0}} VND</td>
 							</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- Load more -->
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a
 					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
 					Xem nhiều </a>
 			</div>
 		</div>
-
 	</section>
 
 	<!-- Back to top -->

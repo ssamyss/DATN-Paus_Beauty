@@ -11,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.poly.dao.DanhMucLoaiSanPhamDao;
 import com.poly.dao.SanPhamDao;
+import com.poly.entity.DanhMucLoaiSanPham;
 import com.poly.entity.SanPham;
 
 @Controller
@@ -21,8 +24,12 @@ public class UserController {
 	@Autowired
 	SanPhamDao spDao;
 
+	@Autowired
+	DanhMucLoaiSanPhamDao dmlspDao;
+
 	@GetMapping("")
-	public String index() {
+	public String index(Model model) {
+		 model.addAttribute("categories", dmlspDao.findAll());
 		return "user/index";
 	}
 
@@ -32,7 +39,16 @@ public class UserController {
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
 		Page<SanPham> sanphamPage = spDao.findAll(pageable);
 		model.addAttribute("sanphamPage", sanphamPage);
+		 model.addAttribute("categories", dmlspDao.findAll());
 		return "user/sanpham";
+	}
+
+	@GetMapping("/search")
+	public String search(Model model, @RequestParam("keyword") String keyword) {
+		List<SanPham> searchResults = spDao.searchByTenSP(keyword);
+		model.addAttribute("searchResults", searchResults);
+		model.addAttribute("keyword", keyword);
+		return "user/search-results";
 	}
 
 	@GetMapping("/detail/{id}")
@@ -65,7 +81,7 @@ public class UserController {
 	public String doiTra() {
 		return "user/doitra";
 	}
-	
+
 	@GetMapping("/thong-tin-ca-nhan")
 	public String thongTin() {
 		return "user/thong-tin-ca-nhan";

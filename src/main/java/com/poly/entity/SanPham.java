@@ -22,52 +22,57 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
-@Entity 
+@Entity
 @Table(name = "san_pham")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SanPham implements Serializable{
-	
+public class SanPham implements Serializable {
+
 	@Id
 	@Column(name = "ma_sp")
 	private Integer maSP;
-	
+
 	@Column(name = "ten_sp", columnDefinition = "nvarchar(max)")
 	private String tenSP;
-	
+
 	@Column(name = "gia")
 	private Long gia;
-	
+
 	@Column(name = "ton_kho")
 	private Integer tonKho;
-	
+
 	@Column(name = "mo_ta", columnDefinition = "nvarchar(max)")
 	private String mota;
-	
+
 	@Column(name = "anh")
 	private String anh;
-	
+
 	@Column(name = "trang_thai")
 	private boolean trangThai;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngay_cap_nhat")
 	private Date createDate = new Date();
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "sanPham")
 	private List<DonHangChiTiet> donHangChiTiet;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "sanPham")
 	private List<GioHang> gioHang;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ma_th")
 	private ThuongHieu thuongHieu;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ma_lsp")
 	private LoaiSanPham loaiSanPham;
+
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name = "ma_loai_sp")
+	private DanhMucLoaiSanPham danhMucLoaiSanPham;
 }

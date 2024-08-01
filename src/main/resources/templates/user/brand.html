@@ -5,6 +5,58 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link th:insert="~{user/link/link.html}">
+<style>
+.custom-brand-title {
+	font-family: 'Georgia', 'Times New Roman', serif;
+	font-size: 36px;
+	font-weight: bold;
+	color: #000000;
+	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	margin-top: 50px;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	text-align: center;
+}
+
+.brand-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.brand-card {
+	text-align: center;
+	margin: 20px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s, box-shadow 0.3s;
+	max-width: 300px;
+}
+
+.brand-card:hover {
+	transform: scale(1.05);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.brand-card img {
+	height: 120px;
+	width: auto;
+	max-width: 100%;
+	border-radius: 10px;
+}
+
+.brand-card h4 {
+	font-family: 'Arial', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	color: #333;
+	margin-top: 10px;
+}
+</style>
 </head>
 
 <body class="animsition">
@@ -17,7 +69,6 @@
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">Miễn phí vận chuyển cho đơn từ 1tr
 						vnđ</div>
-
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m trans-04 p-lr-25"> Trợ giúp </a> <a
 							href="#" class="flex-c-m trans-04 p-lr-25"> Tài khoản của tôi
@@ -33,91 +84,22 @@
 		</div>
 	</header>
 
-	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
-		<div class="s-full js-hide-cart"></div>
-
-		<div class="header-cart flex-col-l p-l-65 p-r-25">
-			<div class="header-cart-title flex-w flex-sb-m p-b-8">
-				<span class="mtext-103 cl2"> Your Cart </span>
-
-				<div
-					class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
-					<i class="zmdi zmdi-close"></i>
-				</div>
-			</div>
-
-			<div class="header-cart-content flex-w js-pscroll">
-				<ul class="header-cart-wrapitem w-full">
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-01.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Áo thun trắng </a> <span class="header-cart-item-info"> 1 x
-								19.00 VND </span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-02.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Giày Converse </a> <span class="header-cart-item-info"> 1 x
-								29.00 VND </span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="images/item-cart-03.jpg" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Đồng hồ </a> <span class="header-cart-item-info"> 1 x 39.00
-								VND </span>
-						</div>
-					</li>
-				</ul>
-
-				<div class="w-full">
-					<div class="header-cart-total w-full p-tb-40">Tổng tiền:
-						77.00 VND</div>
-
-					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html"
-							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							Xem giỏ hàng </a> <a href="shoping-cart.html"
-							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Thanh toán </a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<!-- Header -->
+	<span th:insert="~{user/common/header.html}"></span>
 
 	<!-- Content page -->
-	<div>
-		<h3 class="text-center custom-brand-title">THƯƠNG HIỆU</h3>
-		<div th:each="brand : ${brands}" class="col-md-2 mb-4 brand-container">
-			<a th:href="@{/brand2/{maTH}(maTH=${brand.maTH})}"> <img
-				th:src="@{/user/images/brands/{image}(image=${brand.anhTH})}"
-				class="img-fluid brand-image" alt="Hình ảnh của [[${brand.tenTH}]]">
-			</a>
-			<h4 class="brand-name" th:text="${brand.tenTH}"></h4>
+	<div class="container">
+		<h3 class="custom-brand-title">THƯƠNG HIỆU</h3>
+		<div class="brand-container">
+			<div th:each="brand : ${brands}" class="brand-card">
+				<a th:href="@{/brand2/{maTH}(maTH=${brand.maTH})}"> <img
+					th:src="@{/user/images/brands/{image}(image=${brand.anhTH})}"
+					alt="Hình ảnh của [[${brand.tenTH}]]">
+				</a>
+				<h4 class="brand-name" th:text="${brand.tenTH}"></h4>
+			</div>
 		</div>
 	</div>
-
-	<!-- Footer -->
-	<footer class="bg3 p-t-75 p-b-32">
-		<span th:insert="~{user/common/footer.html}"></span>
-	</footer>
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
@@ -126,98 +108,16 @@
 		</span>
 	</div>
 
-	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/jquery/jquery-3.2.1.min.js}"></script>
-	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/animsition/js/animsition.min.js}"></script>
-	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/bootstrap/js/popper.js}"></script>
-	<script th:src="@{/user/vendor/bootstrap/js/bootstrap.min.js}"></script>
-	<!--===============================================================================================-->
-	<script th:src="@{/user/vendor/select2/select2.min.js}"></script>
-	<script>
-		$(".js-select2").each(function() {
-			$(this).select2({
-				minimumResultsForSearch : 20,
-				dropdownParent : $(this).next('.dropDownSelect2')
-			});
-		})
-	</script>
-	<!--===============================================================================================-->
-	<script
-		th:src="@{/user/vendor/MagnificPopup/jquery.magnific-popup.min.js}"></script>
-	<!--===============================================================================================-->
-	<script
-		th:src="@{/user/vendor/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
-	<script>
-		$('.js-pscroll').each(function() {
-			$(this).css('position', 'relative');
-			$(this).css('overflow', 'hidden');
-			var ps = new PerfectScrollbar(this, {
-				wheelSpeed : 1,
-				scrollingThreshold : 1000,
-				wheelPropagation : false,
-			});
+	<!-- Footer -->
+	<div th:insert="~{user/common/footer.html}"></div>
 
-			$(window).on('resize', function() {
-				ps.update();
-			})
-		});
-	</script>
-	<!--===============================================================================================-->
-	<script th:src="@{/user/js/main.js}"></script>
+	<!-- product-detail -->
+	<div th:insert="~{user/product-detail.html}"></div>
 
-	<style>
-.custom-brand-title {
-	font-family: 'Georgia', 'Times New Roman', serif;
-	font-size: 36px;
-	font-weight: bold;
-	color: #000000;
-	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-	margin-top: 50px;
-	text-transform: uppercase;
-	letter-spacing: 1.5px;
-}
+	<!-- AngularJS -->
+	<script th:src="@{/user/angularjs/sanpham.js}"></script>
 
-.custom-brand-title {
-	font-family: 'Georgia', 'Times New Roman', serif;
-	font-size: 36px;
-	font-weight: bold;
-	color: #000000;
-	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-	margin-top: 50px;
-	text-transform: uppercase;
-	letter-spacing: 1.5px;
-}
-
-.brand-name {
-	font-family: 'Arial', sans-serif;
-	font-size: 18px;
-	font-weight: 600;
-	color: #333;
-	text-align: center;
-	margin-top: 10px;
-}
-
-.brand-image {
-	height: 120px;
-	width: 300px;
-	border: 2px solid #ddd;
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.brand-image:hover {
-	transform: scale(1.05);
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.brand-container {
-	text-align: center;
-	margin-bottom: 30px;
-}
-</style>
-
+	<!-- link -->
+	<div th:insert="~{user/link/scriptIndex.html}"></div>
 </body>
 </html>

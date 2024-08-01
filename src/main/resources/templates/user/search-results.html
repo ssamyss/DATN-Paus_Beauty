@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Kết quả tìm kiếm</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:insert="~{user/link/link.html}">
+<style>
+</style>
+</head>
+<body>
+	<!-- Header -->
+	<span th:insert="~{user/common/header.html}"></span>
+
+	<!-- Search Results -->
+	<section class="bg0 p-t-23 p-b-140">
+		<div class="container">
+			<div class="p-b-10">
+				<h3 class="ltext-103 cl5">
+					Kết quả tìm kiếm: <span th:text="${keyword}">Từ khóa</span>
+				</h3>
+			</div>
+
+			<div class="row">
+				<div th:if="${#lists.isEmpty(searchResults)}">
+					<p>Không tìm thấy sản phẩm nào !!!</p>
+				</div>
+				<div th:each="item : ${searchResults}"
+					class="col-sm-6 col-md-4 col-lg-3 p-b-35">
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img th:src="@{'/assets/images/sanpham/' + ${item.anh}}"
+								alt="IMG-PRODUCT"> <a
+								th:href="@{/detail/{id}(id=${item.maSP})}"
+								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">Xem</a>
+						</div>
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l">
+								<span class="stext-105 cl3"> <span
+									th:text="${item.tenSP}">Tên sản phẩm</span>
+								</span> <span class="stext-105 cl3"> <span th:text="${item.gia}">Giá</span>
+									VND
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top"> <i
+			class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+	<!-- Footer -->
+	<div th:insert="~{user/common/footer.html}"></div>
+
+	<!-- product-detail -->
+	<div th:insert="~{user/product-detail.html}"></div>
+
+	<!-- AngularJS -->
+	<script th:src="@{/user/angularjs/sanpham.js}"></script>
+
+	<!-- link -->
+	<div th:insert="~{user/link/scriptIndex.html}"></div>
+</body>
+</html>
