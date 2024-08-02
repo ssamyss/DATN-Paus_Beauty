@@ -38,8 +38,30 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 		});
 	};
 
-	//Thương hiệu
+	//Loại Sản Phẩm
+	$scope.createLoaiSP = function() {
+		var item = angular.copy($scope.form);
+		$http.post('/rest/loaisanpham', item).then(resp => {
+			$scope.items.push(resp.data);
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công',
+				text: 'Thêm loại sản phẩm thành công!',
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#28a745'
+			});
+			$scope.reset();
+			$scope.initialize();
+		}).catch(error => {
+			alert("Lỗi thêm mới!");
+			console.log("Error", error);
+		});
+	};
 
+
+
+
+	//Thương hiệu
 	$scope.createTH = function() {
 		var item = angular.copy($scope.form);
 		$http.post('/rest/thuonghieu', item).then(resp => {
@@ -90,6 +112,73 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 		});
 	};
 
+	//xóa thương hiệu theo mã thương hiệu
+	$scope.deleteTH = function(item) {
+		Swal.fire({
+			title: 'Xác nhận',
+			text: "Bạn có chắc chắn muốn xóa thương hiệu này không?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Xóa',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$http.delete('/rest/thuonghieu/' + item.maTH, item).then(resp => {
+					var index = $scope.items.findIndex(p => p.maTH == item.maTH);
+					$scope.items.splice(index, 1);
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Thương hiệu đã được xóa thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+					$scope.reset();
+					$scope.initialize();
+				}).catch(error => {
+					alert("Lỗi xóa dữ liệu!");
+					console.log("Error", error);
+				});
+			}
+		});
+	};
+
+	//xóa loại sản phẩm theo mã loại sản phẩm
+	$scope.deleteLSP = function(item) {
+		Swal.fire({
+			title: 'Xác nhận',
+			text: "Bạn có chắc chắn muốn xóa loại sản phẩm này không?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Xóa',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$http.delete('/rest/loaisanpham/' + item.maPL, item).then(resp => {
+					var index = $scope.items.findIndex(p => p.maPL == item.maPL);
+					$scope.items.splice(index, 1);
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Loại sản phẩm đã được xóa thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+					$scope.reset();
+					$scope.initialize();
+				}).catch(error => {
+					alert("Lỗi xóa dữ liệu!");
+					console.log("Error", error);
+				});
+			}
+		});
+	};
+
+
 	$scope.pager = {
 		page: 0,
 		size: 5,
@@ -120,37 +209,37 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 		}
 
 	}
-	
+
 	// Phân trang cho thương hiệu
-		$scope.pagers = {
-			page: 0,
-			size: 5,
-			get bras() {
-				var start = this.page * this.size;
-				return $scope.bras.slice(start, start + this.size);
-			},
-			get count() {
-				return Math.ceil(1.0 * $scope.bras.length / this.size);
-			},
-			first() {
-				this.page = 0;
-			},
-			prev() {
-				this.page--;
-				if (this.page < 0) {
-					this.last();
-				}
-			},
-			next() {
-				this.page++;
-				if (this.page >= this.count) {
-					this.first();
-				}
-			},
-			last() {
-				this.page = this.count - 1;
+	$scope.pagers = {
+		page: 0,
+		size: 5,
+		get bras() {
+			var start = this.page * this.size;
+			return $scope.bras.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.bras.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
 			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
 		}
+	}
 
 
 	$scope.initialize();

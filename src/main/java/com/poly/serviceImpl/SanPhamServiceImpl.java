@@ -1,8 +1,10 @@
 package com.poly.serviceImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.poly.dao.SanPhamDao;
@@ -56,4 +58,12 @@ public class SanPhamServiceImpl implements SanPhamService {
 		// TODO Auto-generated method stub
 		spdao.deleteAll();
 	}
+
+	@Override
+    public List<SanPham> getTop5SanPhamBanChay() {
+        List<Object[]> results = spdao.findTop5SanPhamBanChay(PageRequest.of(0, 5));
+        return results.stream()
+                      .map(result -> (SanPham) result[0])
+                      .collect(Collectors.toList());
+    }
 }

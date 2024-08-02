@@ -51,4 +51,11 @@ public class DonHangServiceImpl implements DonHangService {
 		dhdao.deleteById(maDH);
 	}
 
+	@Override
+	public List<Object[]> getOrderSummary() {
+		// TODO Auto-generated method stub
+		return dhdao.getOrderSummary();
+	}
+	
+
 }

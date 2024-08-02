@@ -17,4 +17,6 @@ public interface SanPhamService {
 
 	void delete(int maSP);
 	void deleteAll();
+	
+	List<SanPham> getTop5SanPhamBanChay();
 }

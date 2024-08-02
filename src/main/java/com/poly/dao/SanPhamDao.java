@@ -26,11 +26,16 @@ public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 
 	@Query("SELECT sp FROM SanPham sp WHERE sp.tenSP LIKE %:keyword%")
 	List<SanPham> searchByTenSP(@Param("keyword") String keyword);
-	
+
 	@Query("SELECT sp FROM SanPham sp WHERE sp.danhMucLoaiSanPham.tenLSP = :category")
 	List<SanPham> findByCategory(@Param("category") String category);
 
 	List<SanPham> findByTenSPContainingIgnoreCase(String tenSP);
 
 	Page<SanPham> findAll(Pageable pageable);
+
+	@Query("SELECT sp, SUM(ct.soLuong) AS totalQuantity " + "FROM DonHangChiTiet ct " + "JOIN ct.sanPham sp "
+			+ "GROUP BY sp " + "ORDER BY totalQuantity DESC")
+	List<Object[]> findTop5SanPhamBanChay(Pageable pageable);
+
 }

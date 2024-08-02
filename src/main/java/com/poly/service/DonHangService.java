@@ -17,4 +17,6 @@ public interface DonHangService {
 	DonHang update(DonHang donHang);
 
 	void delete(String maDH);
+	
+	List<Object[]> getOrderSummary();
 }

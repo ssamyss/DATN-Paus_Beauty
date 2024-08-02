@@ -1,5 +1,9 @@
 package com.poly.controller;
 
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,20 +13,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.poly.dao.DonHangDao;
 import com.poly.dao.SanPhamDao;
 import com.poly.dao.TaiKhoanDao;
+import com.poly.entity.SanPham;
+import com.poly.service.DonHangService;
+import com.poly.service.SanPhamService;
 
 @Controller
 public class AdminController {
-	
+
 	@Autowired
 	SanPhamDao spdao;
-	
+
 	@Autowired
 	DonHangDao dhdao;
-	
+
 	@Autowired
 	TaiKhoanDao tkdao;
-	
-	
+
+	@Autowired
+	SanPhamService sanPhamService;
+
+	@Autowired
+	DonHangService donHangService;
+
 	@GetMapping("/admin")
 	public String index(Model model) {
 		model.addAttribute("product_count", spdao.getCountSP());
@@ -48,12 +60,27 @@ public class AdminController {
 	}
 
 	@GetMapping("/baocao")
-	public String baoCao(Model model ) {
+	public String baoCao(Model model) {
 		model.addAttribute("product_count", spdao.getCountSP());
 		model.addAttribute("order_count", dhdao.getCountDH());
 		model.addAttribute("account_count", tkdao.getCountTK());
 		model.addAttribute("tonkho_count", spdao.getCountTonKho());
 		model.addAttribute("spHetHang_count", spdao.getCounthHetSP());
+//		model.addAttribute("order_countTongDT", dhdao.getCountTongDT());
+		double orderCountTongDT = dhdao.getCountTongDT();
+		NumberFormat vietnameseFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+		String formattedOrderCount = vietnameseFormat.format(orderCountTongDT);
+		model.addAttribute("order_countTongDT", formattedOrderCount);
+		List<SanPham> top5SanPham = sanPhamService.getTop5SanPhamBanChay();
+		model.addAttribute("top5SanPham", top5SanPham);
+		model.addAttribute("order_countHuyDon", dhdao.getCountHuyDon());
+		List<Object[]> orderSummary = donHangService.getOrderSummary();
+
+		// Calculate the total price
+		double totalPrice = orderSummary.stream().mapToDouble(o -> (Double) o[4]).sum();
+
+		model.addAttribute("orderSummary", orderSummary);
+		model.addAttribute("totalPrice", totalPrice);
 		return "admin/quan-ly-bao-cao";
 	}
 
@@ -62,7 +89,6 @@ public class AdminController {
 		return "admin/form-add-don-hang";
 	}
 
-
 	@GetMapping("/sanpham")
 	public String sanPham() {
 		return "admin/form-add-san-pham";
@@ -70,7 +96,7 @@ public class AdminController {
 
 	@GetMapping("/chitietdonhang/{maDH}")
 	public String chiTietDonHang(Model model, @PathVariable("maDH") String maDH) {
-		
+
 		return "admin/form-chi-tiet-don-hang";
 	}
 }

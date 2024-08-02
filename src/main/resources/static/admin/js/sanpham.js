@@ -228,48 +228,6 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 		});
 	};
 
-	//Thương hiệu
-
-	$scope.createTH = function() {
-		var item = angular.copy($scope.form);
-		$http.post('/rest/thuonghieu', item).then(resp => {
-			$scope.items.push(resp.data);
-			$scope.reset();
-			alert("Thêm mới thương hiệu thành công");
-		}).catch(error => {
-			alert("Lỗi thêm mới!");
-			console.log("Error", error);
-		});
-	};
-
-	$scope.brandImageChanged = function(files) {
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			$scope.$apply(function() {
-				$scope.newBrandImageURL = e.target.result;
-			});
-		};
-		reader.readAsDataURL(files[0]);
-
-		// Gửi file ảnh lên server
-		var data = new FormData();
-		data.append('file', files[0]);
-		$http.post('/rest/upload/thuonghieu', data, {
-			transformRequest: angular.identity,
-			headers: { 'Content-Type': undefined }
-		}).then(resp => {
-			if (resp.data.error) {
-				alert(resp.data.error);
-			} else {
-				// Lưu đường dẫn ảnh vào biến form.anh
-				$scope.form.anhTH = resp.data.name;
-			}
-		}).catch(error => {
-			alert("Lỗi tải ảnh!");
-			console.log("Error", error);
-		});
-	};
-
 	// Lấy 5 chữ đầu
 	$scope.getFirstFiveWords = function(str) {
 		if (!str) return '';

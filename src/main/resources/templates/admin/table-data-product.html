@@ -104,8 +104,7 @@
 							<tbody>
 								<tr ng-repeat="item in pager.items">
 									<td>{{ getFirstFiveWords(item.tenSP) }}</td>
-									<td><img ng-src="/assets/images/sanpham/{{item.anh}}"
-										alt="{{item.tenSP}}" style="width: 100px; height: auto;" /></td>
+									<td><img ng-src="/assets/images/sanpham/{{item.anh}}" style="width: 100px; height: auto;" /></td>
 									<td>{{item.tonKho}}</td>
 									<td>{{item.gia | currency:'':0}} VND</td>
 									<td>{{item.loaiSanPham.tenPL}}</td>

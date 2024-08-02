@@ -2,106 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Chi tiết đơn hàng | Quản trị Admin</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Main CSS-->
-	<link rel="stylesheet" type="text/css" th:href="@{/admin/doc/css/main.css}">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-	<!-- or -->
-	<link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-	<!-- Font-icon css-->
-	<link rel="stylesheet" type="text/css"
-		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>Chi tiết đơn hàng | Quản trị Admin</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/admin/doc/css/main.css}">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<!-- or -->
+<link rel="stylesheet"
+	href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body ng-app="app" ng-controller="donhangchitiet-ctrl" onload="time()" class="app sidebar-mini rtl">
+<body ng-app="app" ng-controller="donhangchitiet-ctrl" onload="time()"
+	class="app sidebar-mini rtl">
 
 	<div th:insert="~{admin/menu.html}"></div>
 
 	<main class="app-content">
 		<div class="app-title">
-			<ul class="app-breadcrumb breadcrumb side">
-				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách sản phẩm trong đơn hàng</b></a></li>
-			</ul>
-			<div id="clock"></div>
-		</div>
+    <ul class="app-breadcrumb breadcrumb side">
+        <li class="breadcrumb-item active" ng-repeat="dhct in dhchitiets track by $index">
+            <a href="#" ng-if="$index === 0 || dhchitiets[$index-1].donHang.maDH !== dhct.donHang.maDH">
+                <b>Danh sách sản phẩm trong đơn hàng {{dhct.donHang.maDH}}</b>
+            </a>
+        </li>
+    </ul>
+    <div id="clock"></div>
+</div>
+
 		<div class="row">
 			<div class="col-md-12">
-				<div class="tile">
+				<div class="tile">	
 					<div class="tile-body">
 						<div class="row element-button">
 							<div class="col-sm-2">
-								<a class="btn btn-add btn-sm" th:href="@{/donhang}" title="Thêm"><i
-										class="fas fa-plus"></i> Tạo mới đơn hàng</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập"
-									onclick="myFunction(this)"><i class="fas fa-file-upload"></i> Tải từ file</a>
-							</div>
-
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file" type="button" title="In"
-									onclick="myApp.printTable()"><i class="fas fa-print"></i> In dữ liệu</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button"
-									title="Sao chép"><i class="fas fa-copy"></i>
-									Sao chép</a>
-							</div>
-
-							<div class="col-sm-2">
-								<a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i>
-									Xuất Excel</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm pdf-file" type="button" title="In"
-									onclick="myFunction(this)"><i class="fas fa-file-pdf"></i> Xuất PDF</a>
-							</div>
-							<div class="col-sm-2">
-								<a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
-										class="fas fa-trash-alt"></i>
-									Xóa tất cả </a>
+								<a class="btn btn-add btn-sm" th:href="@{/dataOrder}">Quay lại</a>
 							</div>
 						</div>
 						<table class="table table-hover table-bordered" id="sampleTable">
 							<thead>
 								<tr>
-									<th width="10" scope="col"><input type="checkbox" id="all"></th>
 									<th scope="col">Ảnh</th>
 									<th scope="col">Tên sản phẩm</th>
 									<th scope="col">Số lượng</th>
 									<th scope="col">Giá</th>
 									<th scope="col">Tổng giá</th>
 									<th scope="col">Mã đơn hàng</th>
-									<th scope="col">Tính năng</th>
 								</tr>
 							</thead>
 							<tbody>
 								<!--| filter: {donHang: {maDH: $scope.maDH}}-->
 								<tr ng-repeat="dhct in dhchitiets">
-									<td width="10"><input type="checkbox" name="check1" value="1"></td>
-									<td>{{dhct.sanPham.anh}}</td>
+									<td><img
+										ng-src="/assets/images/sanpham/{{dhct.sanPham.anh}}"
+										style="width: 100px; height: auto;" /></td>
 									<td>{{dhct.sanPham.tenSP}}</td>
 									<td>{{dhct.soLuong}}</td>
 									<td>{{dhct.sanPham.gia | currency:'':0}} VND</td>
 									<td>{{dhct.gia | currency:'':0}} VND</td>
 									<td>{{dhct.donHang.maDH}}</td>
-									<td>
-										<button class="btn btn-primary btn-sm trash" type="button" title="Xóa">
-											<i class="fas fa-trash-alt"></i>
-										</button>
-										<button class="btn btn-primary btn-sm edit" type="button" title="Xem">
-											<i class="bi bi-eye-fill"></i>
-										</button>
-									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -139,8 +114,7 @@
 				mm = '0' + mm
 			}
 			today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-			tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-				'</span>';
+			tmp = '<span class="date"> ' + today + ' - ' + nowTime + '</span>';
 			document.getElementById("clock").innerHTML = tmp;
 			clocktime = setTimeout("time()", "1000", "Javascript");
 
