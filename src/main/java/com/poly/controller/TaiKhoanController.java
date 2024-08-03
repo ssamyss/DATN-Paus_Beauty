@@ -159,6 +159,11 @@ public class TaiKhoanController {
         return "user/register-success";
     }
 	
+	@GetMapping("/forgotpass")
+    public String forgotPass() {
+        return "user/forgotpass";
+    }
+	
 	
 	//	Đăng nhập
 	@GetMapping("/login")

@@ -18,6 +18,29 @@
 	text-align: center;
 }
 
+.letter-nav {
+	text-align: center;
+	margin: 20px 0;
+}
+
+.letter-nav a {
+	display: inline-block;
+	margin: 0 10px;
+	padding: 5px 10px;
+	font-family: 'Arial', sans-serif;
+	font-size: 18px;
+	font-weight: 600;
+	color: #333;
+	text-decoration: none;
+	transition: color 0.3s, background-color 0.3s;
+	border-radius: 5px;
+}
+
+.letter-nav a:hover {
+	color: #fff;
+	background-color: #333;
+}
+
 .brand-container {
 	display: flex;
 	flex-wrap: wrap;
@@ -61,50 +84,54 @@
 
 <body class="animsition">
 	<!-- Header -->
-	<header class="header-v4">
-		<!-- Header desktop -->
-		<div class="container-menu-desktop">
-			<!-- Topbar -->
-			<div class="top-bar">
-				<div class="content-topbar flex-sb-m h-full container">
-					<div class="left-top-bar">Miễn phí vận chuyển cho đơn từ 1tr
-						vnđ</div>
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25"> Trợ giúp </a> <a
-							href="#" class="flex-c-m trans-04 p-lr-25"> Tài khoản của tôi
-						</a> <a href="#" class="flex-c-m trans-04 p-lr-25"> VN </a> <a
-							href="#" class="flex-c-m trans-04 p-lr-25"> VND </a>
-					</div>
-				</div>
-			</div>
-
-			<div class="wrap-menu-desktop">
-				<span th:insert="~{user/common/header.html}"></span>
-			</div>
-		</div>
-	</header>
-
-	<!-- Header -->
 	<span th:insert="~{user/common/header.html}"></span>
 
 	<!-- Content page -->
 	<div class="container">
 		<h3 class="custom-brand-title">THƯƠNG HIỆU</h3>
-		<div class="brand-container">
+
+		<div class="letter-nav">
+			<a href="#" class="letter-link" data-letter="A">A</a>
+			<a href="#" class="letter-link" data-letter="B">B</a>
+			<a href="#" class="letter-link" data-letter="C">C</a>
+			<a href="#" class="letter-link" data-letter="D">D</a>
+			<a href="#" class="letter-link" data-letter="E">E</a>
+			<a href="#" class="letter-link" data-letter="F">F</a>
+			<a href="#" class="letter-link" data-letter="G">G</a>
+			<a href="#" class="letter-link" data-letter="H">H</a>
+			<a href="#" class="letter-link" data-letter="I">I</a>
+			<a href="#" class="letter-link" data-letter="J">J</a>
+			<a href="#" class="letter-link" data-letter="K">K</a>
+			<a href="#" class="letter-link" data-letter="L">L</a>
+			<a href="#" class="letter-link" data-letter="M">M</a>
+			<a href="#" class="letter-link" data-letter="N">N</a>
+			<a href="#" class="letter-link" data-letter="O">O</a>
+			<a href="#" class="letter-link" data-letter="P">P</a>
+			<a href="#" class="letter-link" data-letter="Q">Q</a>
+			<a href="#" class="letter-link" data-letter="R">R</a>
+			<a href="#" class="letter-link" data-letter="S">S</a>
+			<a href="#" class="letter-link" data-letter="T">T</a>
+			<a href="#" class="letter-link" data-letter="U">U</a>
+			<a href="#" class="letter-link" data-letter="V">V</a>
+			<a href="#" class="letter-link" data-letter="W">W</a>
+			<a href="#" class="letter-link" data-letter="X">X</a>
+			<a href="#" class="letter-link" data-letter="Y">Y</a>
+			<a href="#" class="letter-link" data-letter="Z">Z</a>
+			<a href="#" class="letter-link" data-letter="all">All</a>
+		</div>
+
+		<div class="brand-container" id="brand-container">
 			<div th:each="brand : ${brands}" class="brand-card">
-				<a th:href="@{/brand2/{maTH}(maTH=${brand.maTH})}"> <img
-					th:src="@{/user/images/brands/{image}(image=${brand.anhTH})}"
-					alt="Hình ảnh của [[${brand.tenTH}]]">
+				<a th:href="@{/brand2/{maTH}(maTH=${brand.maTH})}">
+					<h4 class="brand-name" th:text="${brand.tenTH}"></h4>
 				</a>
-				<h4 class="brand-name" th:text="${brand.tenTH}"></h4>
 			</div>
 		</div>
 	</div>
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
-		<span class="symbol-btn-back-to-top"> <i
-			class="zmdi zmdi-chevron-up"></i>
+		<span class="symbol-btn-back-to-top"> <i class="zmdi zmdi-chevron-up"></i>
 		</span>
 	</div>
 
@@ -119,5 +146,39 @@
 
 	<!-- link -->
 	<div th:insert="~{user/link/scriptIndex.html}"></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function() {
+	    $('.letter-link').click(function(e) {
+	        e.preventDefault();
+	        var letter = $(this).data('letter');
+	        var url = '/brand/data';
+	        if (letter !== 'all') {
+	            url += '?letter=' + letter;
+	        }
+	        $.ajax({
+	            url: url,
+	            method: 'GET',
+	            success: function(data) {
+	                var brandContainer = $('#brand-container');
+	                brandContainer.empty();
+	                data.forEach(function(brand) {
+	                    brandContainer.append(
+	                        '<div class="brand-card">' +
+	                        '<a href="/brand2/' + brand.maTH + '">' +
+	                        '<h4 class="brand-name">' + brand.tenTH + '</h4>' +
+	                        '</a>' +
+	                        '</div>'
+	                    );
+	                });
+	            },
+	            error: function(err) {
+	                console.log(err);
+	            }
+	        });
+	    });
+	});
+	</script>
 </body>
 </html>
