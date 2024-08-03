@@ -2,11 +2,13 @@ const app = angular.module("app", []);
 app.controller("donhang-ctrl", function($scope, $http, $window) {
 	$scope.form = {};
 	$scope.donhang = [];
+	$scope.donhangnho = [];
 	$scope.taikhoan = [];
 	$scope.giohang = [];
 	$scope.tongtien = 0;
 	$scope.dem = 0;
 	$scope.pvc = 0;
+	$scope.maDH = 0;
 
 	$scope.reset = function() {
 		$scope.form = {
@@ -39,19 +41,40 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 	};
 
 	$scope.create = function() {
+		const sdt = document.getElementById("sdt").value;
+		const diachi = document.getElementById("diachi").value;
 		$http.get('/rest/donhang').then(resp => {
 			$scope.donhang = resp.data;
-			$scope.form.maDH = $scope.donhang.length;
+			if ($scope.donhang.length > 0) {
+				$scope.maDH = $scope.donhang.length + 1;
+			} else {
+				$scope.maDH = 1;
+			}
+			$scope.form.maDH = $scope.maDH;
+			$scope.form.tongGia = $scope.tongtien;
+			$scope.form.sdt = sdt;
+			$scope.form.diaChi = diachi;
+			$scope.form.trangThai = 1;
+			$scope.form.taiKhoan = $scope.taikhoan;
+
+			var item = angular.copy($scope.form);
+			$http.post('/rest/donhang', item).then(resp => {
+				$scope.donhang.push(resp.data);
+				$scope.reset();
+				$http.get('/rest/donhang/' + $scope.maDH).then(resp => {
+					$scope.giohangnho = resp.data;
+					$window.location.href = "/hoa-don/" + $scope.giohangnho.maDH;
+					console.log($scope.giohangnho.maDH);
+				}).catch(error => {
+					alert("Lỗi khi tải giỏ hàng!");
+				});
+				alert("Thêm mới đơn hàng thành công!");
+			}).catch(error => {
+				alert("Lỗi thêm mới đơn hàng!");
+			});
+
 		}).catch(error => {
 			alert("Lỗi khi tải đơn hàng!");
-		});
-		var item = angular.copy($scope.form);
-		$http.post('/rest/donhang', item).then(resp => {
-			$scope.items.push(resp.data);
-			$scope.reset();
-			alert("Thêm mới đơn hàng thành công!");
-		}).catch(error => {
-			alert("Lỗi thêm mới đơn hàng!");
 		});
 	};
 
@@ -64,7 +87,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			$scope.pvc = 40000;
 			$scope.tongtien = $scope.tongtien + 40000;
 		}
-	}
+	};
 
 	$scope.goTo = function() {
 		// Lấy tất cả các element có name là "myRadio" (ví dụ)
@@ -81,8 +104,8 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 		}
 		if ($scope.selectedValue == 1) {
 			$scope.create();
-			$window.location.href = '/hoa-don';
-		} else {
+			
+		} else if ($scope.selectedValue == 2) {
 			$window.location.href = '/vn-pay';
 		}
 	};

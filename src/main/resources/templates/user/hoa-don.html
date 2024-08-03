@@ -19,7 +19,7 @@
 			<h4 style="font-size: 20px;">Mã đơn hàng của quý khách là:</h4>
 			
 			<form id="signupForm">
-				<input type="text" name="tenTaiKhoan" style="text-align: center; font-size: 30px;" value="0111" required
+				<input type="text" name="tenTaiKhoan" style="text-align: center; font-size: 30px;" th:value="${maDH}" required
 					disabled>
 				<br>
 				<a th:href="@{/}">Trang chủ</a>
