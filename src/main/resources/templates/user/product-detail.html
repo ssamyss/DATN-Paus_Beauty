@@ -1,138 +1,145 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Paus Beauty</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link th:href="@{/user/link/link.html}" rel="stylesheet">
-	<link th:href="@{/user/css/styles.css}" rel="stylesheet">
-	<style>
-		.modal-content-custom {
-			border-radius: 10px;
-			overflow: hidden;
-		}
-
-		.modal-header-custom {
-			border-bottom: none;
-			padding-bottom: 0;
-		}
-
-		.modal-body-custom {
-			padding-top: 0;
-		}
-
-		.product-image {
-			border: 1px solid #000;
-			border-radius: 10px;
-		}
-
-		.product-details {
-			padding-left: 30px;
-		}
-
-		.product-price {
-			font-size: 1.5rem;
-			color: #000;
-			font-weight: bold;
-		}
-
-		.product-stock {
-			font-size: 1rem;
-			color: #888;
-		}
-
-		.btn-close-custom {
-			position: absolute;
-			right: 20px;
-			top: 20px;
-		}
-
-		.btn-add-to-cart {
-			margin-top: 5px;
-			display: inline-block;
-			font-weight: 400;
-			line-height: 1.5;
-			text-align: center;
-			text-decoration: none;
-			vertical-align: middle;
-			cursor: pointer;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			user-select: none;
-			border: 1px solid transparent;
-			padding: .375rem .75rem;
-			font-size: 1rem;
-			border-radius: .25rem;
-			color: #fff;
-			background-color: #0d6efd;
-			border-color: #0d6efd;
-
-		}
-	</style>
+    <title>Paus Beauty</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/user/link/link.html}" rel="stylesheet">
+    <link th:href="@{/user/css/styles.css}" rel="stylesheet">
+    <style>
+        .modal-content-custom {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .modal-header-custom {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .modal-body-custom {
+            padding-top: 0;
+        }
+        .product-image {
+            border: 1px solid #000;
+            border-radius: 10px;
+        }
+        .product-details {
+            padding-left: 30px;
+        }
+        .product-price {
+            font-size: 1.5rem;
+            color: #000;
+            font-weight: bold;
+        }
+        .product-stock {
+            font-size: 1rem;
+            color: #888;
+        }
+        .btn-close-custom {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+        .btn-add-to-cart {
+            margin-top: 5px;
+            display: inline-block;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: middle;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            border-radius: .25rem;
+            color: #fff;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+    </style>
 </head>
-
 <body ng-app="app" ng-controller="sanpham-index" class="animsition">
-	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
-		<div class="overlay-modal1 js-hide-modal1"></div>
-		<div class="container">
-			<div class="modal-content-custom bg0 p-t-60 p-b-30 p-lr-15-lg">
-				<button class="btn-close-custom how-pos3 hov3 trans-04 js-hide-modal1">
-					<img th:src="@{user/images/icons/icon-close.png}" alt="CLOSE">
-				</button>
-				<div class="row">
-					<div class="col-md-6 col-lg-7 p-b-30">
-						<div class="p-l-25 p-r-30 p-lr-0-lg">
-							<div class="wrap-slick3 flex-sb flex-w">
-								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-								<div class="slick3 gallery-lb">
-									<div class="item-slick3">
-										<div class="wrap-pic-w pos-relative product-image">
-											<img ng-src="/assets/images/sanpham/{{form.anh}}" alt="IMG-PRODUCT"> <a
-												class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-												ng-href="/assets/images/sanpham/{{form.anh}}"> <i
-													class="fa fa-expand"></i>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-5 p-b-30">
-						<div class="product-details p-t-5">
-							<h4 class="mtext-105 cl2 js-name-detail p-b-14">{{form.tenSP}}</h4>
-							<span class="product-price">Giá: {{form.gia |
-								currency:'':0}} VND</span>
-							<p class="product-stock p-t-23">Tồn kho: {{form.tonKho}}</p>
-							<div class="p-t-33">
-								<div class="flex-w flex-r-m p-b-10">
-									<div class="size-204 flex-w flex-m respon6-next">
-										<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-											<input class="mtext-104 cl3 num-product text-center" type="number"
-												name="num-product" value="1">
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
+    <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+        <div class="overlay-modal1 js-hide-modal1"></div>
+        <div class="container">
+            <div class="modal-content-custom bg0 p-t-60 p-b-30 p-lr-15-lg">
+                <button class="btn-close-custom how-pos3 hov3 trans-04 js-hide-modal1">
+                    <img th:src="@{user/images/icons/icon-close.png}" alt="CLOSE">
+                </button>
+                <div class="row">
+                    <div class="col-md-6 col-lg-7 p-b-30">
+                        <div class="p-l-25 p-r-30 p-lr-0-lg">
+                            <div class="wrap-slick3 flex-sb flex-w">
+                                <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+                                <div class="slick3 gallery-lb">
+                                    <div class="item-slick3">
+                                        <div class="wrap-pic-w pos-relative product-image">
+                                            <img ng-src="/assets/images/sanpham/{{form.anh}}" alt="IMG-PRODUCT">
+                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" ng-href="/assets/images/sanpham/{{form.anh}}">
+                                                <i class="fa fa-expand"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-5 p-b-30">
+                        <div class="product-details p-t-5">
+                            <h4 class="mtext-105 cl2 js-name-detail p-b-14">{{form.tenSP}}</h4>
+                            <span class="product-price">Giá: {{form.gia | currency:'':0}} VND</span>
+                            <p class="product-stock p-t-23">Tồn kho: {{form.tonKho}}</p>
+                            <div class="p-t-33">
+                                <div class="flex-w flex-r-m p-b-10">
+                                    <div class="size-204 flex-w flex-m respon6-next">
+                                        <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                <i class="fs-16 zmdi zmdi-minus"></i>
+                                            </div>
+                                            <input class="mtext-104 cl3 num-product text-center" type="number" name="num-product" value="1">
+                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                <i class="fs-16 zmdi zmdi-plus"></i>
+                                            </div>
+                                        </div>
+                                    	 <a href="/chitietsanpham?maSP={{form.maSP}}" class="product-detail-link">Chi tiết sản phẩm</a>
 
-										<td th:if="${session.tentaikhoan == null}"><a th:herf="@{/login}">Thêm vào giỏ
-												hàng 1</a></td>
-
-										<button th:if="${session.tentaikhoan != null}" ng-click="themGH(form)"
-											class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m" type="button">Thêm
-											vào giỏ hàng</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                       
+                                        <button th:if="${session.tentaikhoan != null}" ng-click="themGH(form)" class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m" type="button">Thêm vào giỏ hàng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<style>
+.product-detail-link {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #EC6090; /* Màu nền của nút */
+    border: 1px solid #EC6090;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
 
+.product-detail-link:hover {
+    background-color: #d94a80; /* Màu nền khi hover */
+    color: #fff;
+    transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
+}
+
+.product-detail-link:active {
+    background-color: #b83d6c; /* Màu nền khi nhấn */
+}
+</style>
 </html>

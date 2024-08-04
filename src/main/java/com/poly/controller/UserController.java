@@ -17,6 +17,7 @@ import com.poly.dao.DanhMucLoaiSanPhamDao;
 import com.poly.dao.SanPhamDao;
 import com.poly.entity.DanhMucLoaiSanPham;
 import com.poly.entity.SanPham;
+import com.poly.service.SanPhamService;
 
 @Controller
 public class UserController {
@@ -26,6 +27,9 @@ public class UserController {
 
 	@Autowired
 	DanhMucLoaiSanPhamDao dmlspDao;
+	
+	@Autowired
+	SanPhamService spService;
 
 	@GetMapping("")
 	public String index(Model model) {
@@ -85,5 +89,16 @@ public class UserController {
 	@GetMapping("/thong-tin-ca-nhan")
 	public String thongTin() {
 		return "user/thong-tin-ca-nhan";
+	}
+	
+	@GetMapping("/chitietsanpham")
+	public String chitietsanpham(@RequestParam(name = "maSP") Integer maSP, Model model) {
+	    SanPham product = spService.findById(maSP);
+	    if (product != null) {
+	        model.addAttribute("product", product);
+	        return "user/chitietsanpham";
+	    } else {
+	        return "redirect:/error"; // Hoặc trang lỗi khác
+	    }
 	}
 }

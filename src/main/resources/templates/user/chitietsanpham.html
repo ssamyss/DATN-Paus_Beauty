@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Paus Beauty - Chi tiết sản phẩm</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:insert="~{user/link/link.html}">
+</head>
+
+<body>
+	<!-- Header -->
+	<span th:insert="~{user/common/header.html}"></span>
+
+	<div class="container mt-5"
+		style="margin-top: 50px; margin-bottom: 20px">
+		<!-- Button Close -->
+		<button class="btn-close-custom how-pos3 hov3 trans-04"
+			style="background: none; border: none;">
+			<img th:src="@{/user/images/icons/icon-close.png}" alt="CLOSE">
+		</button>
+
+		<!-- Xử lý hiển thị sản phẩm không tìm thấy -->
+		<div th:if="${product == null}">
+			<p>Không tìm thấy sản phẩm.</p>
+		</div>
+
+		<!-- Hiển thị thông tin sản phẩm -->
+		<div th:if="${product != null}">
+			<div class="row">
+				<!-- Cột hình ảnh -->
+				<div class="col-md-5">
+					<img th:src="@{'/assets/images/sanpham/' + ${product.anh}}"
+						class="img-fluid" alt="${product.tenSP}">
+				</div>
+
+				<!-- Cột thông tin -->
+				<div class="col-md-7">
+					<div class="card">
+						<div class="card-body">
+							<h3 class="card-title" th:text="${product.tenSP}"></h3>
+							<div style="display: flex;">
+								<p style="font-weight: bold;">Giá bán:</p>
+								<p style="color: red; font-weight: bold; margin-left: 20px;">
+									<span class="formatted-price" th:text="${product.gia}"></span>
+									VNĐ
+								</p>
+							</div>
+							<hr>
+							<div style="display: flex;">
+								<div style="font-weight: bold;">
+									Tồn kho: <span th:text="${product.tonKho}"></span>
+								</div>
+							</div>
+							<hr>
+
+							<th:block th:if="${product.tonKho < 1}">
+								<div style="display: flex;">
+									<div style="font-weight: bold; color: red;">Sản phẩm đang
+										tạm hết hàng</div>
+								</div>
+							</th:block>
+							<div style="display: flex;">
+								<div style="font-weight: bold;">Mô tả: &nbsp;</div>
+								<div th:text="${product.mota}"></div>
+							</div>
+							<hr />
+							<th:block th:if="${product.tonKho > 0}">
+								<div style="display: flex;">
+									<div style="font-weight: bold;">Trạng thái: &nbsp;</div>
+									<div>Còn hàng</div>
+								</div>
+								<hr>
+
+								<div class="flex-w flex-r-m p-b-10">
+									<div class="size-204 flex-w flex-m respon6-next">
+										<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+											<div
+												class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-minus"></i>
+											</div>
+											<input class="mtext-104 cl3 num-product text-center"
+												type="number" name="num-product" value="1">
+											<div
+												class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-plus"></i>
+											</div>
+										</div>
+										<div class="text-center mt-4">
+											<button th:if="${session.username != null}"
+												th:onclick="'themGH(' + ${product.id} + ')'"
+												class="btn btn-primary addToCart"
+												style="background-color: #EC6090; border: none; margin-right: 10px;">
+												Thêm vào giỏ hàng</button>
+											<a th:if="!${session.username != null}" th:href="@{'/login'}"
+												class="btn btn-primary"
+												style="background-color: #EC6090; border: none; margin-right: 10px;">
+												Thêm vào giỏ hàng </a> <a th:if="${session.username != null}"
+												th:href="@{'/cart/add/' + ${product.id}}"
+												class="btn btn-primary"
+												style="background-color: #EC6090; border: none; margin-right: 10px;">
+												Mua ngay </a> <a th:if="!${session.username != null}"
+												th:href="@{'/login'}" class="btn btn-primary"
+												style="background-color: #EC6090; border: none; margin-right: 10px;">
+												Mua ngay </a>
+										</div>
+
+									</div>
+								</div>
+							</th:block>
+
+							<!-- Thêm mã JavaScript để hiển thị thông báo -->
+							<script>
+                            document.querySelectorAll('.addToCart').forEach(function(button) {
+                                button.addEventListener('click', function() {
+                                    alert('Sản phẩm đã được thêm vào giỏ hàng thành công!');
+                                });
+                            });
+                        </script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<div th:insert="~{user/common/footer.html}"></div>
+
+	<!-- AngularJS -->
+	<script th:src="@{/user/angularjs/sanpham.js}"></script>
+</body>
+
+<style>
+.product-image {
+	border: 1px solid #000;
+	border-radius: 10px;
+}
+
+.product-details {
+	padding-left: 30px;
+}
+
+.product-price {
+	font-size: 1.5rem;
+	color: #000;
+	font-weight: bold;
+}
+
+.product-stock {
+	font-size: 1rem;
+	color: #888;
+}
+
+.btn-close-custom {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+.btn-add-to-cart {
+	margin-top: 5px;
+	display: inline-block;
+	font-weight: 400;
+	line-height: 1.5;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	border-radius: .25rem;
+	color: #fff;
+	background-color: #0d6efd;
+	border-color: #0d6efd;
+}
+</style>
+</html>
