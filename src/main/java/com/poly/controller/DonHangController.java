@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class ThanhToanController {
+public class DonHangController {
 
 	@GetMapping("/don-hang")
 	public String donhang() {
@@ -17,5 +17,10 @@ public class ThanhToanController {
 	public String hoadon(@PathVariable("maDH") String maDH, Model model) {
 		model.addAttribute("maDH", maDH);
 		return "user/hoa-don";
+	}
+	
+	@GetMapping("/quan-ly-don-hang")
+	public String quanlydonhang() {
+		return "user/quan-ly-don-hang";
 	}
 }

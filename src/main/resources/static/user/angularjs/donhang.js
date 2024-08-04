@@ -60,56 +60,73 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			$scope.form.taiKhoan = $scope.taikhoan;
 
 			var donhang = angular.copy($scope.form);
-			$http.post('/rest/donhang', donhang).then(resp => {
-				$scope.donhang.push(resp.data);
-				$scope.reset();
+			$scope.themDH(donhang);
 
-				$http.get('/rest/donhang/' + $scope.maDH).then(resp => {
-					$scope.giohangnho = resp.data;
-					for (i = 0; i < $scope.giohang.length; i++) {
-
-						$http.get('/rest/donhangchitiet').then(resp => {
-							$scope.donhangchitiet = resp.data;
-							if ($scope.donhangchitiet.length > 0) {
-								$scope.maDHCT = $scope.donhangchitiet.length + 1;
-							} else {
-								$scope.maDHCT = 1;
-							}
-							$scope.form.maDHCT = $scope.maDHCT;
-							$scope.form.tongGia = $scope.tongtien;
-							$scope.form.sdt = sdt;
-							$scope.form.diaChi = diachi;
-							$scope.form.trangThai = 1;
-							$scope.form.taiKhoan = $scope.taikhoan;
-
-							var donhangchitiet = angular.copy($scope.form);
-							$http.post('/rest/donhangchitiet', donhangchitiet).then(resp => {
-								
-								$scope.reset();
-
-								var item = angular.copy($scope.giohang[i]);
-								$http.delete('/rest/giohang/' + item.maGH, item).then(resp => {
-									var index = $scope.items.findIndex(p => p.maGH == item.maGH);
-									$scope.items.splice(index, 1);
-								}).catch(error => {
-									alert("Lỗi xóa giỏ hàng dữ liệu!");
-								});
-							}).catch(error => {
-								alert("Lỗi khi thêm đơn hàng chi tiết!");
-							});
-						}).catch(error => {
-							alert("Lỗi khi tải đơn hàng chi tiết!");
-						});
-					}
-					$window.location.href = "/hoa-don/" + $scope.giohangnho.maDH;
-				}).catch(error => {
-					alert("Lỗi khi tải giỏ hàng!");
-				});
-			}).catch(error => {
-				alert("Lỗi thêm mới đơn hàng!");
-			});
 		}).catch(error => {
 			alert("Lỗi khi tải đơn hàng!");
+		});
+	};
+
+	$scope.themDH = function(donhang) {
+		$http.post('/rest/donhang', donhang).then(resp => {
+			$scope.donhang.push(resp.data);
+			$scope.reset();
+			$scope.taiGH();
+		}).catch(error => {
+			alert("Lỗi thêm mới đơn hàng!");
+		});
+	};
+
+	$scope.taiGH = function() {
+		$http.get('/rest/donhang/' + $scope.maDH).then(resp => {
+			$scope.giohangnho = resp.data;
+			for (i = 0; i < $scope.giohang.length; i++) {
+				var item = angular.copy($scope.giohang[i]);
+				$scope.taiDH(item);
+				$scope.deleteGH(item);
+			}
+			$window.location.href = "/hoa-don/" + $scope.giohangnho.maDH;
+		}).catch(error => {
+			alert("Lỗi khi tải giỏ hàng!");
+		});
+	};
+
+	$scope.taiDH = function(item) {
+		$http.get('/rest/donhangchitiet').then(resp => {
+			$scope.donhangchitiet = resp.data;
+			if ($scope.donhangchitiet.length > 0) {
+				$scope.maDHCT = $scope.donhangchitiet.length + 1;
+			} else {
+				$scope.maDHCT = 1;
+			}
+			$scope.form.maDHCT = $scope.maDHCT;
+			$scope.form.gia = item.sanPham.gia;
+			$scope.form.soLuong = item.soLuong;
+			$scope.form.sanPham = item.sanPham;
+			$scope.form.donHang = $scope.giohangnho;
+			
+			var donhangchitiet = angular.copy($scope.form);
+			$scope.themDHCT(donhangchitiet);
+		}).catch(error => {
+			alert("Lỗi khi tải đơn hàng chi tiết!");
+		});
+	};
+
+	$scope.themDHCT = function(donhangchitiet) {
+		$http.post('/rest/donhangchitiet', donhangchitiet).then(resp => {
+			$scope.donhangchitiet.push(resp.data);
+			$scope.reset();
+		}).catch(error => {
+			alert("Lỗi khi thêm đơn hàng chi tiết!");
+		});
+	};
+
+	$scope.deleteGH = function(item) {
+		$http.delete('/rest/giohang/' + item.maGH, item).then(resp => {
+			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
+			$scope.giohang.splice(index, 1);
+		}).catch(error => {
+			alert("Lỗi xóa giỏ hàng dữ liệu!");
 		});
 	};
 
