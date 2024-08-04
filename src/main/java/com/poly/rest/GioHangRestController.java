@@ -79,8 +79,8 @@ public class GioHangRestController {
 		return giohangService.update(giohang);
 	}
 
-	@DeleteMapping("{giohangid}")
-	public void delete(@PathVariable("taiKhoan") Integer maGH) {
+	@DeleteMapping("{maGH}")
+	public void delete(@PathVariable("maGH") Integer maGH) {
 		giohangService.delete(maGH);
 	}
 

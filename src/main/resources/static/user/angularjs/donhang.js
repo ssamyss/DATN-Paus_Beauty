@@ -57,14 +57,14 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			$scope.form.trangThai = 1;
 			$scope.form.taiKhoan = $scope.taikhoan;
 
-			var item = angular.copy($scope.form);
-			$http.post('/rest/donhang', item).then(resp => {
+			var donhang = angular.copy($scope.form);
+			$http.post('/rest/donhang', donhang).then(resp => {
 				$scope.donhang.push(resp.data);
 				$scope.reset();
 				$http.get('/rest/donhang/' + $scope.maDH).then(resp => {
 					$scope.giohangnho = resp.data;
+					
 					$window.location.href = "/hoa-don/" + $scope.giohangnho.maDH;
-					console.log($scope.giohangnho.maDH);
 				}).catch(error => {
 					alert("Lỗi khi tải giỏ hàng!");
 				});

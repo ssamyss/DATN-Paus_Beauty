@@ -142,6 +142,7 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 					$scope.giohang.push(resp.data);
 					$('.js-modal1').removeClass('show-modal1');
 					alert("Thêm sp vào giỏ hàng thành công!");
+					$scope.initialize();
 					$scope.reset();
 				}).catch(error => {
 					console.error("Lỗi khi thêm mới sp vào giỏ hàng: ", error);

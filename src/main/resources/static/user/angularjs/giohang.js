@@ -49,23 +49,27 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 	};
 
 	$scope.tru = function(item) {
-		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
-			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
-			$scope.giohang[index].soLuong = $scope.giohang[index].soLuong - 1;
+		var sanpham = angular.copy(item);
+		sanpham.soLuong = sanpham.soLuong - 1;
+		$http.put('/rest/giohang/' + sanpham.maGH, sanpham).then(resp => {
+			var index = $scope.giohang.findIndex(p => p.maGH == sanpham.maGH);
+			$scope.giohang[index] = angular.copy(sanpham);
+			$scope.tong();
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
 		});
-		$scope.tong();
 	};
 
 	$scope.cong = function(item) {
-		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
-			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
-			$scope.giohang[index].soLuong = $scope.giohang[index].soLuong + 1;
+		var sanpham = angular.copy(item);
+		sanpham.soLuong = sanpham.soLuong + 1;
+		$http.put('/rest/giohang/' + sanpham.maGH, sanpham).then(resp => {
+			var index = $scope.giohang.findIndex(p => p.maGH == sanpham.maGH);
+			$scope.giohang[index] = angular.copy(sanpham);
+			$scope.tong();
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
 		});
-		$scope.tong();
 	};
 	
 	$scope.goToPage = function() {
