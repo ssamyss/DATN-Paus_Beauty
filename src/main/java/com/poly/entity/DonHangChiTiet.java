@@ -31,7 +31,7 @@ public class DonHangChiTiet implements Serializable{
 	private Integer soLuong;
 	
 	@Column(name = "gia")
-	private Double gia;
+	private Long gia;
 	
 	@ManyToOne
 	@JoinColumn(name = "ma_sp")
