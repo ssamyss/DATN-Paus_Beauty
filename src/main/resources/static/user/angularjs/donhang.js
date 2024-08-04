@@ -63,16 +63,22 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 				$scope.reset();
 				$http.get('/rest/donhang/' + $scope.maDH).then(resp => {
 					$scope.giohangnho = resp.data;
-					
+					for (i = 0; i < $scope.giohang.length; i++) {
+						var item = angular.copy($scope.giohang[i]);
+						$http.delete('/rest/giohang/' + item.maGH, item).then(resp => {
+							var index = $scope.items.findIndex(p => p.maGH == item.maGH);
+							$scope.items.splice(index, 1);
+						}).catch(error => {
+							alert("Lỗi xóa dữ liệu!");
+						});
+					}
 					$window.location.href = "/hoa-don/" + $scope.giohangnho.maDH;
 				}).catch(error => {
 					alert("Lỗi khi tải giỏ hàng!");
 				});
-				alert("Thêm mới đơn hàng thành công!");
 			}).catch(error => {
 				alert("Lỗi thêm mới đơn hàng!");
 			});
-
 		}).catch(error => {
 			alert("Lỗi khi tải đơn hàng!");
 		});
@@ -104,7 +110,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 		}
 		if ($scope.selectedValue == 1) {
 			$scope.create();
-			
+
 		} else if ($scope.selectedValue == 2) {
 			$window.location.href = '/vn-pay';
 		}

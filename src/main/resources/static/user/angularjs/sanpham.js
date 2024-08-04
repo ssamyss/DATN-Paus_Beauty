@@ -55,13 +55,20 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 					item.createDate = new Date(item.createDate);
 				});
 				$scope.dem = $scope.giohang.length;
+				$scope.tong();
 			}).catch(error => {
 				alert("Lỗi khi tải giỏ hàng!");
 			});
 		}).catch(error => {
 			console.error(error);
 		});
+	};
 
+	$scope.tong = function() {
+		$scope.tongtien = 0;
+		for (let i = 0; i < $scope.dem; i++) {
+			$scope.tongtien = $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong + $scope.tongtien;
+		}
 	};
 
 	$scope.openQuickView = function(item) {
