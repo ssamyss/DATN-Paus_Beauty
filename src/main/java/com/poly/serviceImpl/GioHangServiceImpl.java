@@ -18,19 +18,16 @@ public class GioHangServiceImpl implements GioHangService {
 
     @Override
 	public List<GioHang> findAll() {
-		// TODO Auto-generated method stub
 		return ghdao.findAll();
 	}
 
 	@Override
 	public GioHang findById(Integer maGH) {
-		// TODO Auto-generated method stub
 		return ghdao.findById(maGH).get();
 	}
 
 	@Override
 	public List<GioHang> getGioHangByTenTaiKhoan(String tenTaiKhoan) {
-		// TODO Auto-generated method stub
 		TaiKhoan taikhoan = new TaiKhoan();
 		taikhoan.setTenTaiKhoan(tenTaiKhoan);
 		return ghdao.findByTaiKhoan(taikhoan);
@@ -38,19 +35,16 @@ public class GioHangServiceImpl implements GioHangService {
 
 	@Override
 	public GioHang create(GioHang giohang) {
-		// TODO Auto-generated method stub
 		return ghdao.save(giohang);
 	}
 
 	@Override
 	public GioHang update(GioHang giohang) {
-		// TODO Auto-generated method stub
 		return ghdao.save(giohang);
 	}
 
 	@Override
 	public void delete(Integer maGH) {
-		// TODO Auto-generated method stub
 		ghdao.deleteById(maGH);
 	}
 
@@ -60,7 +54,7 @@ public class GioHangServiceImpl implements GioHangService {
 	}
 	
 	@Override
-	public Double tongTien(String tenTaiKhoan) {
+	public Long tongTien(String tenTaiKhoan) {
 		return ghdao.tongTien(tenTaiKhoan);
 	}
 }

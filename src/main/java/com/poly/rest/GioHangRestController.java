@@ -1,5 +1,7 @@
 package com.poly.rest;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +56,7 @@ public class GioHangRestController {
 	}
 	
 	@GetMapping("/tongtien")
-	public Double tongTien(HttpSession session) {
+	public Long tongTien(HttpSession session) {
 		String tentaikhoan = (String) session.getAttribute("tentaikhoan");
 		return giohangService.tongTien(tentaikhoan);
 	}
@@ -83,5 +85,14 @@ public class GioHangRestController {
 	public void delete(@PathVariable("maGH") Integer maGH) {
 		giohangService.delete(maGH);
 	}
-
+	
+	@DeleteMapping("/deleteByTTK/{tentaikhoan}")
+	public void deleteAll(@PathVariable("tentaikhoan") String tentaikhoan) {
+		List<GioHang> gh = getGioHangByTenTaiKhoan(tentaikhoan);
+		int count = gh.size();
+		for (int i = 0; i < count; i++) {
+			GioHang gioHang = gh.get(i);
+			giohangService.delete(gioHang.getMaGH());
+		}
+	}
 }

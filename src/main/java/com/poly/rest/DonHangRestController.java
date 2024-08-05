@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poly.entity.DonHang;
 import com.poly.service.DonHangService;
 
+import jakarta.servlet.http.HttpSession;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/donhang")
@@ -27,6 +29,12 @@ public class DonHangRestController {
 	@GetMapping()
 	public List<DonHang> getAll() {
 		return donHangService.findAll();
+	}
+	
+	@GetMapping("canhan")
+	public List<DonHang> getDHs(HttpSession session) {
+		String tentaikhoan = (String) session.getAttribute("tentaikhoan");
+		return donHangService.getOrders(tentaikhoan);
 	}
 	
 	@GetMapping("{maDH}")

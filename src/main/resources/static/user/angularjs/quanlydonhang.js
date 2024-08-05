@@ -11,7 +11,7 @@ app.controller("quanlydonhang-ctrl", function($scope, $http) {
 
 	$scope.initialize = function() {
 		// Load đơn hàng
-		$http.get('/rest/donhang').then(resp => {
+		$http.get('/rest/donhang/canhan').then(resp => {
 			$scope.donhang = resp.data;
 			$scope.donhang.forEach(item => {
 				item.createDate = new Date(item.createDate);

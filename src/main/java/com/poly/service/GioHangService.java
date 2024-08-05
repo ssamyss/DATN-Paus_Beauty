@@ -20,5 +20,6 @@ public interface GioHangService {
 
 	List<GioHang> selectGioHang(GioHang giohang);
 	
-	public Double tongTien(String tenTaiKhoan);
+	public Long tongTien(String tenTaiKhoan);
+	
 }

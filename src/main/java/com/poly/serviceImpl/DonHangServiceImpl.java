@@ -57,5 +57,10 @@ public class DonHangServiceImpl implements DonHangService {
 		return dhdao.getOrderSummary();
 	}
 	
+	@Override
+	public List<DonHang> getOrders(String tentaikhoan) {
+		// TODO Auto-generated method stub
+		return dhdao.getOrders(tentaikhoan);
+	}
 
 }

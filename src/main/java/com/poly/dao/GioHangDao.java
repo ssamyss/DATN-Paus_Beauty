@@ -19,5 +19,6 @@ public interface GioHangDao extends JpaRepository<GioHang, Integer> {
 	//@Query("select SUM(sp.gia * gh.so_luong) from GioHang gh join tai_khoan tk on gh.ten_tai_khoan = tk.ten_tai_khoan join san_pham sp on gh.ma_sp = sp.ma_sp where tk.ten_tai_khoan = 'nnahnn'")
 	
 	@Query("select SUM(gh.sanPham.gia * gh.soLuong) from GioHang gh where gh.taiKhoan.TenTaiKhoan = :tentaikhoan")
-	Double tongTien(@Param("tentaikhoan") String tentaikhoan);
+	Long tongTien(@Param("tentaikhoan") String tentaikhoan);
+	
 }

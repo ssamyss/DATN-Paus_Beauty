@@ -23,4 +23,9 @@ public class DonHangController {
 	public String quanlydonhang() {
 		return "user/quan-ly-don-hang";
 	}
+	
+	@GetMapping("/don-hang-chi-tiet/{maDH}")
+	public String quanlydonhangchitiet() {
+		return "user/quan-ly-don-hang-chi-tiet";
+	}
 }

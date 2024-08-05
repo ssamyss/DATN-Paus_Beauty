@@ -84,9 +84,8 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			for (i = 0; i < $scope.giohang.length; i++) {
 				var item = angular.copy($scope.giohang[i]);
 				$scope.taiDH(item);
-				$scope.deleteGH(item);
 			}
-			$window.location.href = "/hoa-don/" + $scope.maDH;
+			$scope.xoaGH();
 		}).catch(error => {
 			alert("Lỗi khi tải giỏ hàng!");
 		});
@@ -95,12 +94,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 	$scope.taiDH = function(item) {
 		$http.get('/rest/donhangchitiet').then(resp => {
 			$scope.donhangchitiet = resp.data;
-			if ($scope.donhangchitiet.length > 0) {
-				$scope.maDHCT = $scope.donhangchitiet.length + 1;
-			} else {
-				$scope.maDHCT = 1;
-			}
-			$scope.form.maDHCT = $scope.maDHCT;
+			
 			$scope.form.gia = item.sanPham.gia;
 			$scope.form.soLuong = item.soLuong;
 			$scope.form.sanPham = item.sanPham;
@@ -122,10 +116,13 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 		});
 	};
 
-	$scope.deleteGH = function(item) {
-		$http.delete('/rest/giohang/' + item.maGH, item).then(resp => {
-			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
-			$scope.giohang.splice(index, 1);
+	$scope.xoaGH = function() {
+		console.log($scope.taikhoan.tenTaiKhoan);
+		var items = $scope.giohang;
+		var tentaikhoan = $scope.taikhoan.tenTaiKhoan;
+		$http.delete('/rest/giohang/deleteByTTK/' + tentaikhoan).then(resp => {
+			$scope.initialize();
+			$window.location.href = "/hoa-don/" + $scope.maDH;
 		}).catch(error => {
 			alert("Lỗi xóa giỏ hàng dữ liệu!");
 		});

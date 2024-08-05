@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.poly.entity.DonHang;
 
@@ -28,4 +29,7 @@ public interface DonHangDao extends JpaRepository<DonHang, String> {
 	           "JOIN dh.taiKhoan tk " +
 	           "GROUP BY dh.maDH, tk.HoVaTen")
 	List<Object[]> getOrderSummary();
+	
+	@Query("SELECT dh from DonHang dh where dh.taiKhoan.TenTaiKhoan = :tentaikhoan")
+	List<DonHang> getOrders(@Param("tentaikhoan") String tentaikhoan);
 }
