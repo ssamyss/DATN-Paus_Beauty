@@ -72,6 +72,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			$scope.donhang.push(resp.data);
 			$scope.reset();
 			$scope.taiGH();
+			
 		}).catch(error => {
 			alert("Lỗi thêm mới đơn hàng!");
 		});
@@ -85,7 +86,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 				$scope.taiDH(item);
 				$scope.deleteGH(item);
 			}
-			$window.location.href = "/hoa-don/" + $scope.giohangnho.maDH;
+			$window.location.href = "/hoa-don/" + $scope.maDH;
 		}).catch(error => {
 			alert("Lỗi khi tải giỏ hàng!");
 		});
@@ -156,7 +157,6 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 		}
 		if ($scope.selectedValue == 1) {
 			$scope.create();
-
 		} else if ($scope.selectedValue == 2) {
 			$window.location.href = '/vn-pay';
 		}

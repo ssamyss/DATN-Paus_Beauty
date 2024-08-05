@@ -53,7 +53,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="item in pager.items">
+								<tr ng-repeat="item in donhang">
 									<td>{{item.maDH}}</td>
 									<td>{{item.taiKhoan.hoVaTen}}</td>
 									<td>{{item.sdt}}</td>
@@ -98,7 +98,7 @@
 		</div>
 	</main>
 
-	<script th:src="@{/admin/js/donhang.js}"></script>
+	<script th:src="@{/user/angularjs/quanlydonhang.js}"></script>
 	<script>
 		//Thời Gian
 		function time() {
