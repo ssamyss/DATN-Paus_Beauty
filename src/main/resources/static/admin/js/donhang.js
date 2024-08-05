@@ -25,6 +25,85 @@ app.controller("donhang-ctrl", function($scope, $http) {
 		});
 	};
 	
+	//xóa tất cả sản phẩm
+	$scope.deleteAll = function() {
+		Swal.fire({
+			title: 'Xác nhận',
+			text: "Bạn có chắc chắn muốn xóa tất cả đơn hàng không?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Xóa',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Call the delete function if the user confirms
+				$http.delete('/rest/donhang').then(resp => {
+					$scope.items = []; // Clear the local list of items
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Đơn hàng đã được xóa thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+					$scope.initialize(); // Refresh the data to ensure UI is updated
+				}).catch(error => {
+					alert("Lỗi khi xóa tất cả đơn hàng!");
+					console.log("Error", error);
+				});
+			}
+		});
+	};
+	
+	//xóa sản phẩm theo mã sản phẩm
+	$scope.delete = function(item) {
+		Swal.fire({
+			title: 'Xác nhận',
+			text: "Bạn có chắc chắn muốn xóa đơn hàng này không?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Xóa',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Call the delete function if the user confirms
+				$http.delete('/rest/donhang/' + item.maDH, item).then(resp => {
+					var index = $scope.items.findIndex(p => p.maDH == item.maDH);
+					$scope.items.splice(index, 1);
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Đơn hàng đã được xóa thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+					$scope.reset();
+					$scope.initialize();
+				}).catch(error => {
+					alert("Lỗi xóa đơn hàng!");
+					console.log("Error", error);
+				});
+			}
+		});
+	};
+	
+	$scope.getStatusText = function(status) {
+	            switch(status) {
+	                case 'DANG_XU_LY':
+	                    return 'Đang xử lý';
+	                case 'HOAN_TAT':
+	                    return 'Hoàn thành';
+	                case 'HUY_DON':
+	                    return 'Đã hủy';
+	                default:
+	                    return 'Chưa rõ';
+	            }
+	        };
+	
 	$scope.pager = {
 		page: 0,
 		size: 5,

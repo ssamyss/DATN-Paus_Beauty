@@ -106,17 +106,6 @@ body {
     font-weight: 600;
 }
 
-.close {
-    color: white;
-    opacity: 1;
-}
-
-.close:hover {
-    color: #f8f9fa;
-    text-decoration: none;
-    opacity: 0.75;
-}
-
 /* Modal Body */
 .modal-body {
     padding: 2rem;

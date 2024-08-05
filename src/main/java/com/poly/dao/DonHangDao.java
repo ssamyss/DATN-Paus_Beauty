@@ -19,17 +19,23 @@ public interface DonHangDao extends JpaRepository<DonHang, String> {
 	@Query("SELECT count(dh) FROM DonHang dh WHERE dh.trangThai = 'HUY_DON'")
 	Integer getCountHuyDon();
 
-	@Query("SELECT dh.maDH, tk.HoVaTen, " +
-	           "STRING_AGG(sp.tenSP, ', '), " +
-	           "SUM(dht.soLuong), " +
-	           "SUM(dht.gia * dht.soLuong) " +
-	           "FROM DonHang dh " +
-	           "JOIN dh.donHangChiTiet dht " +
-	           "JOIN dht.sanPham sp " +
-	           "JOIN dh.taiKhoan tk " +
-	           "GROUP BY dh.maDH, tk.HoVaTen")
-	List<Object[]> getOrderSummary();
+//	@Query("SELECT dh.maDH, tk.HoVaTen, " +
+//	           "STRING_AGG(sp.tenSP, ', '), " +
+//	           "SUM(dht.soLuong), " +
+//	           "SUM(dht.gia * dht.soLuong) " +
+//	           "FROM DonHang dh " +
+//	           "JOIN dh.donHangChiTiet dht " +
+//	           "JOIN dht.sanPham sp " +
+//	           "JOIN dh.taiKhoan tk " +
+//	           "GROUP BY dh.maDH, tk.HoVaTen")
+//	List<Object[]> getOrderSummary();
 	
 	@Query("SELECT dh from DonHang dh where dh.taiKhoan.TenTaiKhoan = :tentaikhoan")
 	List<DonHang> getOrders(@Param("tentaikhoan") String tentaikhoan);
+	
+	@Query("SELECT MONTH(dh.createDate), SUM(dh.tongGia) FROM DonHang dh WHERE dh.trangThai = 'HOAN_TAT' GROUP BY MONTH(dh.createDate)")
+	List<Object[]> getMonthlyRevenue();
+
+	@Query("SELECT QUARTER(dh.createDate), SUM(dh.tongGia) FROM DonHang dh WHERE dh.trangThai = 'HOAN_TAT' GROUP BY QUARTER(dh.createDate)")
+    List<Object[]> getQuarterlyRevenue();
 }

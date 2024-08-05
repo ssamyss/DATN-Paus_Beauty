@@ -53,4 +53,10 @@ public class SanPhamRestController {
     public void deleteAll() {
         sanPhamService.deleteAll();
     }
+	
+	@GetMapping("/tonKho")
+	public List<SanPham> getOutOfStockProducts() {
+	    return sanPhamService.findHetHang();
+	}
+	
 }

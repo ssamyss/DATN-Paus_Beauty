@@ -37,5 +37,9 @@ public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 	@Query("SELECT sp, SUM(ct.soLuong) AS totalQuantity " + "FROM DonHangChiTiet ct " + "JOIN ct.sanPham sp "
 			+ "GROUP BY sp " + "ORDER BY totalQuantity DESC")
 	List<Object[]> findTop5SanPhamBanChay(Pageable pageable);
+	
+	@Query("SELECT sp FROM SanPham sp WHERE sp.tonKho = 0")
+	List<SanPham> findByTonKho(@Param("tonKho") Integer tonKho);
+
 
 }

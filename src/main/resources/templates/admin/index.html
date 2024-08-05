@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Main CSS-->
-<link rel="stylesheet" type="text/css" th:href="@{/admin/doc/css/main.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/admin/doc/css/main.css}">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 <script
@@ -23,23 +24,21 @@
 	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/admin/css/index.css}">	
 </head>
 
-<body onload="time()" class="app sidebar-mini rtl">
+<body onload="time()" class="app sidebar-mini rtl" ng-app="app"
+	ng-controller="baocao-ctrl">
 
 	<div th:insert="~{admin/menu.html}"></div>
 
 	<main class="app-content">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="app-title">
-					<ul class="app-breadcrumb breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><b>Bảng điều
-									khiển</b></a></li>
-					</ul>
-					<div id="clock"></div>
-				</div>
-			</div>
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a href="#"><b>Bảng điều khiển</b></a></li>
+			</ul>
+			<div id="clock"></div>
 		</div>
 		<div class="row">
 			<!--Left-->
@@ -52,8 +51,7 @@
 							<div class="info">
 								<h4>Tổng tài khoản</h4>
 								<p>
-									<b th:text="${account_count}"></b>
-									<b>Tài khoản</b>
+									<b th:text="${account_count}"></b> <b>Tài khoản</b>
 								</p>
 								<p class="info-tong">Tổng số tài khoản được quản lý.</p>
 							</div>
@@ -66,8 +64,7 @@
 							<div class="info">
 								<h4>Tổng sản phẩm</h4>
 								<p>
-									<b th:text="${product_count}"></b>
-									<b>Sản phẩm</b>
+									<b th:text="${product_count}"></b> <b>Sản phẩm</b>
 								</p>
 								<p class="info-tong">Tổng số sản phẩm được quản lý.</p>
 							</div>
@@ -80,8 +77,7 @@
 							<div class="info">
 								<h4>Tổng đơn hàng</h4>
 								<p>
-									<b th:text="${order_count}"></b>
-									<b>Đơn hàng</b>
+									<b th:text="${order_count}"></b> <b>Đơn hàng</b>
 								</p>
 								<p class="info-tong">Tổng số hóa đơn bán hàng trong tháng.</p>
 							</div>
@@ -94,13 +90,25 @@
 							<div class="info">
 								<h4>Sắp hết hàng</h4>
 								<p>
-									<b th:text="${tonkho_count}"></b>
-									<b>Sản phẩm</b>
+									<b th:text="${tonkho_count}"></b> <b>Sản phẩm</b>
 								</p>
 								<p class="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
 							</div>
 						</div>
 					</div>
+					<div class="col-md-6">
+						<div class="widget-small danger coloured-icon">
+							<i class='icon fa-3x bx bxs-tag-x'></i>
+							<div class="info">
+								<h4>Hết hàng</h4>
+								<p>
+									<b th:text="${spHetHang_count}"></b> <b>Sản phẩm</b>
+								</p>
+								<p class="info-tong">Số sản phẩm đã hết cần nhập thêm.</p>
+							</div>
+						</div>
+					</div>
+					
 					<!-- col-12 -->
 					<div class="col-md-12">
 						<div class="tile">
@@ -144,7 +152,6 @@
 									</tbody>
 								</table>
 							</div>
-							<!-- / div trống-->
 						</div>
 					</div>
 				</div>
@@ -155,23 +162,33 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="tile">
-							<h3 class="tile-title">Dữ liệu 6 tháng đầu vào</h3>
-							<div class="embed-responsive embed-responsive-16by9">
-								<canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="tile">
-							<h3 class="tile-title">Thống kê 6 tháng doanh thu</h3>
-							<div class="embed-responsive embed-responsive-16by9">
-								<canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+							<h3 class="tile-title">SẢN PHẨM ĐÃ HẾT</h3>
+							<div>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Tên sản phẩm</th>
+											<th>Ảnh</th>
+											<th>Giá tiền</th>
+											<th>Trạng thái</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="item in items">
+											<td>{{ getFirstFiveWords(item.tenSP) }}</td>
+											<td><img ng-src="/assets/images/sanpham/{{item.anh}}"
+												alt="" width="100px;"></td>
+											<td>{{item.gia | currency:'':0}} VND</td>
+											<td><span class="badge bg-danger">Hết hàng</span></td>
+
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- END right-->
 		</div>
 	</main>
 
@@ -206,8 +223,8 @@
 		var ctxb = $("#barChartDemo").get(0).getContext("2d");
 		var barChart = new Chart(ctxb).Bar(data);
 	</script>
-	
-		$('#sampleTable').DataTable();
+
+	$('#sampleTable').DataTable();
 	<script type="text/javascript">
 		//Thời Gian
 		function time() {
@@ -320,5 +337,6 @@
 	<script th:src="@{/admin/doc/js/plugins/toastr.min.js}"></script>
 	<script th:src="@{/admin/doc/js/plugins/jquery-confirm.min.js}"></script>
 	<script th:src="@{/admin/doc/js/plugins/sweetalert.min.js}"></script>
+	<script th:src="@{/admin/js/baocao.js}"></script>
 </body>
 </html>

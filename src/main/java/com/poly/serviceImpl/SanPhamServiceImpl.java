@@ -66,4 +66,10 @@ public class SanPhamServiceImpl implements SanPhamService {
                       .map(result -> (SanPham) result[0])
                       .collect(Collectors.toList());
     }
+
+	@Override
+	public List<SanPham> findHetHang() {
+		// TODO Auto-generated method stub
+		return spdao.findByTonKho(0);
+	}
 }

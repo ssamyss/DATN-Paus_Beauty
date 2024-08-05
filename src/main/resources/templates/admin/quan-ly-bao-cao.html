@@ -24,36 +24,23 @@
 	href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-
+<link rel="stylesheet" type="text/css"
+	th:href="@{/admin/css/baocao.css}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl" ng-app="app"
 	ng-controller="baocao-ctrl">
 	<div th:insert="~{admin/menu.html}"></div>
 	<main class="app-content">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="app-title">
-					<ul class="app-breadcrumb breadcrumb">
-						<li class="breadcrumb-item"><a href="#"><b>Báo cáo
-									doanh thu </b></a></li>
-					</ul>
-					<div id="clock"></div>
-				</div>
-			</div>
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a href="#"><b>Báo
+							cáo thống kê</b></a></li>
+			</ul>
+			<div id="clock"></div>
 		</div>
 		<div class="row">
-			<div class="col-md-6 col-lg-3">
-				<div class="widget-small primary coloured-icon">
-					<i class='icon  bx bxs-user fa-3x'></i>
-					<div class="info">
-						<h4>Tổng Tài Khoản</h4>
-						<p>
-							<b th:text="${account_count}"></b> <b>Tài Khoản</b>
-						</p>
-					</div>
-				</div>
-			</div>
 			<div class="col-md-6 col-lg-3">
 				<div class="widget-small info coloured-icon">
 					<i class='icon bx bxs-purchase-tag-alt fa-3x'></i>
@@ -87,26 +74,13 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
 			<div class="col-md-6 col-lg-3">
 				<div class="widget-small primary coloured-icon">
 					<i class='icon fa-3x bx bxs-chart'></i>
 					<div class="info">
-						<h4>Tổng thu nhập</h4>
+						<h4>Tổng doanh thu</h4>
 						<p>
 							<b th:text="${order_countTongDT}"></b> <b> VND</b>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3">
-				<div class="widget-small warning coloured-icon">
-					<i class='icon fa-3x bx bxs-tag-x'></i>
-					<div class="info">
-						<h4>Hết hàng</h4>
-						<p>
-							<b th:text="${spHetHang_count}"></b> <b>Sản phẩm</b>
 						</p>
 					</div>
 				</div>
@@ -146,90 +120,19 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
-				<div class="tile">
-					<div>
-						<h3 class="tile-title">TỔNG ĐƠN HÀNG</h3>
-					</div>
-					<div class="tile-body">
-						<table class="table table-hover table-bordered" id="sampleTable">
-							<thead>
-								<tr>
-									<th>ID đơn hàng</th>
-									<th>Khách hàng</th>
-									<th>Đơn hàng</th>
-									<th>Số lượng</th>
-									<th>Tổng tiền</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="order : ${orderSummary}">
-									<td th:text="${order[0]}"></td>
-									<td th:text="${order[1]}"></td>
-									<td th:text="${order[2]}"></td>
-									<td th:text="${order[3] + ' sản phẩm'}"></td>
-									<td th:text="${order[4]}" class="gia"></td>
-								</tr>
-								<tr>
-									<th colspan="4">Tổng cộng:</th>
-									<td
-										th:text="${totalPrice}" class="gia"></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="tile">
-					<div>
-						<h3 class="tile-title">SẢN PHẨM ĐÃ HẾT</h3>
-					</div>
-					<div class="tile-body">
-						<table class="table table-hover table-bordered" id="sampleTable">
-							<thead>
-								<tr>
-									<th>Mã sản phẩm</th>
-									<th>Tên sản phẩm</th>
-									<th>Ảnh</th>
-									<th>Số lượng</th>
-									<th>Tình trạng</th>
-									<th>Giá tiền</th>
-									<th>Danh mục</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>83826226</td>
-									<td>Tủ ly - tủ bát</td>
-									<td><img src="/img-sanpham/tu.jpg" alt="" width="100px;"></td>
-									<td>0</td>
-									<td><span class="badge bg-danger">Hết hàng</span></td>
-									<td>2.450.000 đ</td>
-									<td>Tủ</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-md-6">
 				<div class="tile">
-					<h3 class="tile-title">DỮ LIỆU HÀNG THÁNG</h3>
-					<div class="embed-responsive embed-responsive-16by9">
-						<canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+					<h3 class="tile-title">DOANH THU HÀNG THÁNG</h3>
+					<div>
+						<canvas id="revenueChart" width="400" height="200"></canvas>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="tile">
-					<h3 class="tile-title">THỐNG KÊ DOANH SỐ</h3>
-					<div class="embed-responsive embed-responsive-16by9">
-						<canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+					<h3 class="tile-title">THỐNG KÊ DOANH THU THEO QUÝ</h3>
+					<div>
+						<canvas id="quarterlyRevenueChart" width="400" height="200"></canvas>
 					</div>
 				</div>
 			</div>
@@ -241,7 +144,6 @@
 			</p>
 		</div>
 	</main>
-	
 	<!-- Essential javascripts for application to work-->
 	<script th:src="@{/admin/doc/js/jquery-3.2.1.min.js}"></script>
 	<script th:src="@{/admin/doc/js/popper.min.js}"></script>
@@ -250,9 +152,9 @@
 	<!-- The javascript plugin to display page loading on top-->
 	<script src="js/plugins/pace.min.js"></script>
 	<!-- Page specific javascripts-->
-	<script type="text/javascript"
-		th:src="@{/admin/doc/js/plugins/chart.js}"></script>
+
 	<script th:src="@{/admin/doc/js/scriptbaocao.js}"></script>
+	<script th:src="@{/admin/js/baocao.js}"></script>
 </body>
 
 </html>

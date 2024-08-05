@@ -56,4 +56,19 @@ public class DonHangRestController {
 	public void delete(@PathVariable("maDH") String maDH) {
 		donHangService.delete(maDH);
 	}
+	
+	@DeleteMapping()
+    public void deleteAll() {
+		donHangService.deleteAll();
+    }
+	
+	@GetMapping("/doanhthu")
+    public List<Object[]> getMonthlyRevenue() {
+        return donHangService.getMonthlyRevenue();
+    }
+    
+    @GetMapping("/doanhthu/quy")
+    public List<Object[]> getQuarterlyRevenue() {
+        return donHangService.getQuarterlyRevenue();
+    }
 }

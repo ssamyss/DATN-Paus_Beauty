@@ -52,9 +52,19 @@ public class DonHangServiceImpl implements DonHangService {
 	}
 
 	@Override
-	public List<Object[]> getOrderSummary() {
+    public List<Object[]> getMonthlyRevenue() {
+        return dhdao.getMonthlyRevenue();
+    }
+    
+    @Override
+    public List<Object[]> getQuarterlyRevenue() {
+        return dhdao.getQuarterlyRevenue();
+    }
+
+	@Override
+	public void deleteAll() {
 		// TODO Auto-generated method stub
-		return dhdao.getOrderSummary();
+		dhdao.deleteAll();
 	}
 	
 	@Override

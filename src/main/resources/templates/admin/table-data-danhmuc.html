@@ -36,6 +36,7 @@
 <!-- SweetAlert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
 <link rel="stylesheet" type="text/css"
 	th:href="@{/admin/css/dmsanpham.css}">
 
@@ -74,48 +75,15 @@
 									ng-click="deleteAll()"><i class="fas fa-trash-alt"></i> Xóa
 									tất cả</a>
 							</div>
+							<div class="col-sm-6 col-md-2 mb-2">
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
+									title="Nhập"
+									onclick="document.getElementById('fileInput').click()"><i
+									class="fas fa-file-upload"></i> Tải danh mục từ file</a> <input
+									id="fileInput" type="file" style="display: none"
+									onchange="angular.element(this).scope().importTH(this.files)">
+							</div>
 						</div>
-						<h2 class="table-title">Danh sách loại sản phẩm</h2>
-						<table class="table table-hover table-bordered" id="sampleTable">
-							<thead>
-								<tr>
-									<th class="col-danhmuc">Danh mục</th>
-									<th class="col-tenloaisp">Tên loại sản phẩm</th>
-									<th class="col-chucnang">Chức năng</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="item in pager.cates">
-									<td>{{item.danhMucLoaiSanPham.tenLSP}}</td>
-									<td>{{item.tenPL}}</td>
-									<td>
-										<button ng-click="deleteLSP(item)"
-											class="btn btn-danger btn-sm trash" type="button" title="Xóa">
-											<i class="fas fa-trash-alt"></i>
-										</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<nav aria-label="Page navigation">
-							<ul class="pagination justify-content-center">
-								<li class="page-item">
-									<button ng-click="pager.first()" class="page-link">First</button>
-								</li>
-								<li class="page-item">
-									<button ng-click="pager.prev()" class="page-link">Previous</button>
-								</li>
-								<li class="page-item"><span style="color: black;"
-									class="page-link">{{pager.page + 1}} of {{pager.count}}</span></li>
-								<li class="page-item">
-									<button ng-click="pager.next()" class="page-link">Next</button>
-								</li>
-								<li class="page-item">
-									<button ng-click="pager.last()" class="page-link">Last</button>
-								</li>
-							</ul>
-						</nav>
-						<hr class="element-button mb-3">
 						<h2 class="table-title">Danh sách thương hiệu</h2>
 						<table class="table table-hover table-bordered" id="sampleTable">
 							<thead>
@@ -158,8 +126,48 @@
 									<button ng-click="pagers.last()" class="page-link">Last</button>
 								</li>
 							</ul>
+						</nav>	
+						<hr class="element-button mb-3">
+						<h2 class="table-title">Danh sách loại sản phẩm</h2>
+						<table class="table table-hover table-bordered" id="sampleTable">
+							<thead>
+								<tr>
+									<th class="col-danhmuc">Danh mục</th>
+									<th class="col-tenloaisp">Tên loại sản phẩm</th>
+									<th class="col-chucnang">Chức năng</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in pager.cates">
+									<td>{{item.danhMucLoaiSanPham.tenLSP}}</td>
+									<td>{{item.tenPL}}</td>
+									<td>
+										<button ng-click="deleteLSP(item)"
+											class="btn btn-danger btn-sm trash" type="button" title="Xóa">
+											<i class="fas fa-trash-alt"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<nav aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+								<li class="page-item">
+									<button ng-click="pager.first()" class="page-link">First</button>
+								</li>
+								<li class="page-item">
+									<button ng-click="pager.prev()" class="page-link">Previous</button>
+								</li>
+								<li class="page-item"><span style="color: black;"
+									class="page-link">{{pager.page + 1}} of {{pager.count}}</span></li>
+								<li class="page-item">
+									<button ng-click="pager.next()" class="page-link">Next</button>
+								</li>
+								<li class="page-item">
+									<button ng-click="pager.last()" class="page-link">Last</button>
+								</li>
+							</ul>
 						</nav>
-
 					</div>
 				</div>
 			</div>
@@ -176,10 +184,6 @@
 					<div class="modal-header">
 						<h5 class="modal-title" id="addProductCategoryModalLabel">Thêm
 							loại sản phẩm</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
@@ -211,8 +215,8 @@
 			<div class="modal-content">
 				<form action="">
 					<div class="modal-header">
-						<h5 class="modal-title" id="addBrandModalLabel">Thêm thương
-							hiệu</h5>
+						<h4 class="modal-title" id="addBrandModalLabel">Thêm thương
+							hiệu</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>

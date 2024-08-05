@@ -5,7 +5,7 @@ import java.util.List;
 import com.poly.entity.DonHang;
 
 public interface DonHangService {
-	
+
 	List<DonHang> findAll();
 
 	DonHang findById(String maDH);
@@ -17,8 +17,12 @@ public interface DonHangService {
 	DonHang update(DonHang donHang);
 
 	void delete(String maDH);
-	
-	List<Object[]> getOrderSummary();
-	
+
+	void deleteAll();
+
+	List<Object[]> getMonthlyRevenue();
+
+	List<Object[]> getQuarterlyRevenue();
+
 	List<DonHang> getOrders(String tentaikhoan);
 }

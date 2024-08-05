@@ -19,4 +19,7 @@ public interface SanPhamService {
 	void deleteAll();
 	
 	List<SanPham> getTop5SanPhamBanChay();
+	
+	List<SanPham> findHetHang();
+
 }

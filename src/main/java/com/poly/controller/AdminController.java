@@ -41,6 +41,7 @@ public class AdminController {
 		model.addAttribute("order_count", dhdao.getCountDH());
 		model.addAttribute("account_count", tkdao.getCountTK());
 		model.addAttribute("tonkho_count", spdao.getCountTonKho());
+		model.addAttribute("spHetHang_count", spdao.getCounthHetSP());
 		return "admin/index";
 	}
 
@@ -65,8 +66,6 @@ public class AdminController {
 		model.addAttribute("order_count", dhdao.getCountDH());
 		model.addAttribute("account_count", tkdao.getCountTK());
 		model.addAttribute("tonkho_count", spdao.getCountTonKho());
-		model.addAttribute("spHetHang_count", spdao.getCounthHetSP());
-//		model.addAttribute("order_countTongDT", dhdao.getCountTongDT());
 		double orderCountTongDT = dhdao.getCountTongDT();
 		NumberFormat vietnameseFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
 		String formattedOrderCount = vietnameseFormat.format(orderCountTongDT);
@@ -74,13 +73,6 @@ public class AdminController {
 		List<SanPham> top5SanPham = sanPhamService.getTop5SanPhamBanChay();
 		model.addAttribute("top5SanPham", top5SanPham);
 		model.addAttribute("order_countHuyDon", dhdao.getCountHuyDon());
-		List<Object[]> orderSummary = donHangService.getOrderSummary();
-
-		// Calculate the total price
-		double totalPrice = orderSummary.stream().mapToDouble(o -> (Double) o[4]).sum();
-
-		model.addAttribute("orderSummary", orderSummary);
-		model.addAttribute("totalPrice", totalPrice);
 		return "admin/quan-ly-bao-cao";
 	}
 

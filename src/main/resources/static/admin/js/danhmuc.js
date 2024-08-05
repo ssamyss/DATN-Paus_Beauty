@@ -240,6 +240,131 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 			this.page = this.count - 1;
 		}
 	}
+	
+	// Thêm dữ liệu từ file Excel
+	$scope.importDanhMuc = function(files) {
+		var reader = new FileReader();
+		reader.onloadend = async () => {
+			var workbook = new ExcelJS.Workbook();
+			await workbook.xlsx.load(reader.result);
+			const worksheet = workbook.getWorksheet('Sheet1');
+			let successCount = 0; // Counter to keep track of successful imports
+
+			worksheet.eachRow((row, index) => {
+				if (index > 1) {
+					let danhmucsanpham = {
+						maLSP: row.getCell(1).value,
+						tenLSP: row.getCell(2).value
+					};
+
+					var url = "http://localhost:8080/rest/danhmucsanpham";
+					$http.post(url, danhmucsanpham).then(resp => {
+						console.log("Success", resp.data);
+						$scope.initialize();
+						successCount++;
+					}).catch(error => {
+						console.log("Error", error);
+					});
+				}
+			});
+			setTimeout(() => {
+				if (successCount > 0) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Thêm danh muc thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+				}
+			}, 1000);
+		};
+		reader.readAsArrayBuffer(files[0]);
+	};
+	
+	// Thêm dữ liệu từ file Excel
+	$scope.importLoaiSP = function(files) {
+		var reader = new FileReader();
+		reader.onloadend = async () => {
+			var workbook = new ExcelJS.Workbook();
+			await workbook.xlsx.load(reader.result);
+			const worksheet = workbook.getWorksheet('Sheet1');
+			let successCount = 0; // Counter to keep track of successful imports
+
+			worksheet.eachRow((row, index) => {
+				if (index > 1) {
+					let loaisanpham = {
+						maPL:row.getCell(1).value,
+						tenPL: row.getCell(2).value,
+						danhMucLoaiSanPham: { maLSP: row.getCell(3).value }
+					};
+
+					var url = "http://localhost:8080/rest/loaisanpham";
+					$http.post(url, loaisanpham).then(resp => {
+						console.log("Success", resp.data);
+						$scope.initialize();
+						successCount++;
+					}).catch(error => {
+						console.log("Error", error);
+					});
+				}
+			});
+			setTimeout(() => {
+				if (successCount > 0) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Thêm loai sản phẩm thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+				}
+			}, 1000);
+		};
+		reader.readAsArrayBuffer(files[0]);
+	};
+	
+	// Thêm dữ liệu từ file Excel
+	$scope.importTH = function(files) {
+		var reader = new FileReader();
+		reader.onloadend = async () => {
+			var workbook = new ExcelJS.Workbook();
+			await workbook.xlsx.load(reader.result);
+			const worksheet = workbook.getWorksheet('Sheet1');
+			let successCount = 0; // Counter to keep track of successful imports
+
+			worksheet.eachRow((row, index) => {
+				if (index > 1) {
+					let thuonghieu = {
+						maTH: row.getCell(1).value,
+						tenTH: row.getCell(3).value,
+						 anhTH: row.getCell(2).value
+					};
+
+					var url = "http://localhost:8080/rest/thuonghieu";
+					$http.post(url, thuonghieu).then(resp => {
+						console.log("Success", resp.data);
+						$scope.initialize();
+						successCount++;
+					}).catch(error => {
+						console.log("Error", error);
+					});
+				}
+			});
+			setTimeout(() => {
+				if (successCount > 0) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Thêm thương hiệu thành công!',
+						confirmButtonText: 'OK',
+						confirmButtonColor: '#28a745'
+					});
+				}
+			}, 1000);
+		};
+		reader.readAsArrayBuffer(files[0]);
+	};
 
 
 	$scope.initialize();
