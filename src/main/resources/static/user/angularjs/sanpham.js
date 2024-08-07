@@ -148,7 +148,7 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 				$http.post('/rest/giohang', item).then(resp => {
 					$scope.giohang.push(resp.data);
 					$('.js-modal1').removeClass('show-modal1');
-					alert("Thêm sp vào giỏ hàng thành công!");
+					alert("Sản phẩm đã được thêm vào giỏ hàng!");
 					$scope.initialize();
 					$scope.reset();
 				}).catch(error => {
@@ -169,6 +169,73 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 			console.error("Lỗi khi lấy giỏ hàng tồn tại: ", error);
 		});
 	};
+
+	$scope.pager = {
+		page: 0,
+		size: 8, // Điều chỉnh số lượng sản phẩm trên mỗi trang
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.items.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+
+	}
+
+	$scope.showAll = function() {
+		$scope.pager.size = $scope.items.length;
+		$scope.pager.page = 0;
+	};
+
+	$scope.sortOptions = [
+		{ value: 'newest', text: 'Mới nhất' },
+		{ value: 'best_selling', text: 'Bán chạy' },
+		{ value: 'price_asc', text: 'Giá tăng dần' },
+		{ value: 'price_desc', text: 'Giá giảm dần' }
+	];
+
+	$scope.selectedSortOption = $scope.sortOptions[0].value; // Giá trị mặc định
+
+	$scope.sortProducts = function() {
+		let sortedItems = angular.copy($scope.items);
+
+		if ($scope.selectedSortOption === 'price_asc') {
+			sortedItems.sort((a, b) => a.gia - b.gia);
+		} else if ($scope.selectedSortOption === 'price_desc') {
+			sortedItems.sort((a, b) => b.gia - a.gia);
+		} else if ($scope.selectedSortOption === 'newest') {
+			sortedItems.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+		} else if ($scope.selectedSortOption === 'best_selling') {
+			// Giả sử có một thuộc tính để đánh giá sản phẩm bán chạy nhất
+			// Bạn có thể sắp xếp dựa trên thuộc tính này nếu có
+		}
+
+		$scope.items = sortedItems;
+		$scope.pager.page = 0;
+	};
+
+	$scope.$watch('selectedSortOption', function(newVal) {
+		$scope.sortProducts();
+	});
 
 	$scope.initialize();
 	$scope.reset();

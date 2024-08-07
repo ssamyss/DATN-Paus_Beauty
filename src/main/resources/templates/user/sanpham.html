@@ -4,13 +4,237 @@
 <title>Paus Beauty - Sản Phẩm</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-<title>Paus Beauty - Sản Phẩm</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link th:insert="~{user/link/link.html}">
-<style>
+</head>
+<body ng-app="app" ng-controller="sanpham-index">
+	<!-- Header -->
+	<span th:insert="~{user/common/header.html}"></span>
+
+	<!-- Product -->
+	<main class="container mt-4">
+		<div class="row">
+			<aside class="col-lg-3 mb-4">
+				<div class="card mb-4">
+					<div class="card-header">Danh mục</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><th:block
+								th:each="category : ${categories}">
+								<a th:href="@{/category/{maLSP}(maLSP=${category.maLSP})}"
+									class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+									th:text="${category.tenLSP}"></a>
+							</th:block></li>
+					</ul>
+				</div>
+				<div class="card mb-4">
+					<div class="card-header">Thương hiệu</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><a href="#">L'Oreal</a></li>
+						<li class="list-group-item"><a href="#">Maybelline</a></li>
+						<li class="list-group-item"><a href="#">Chanel</a></li>
+					</ul>
+				</div>
+				<div class="card mb-4">
+					<div class="card-header">Khoảng giá</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item"><a href="#">Dưới 500.000đ</a></li>
+						<li class="list-group-item"><a href="#">500.000đ -
+								1.000.000đ</a></li>
+						<li class="list-group-item"><a href="#">Trên 1.000.000đ</a></li>
+					</ul>
+				</div>
+			</aside>
+			<section class="col-lg-9">
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<h2 class="h4">Tất cả sản phẩm</h2>
+					<div class="form-inline">
+						<label class="mr-2">Sắp xếp theo:</label> <select
+							class="custom-select" ng-model="selectedSortOption">
+							<option ng-repeat="option in sortOptions"
+								value="{{option.value}}">{{option.text}}</option>
+						</select>
+					</div>
+
+				</div>
+				<div class="row" id="product-list">
+					<div class="col-md-4 mb-4" ng-repeat="item in pager.items">
+						<div class="card h-100 product-card">
+							<img ng-src="/assets/images/sanpham/{{item.anh}}"
+								class="card-img-top" alt="Product 1">
+							<div class="card-body text-center">
+								<h5 class="card-title">{{item.tenSP}}</h5>
+								<p class="text-danger font-weight-bold">{{item.gia |
+									currency:'':0}} VNĐ</p>
+							</div>
+							<div class="hover-text" ng-click="openQuickView(item)"
+								data-toggle="modal" data-target="#quickViewModal">Xem
+								nhanh</div>
+						</div>
+					</div>
+				</div>
+				<div class="flex-c-m flex-w w-full p-t-45"></div>
+				<nav aria-label="Page navigation">
+					<ul class="pagination justify-content-center">
+						<li class="page-item" ng-class="{disabled: pager.page === 0}">
+							<a class="page-link" href="#" ng-click="pager.first()">|&lt;</a>
+						</li>
+						<li class="page-item" ng-class="{disabled: pager.page === 0}">
+							<a class="page-link" href="#" ng-click="pager.prev()">&lt;&lt;</a>
+						</li>
+						<li class="page-item active"><a class="page-link">{{pager.page
+								+ 1}}</a></li>
+						<li class="page-item"
+							ng-class="{disabled: pager.page >= pager.count - 1}"><a
+							class="page-link" href="#" ng-click="pager.next()">&gt;&gt;</a></li>
+						<li class="page-item"
+							ng-class="{disabled: pager.page >= pager.count - 1}"><a
+							class="page-link" href="#" ng-click="pager.last()">&gt;|</a></li>
+					</ul>
+				</nav>
+
+				<div class="flex-c-m flex-w w-full p-t-45">
+					<a ng-click="showAll()"
+						class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+						Xem nhiều </a>
+				</div>
+
+			</section>
+		</div>
+	</main>
+
+	<!-- Quick View Modal -->
+	<div class="modal fade" id="quickViewModal" tabindex="-1"
+		aria-labelledby="quickViewModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="quickViewModalLabel">Quick View</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-6">
+								<img ng-src="/assets/images/sanpham/{{form.anh}}"
+									alt="Product Image" class="img-fluid">
+							</div>
+							<div class="col-md-6 product-details">
+								<h4>{{form.tenSP}}</h4>
+								<p class="price">Giá: {{form.gia | currency:'':0}} VNĐ</p>
+								<!-- Add more product details here -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary">Thêm vào giỏ
+						hàng</button>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top"> <i
+			class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+	<!-- Footer -->
+	<div style="margin-top: 20px;" th:insert="~{user/common/footer.html}"></div>
+
+	<!-- product-detail -->
+	<div th:insert="~{user/product-detail.html}"></div>
+
+	<!-- AngularJS -->
+	<script th:src="@{/user/angularjs/sanpham.js}"></script>
+
+	<!-- link -->
+	<div th:insert="~{user/link/scriptIndex.html}"></div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script th:src="@{/user/angularjs/sanpham.js}"></script>
+
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch and display products when the page loads
+        fetchProducts();
+
+        // Add event listener to the sort select
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            fetchProducts(this.value);
+        });
+    });
+
+    function fetchProducts(sortOption = 'newest') {
+        // Fetch products from the server
+        fetch('/api/sanpham') // URL should point to your API endpoint
+            .then(response => response.json())
+            .then(data => {
+                // Sort products based on the selected option
+                if (sortOption === 'price_asc') {
+                    data.sort((a, b) => a.gia - b.gia);
+                } else if (sortOption === 'price_desc') {
+                    data.sort((a, b) => b.gia - a.gia);
+                } else if (sortOption === 'newest') {
+                    data.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+                }
+                displayProducts(data);
+            })
+            .catch(error => {
+                console.error('Error fetching products:', error);
+            });
+    }
+
+    function displayProducts(products) {
+        const productList = document.getElementById('product-list');
+        productList.innerHTML = ''; // Clear current content
+
+        if (products.length === 0) {
+            productList.innerHTML = '<p>Không có sản phẩm nào.</p>';
+        } else {
+            products.forEach(item => {
+                productList.innerHTML += `
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 product-card">
+                            <img src="/assets/images/sanpham/${item.anh}" class="card-img-top" alt="${item.tenSP}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">${item.tenSP}</h5>
+                                <p class="text-danger font-weight-bold">${item.gia} VNĐ</p>
+                            </div>
+                            <div class="hover-text" onclick="openQuickView(${item.id})" data-toggle="modal" data-target="#quickViewModal">Xem nhanh</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    function openQuickView(productId) {
+        // Fetch and display product details in the modal
+        fetch(`/api/sanpham/${productId}`)
+            .then(response => response.json())
+            .then(product => {
+                document.querySelector('#quickViewModal .modal-title').textContent = product.tenSP;
+                document.querySelector('#quickViewModal .modal-body img').src = `/assets/images/sanpham/${product.anh}`;
+                document.querySelector('#quickViewModal .modal-body .price').textContent = `${product.gia} VNĐ`;
+            })
+            .catch(error => {
+                console.error('Error fetching product details:', error);
+            });
+    }
+</script>
+
+	<style>
 .product-card {
 	position: relative;
 	overflow: hidden;
@@ -105,201 +329,48 @@
 	font-weight: bold;
 	margin-bottom: 15px;
 }
+
+/* CSS for Danh mục */
+.list-group-item a {
+	color: #333;
+	text-decoration: none;
+	transition: color 0.3s, background-color 0.3s;
+	display: block;
+	padding: 5px 0;
+}
+
+.list-group-item a:hover {
+	color: #ff758c;
+	background-color: #fad0c4;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.list-group-item {
+	background: transparent;
+	border: none;
+	padding: 5px 0;
+}
+
+.card-header {
+	background-color: #ff9a9e;
+	color: #fff;
+	font-weight: bold;
+}
+
+.card {
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-select {
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	padding: 5px 10px;
+}
 </style>
-</head>
-<body ng-app="app" ng-controller="sanpham-index">
-	<!-- Header -->
-	<span th:insert="~{user/common/header.html}"></span>
 
-	<!-- Product -->
-	<main class="container mt-4">
-		<div class="row">
-			<aside class="col-lg-3 mb-4">
-				<div class="card mb-4">
-					<div class="card-header">Danh mục</div>
-					 <ul class="list-group list-group-flush">
-                        <th:block th:each="category : ${categories}">
-                            <li class="list-group-item">
-                                <a th:href="@{/product(category=${category.maLSP})}" 
-                                   th:text="${category.tenLSP}"></a>
-                            </li>
-                        </th:block>
-                    </ul>
-				</div>
-				<div class="card mb-4">
-					<div class="card-header">Thương hiệu</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item"><a href="#">L'Oreal</a></li>
-						<li class="list-group-item"><a href="#">Maybelline</a></li>
-						<li class="list-group-item"><a href="#">Chanel</a></li>
-					</ul>
-				</div>
-				<div class="card mb-4">
-					<div class="card-header">Khoảng giá</div>
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item"><a href="#">Dưới 500.000đ</a></li>
-						<li class="list-group-item"><a href="#">500.000đ -
-								1.000.000đ</a></li>
-						<li class="list-group-item"><a href="#">Trên 1.000.000đ</a></li>
-					</ul>
-				</div>
-			</aside>
-			<section class="col-lg-9">
-				<div class="d-flex justify-content-between align-items-center mb-3">
-					<h2 class="h4">Tất cả sản phẩm</h2>
-					<div class="form-inline">
-						<label class="mr-2">Sắp xếp theo:</label> <select
-							class="custom-select" id="sortSelect">
-							<option value="newest">Mới nhất</option>
-							<option value="best_selling">Bán chạy</option>
-							<option value="price_asc">Giá tăng dần</option>
-							<option value="price_desc">Giá giảm dần</option>
-						</select>
-					</div>
-
-				</div>
-				<div class="row" id="product-list">
-					<div class="col-md-4 mb-4" ng-repeat="item in items">
-						<div class="card h-100 product-card">
-							<img ng-src="/assets/images/sanpham/{{item.anh}}"
-								class="card-img-top" alt="Product 1">
-							<div class="card-body text-center">
-								<h5 class="card-title">{{item.tenSP}}</h5>
-								<p class="text-danger font-weight-bold">{{item.gia |
-									currency:'':0}} VND</p>
-							</div>
-							<div class="hover-text" ng-click="openQuickView(item)"
-								data-toggle="modal" data-target="#quickViewModal">Xem
-								nhanh</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
-	</main>
-
-	<!-- Back to top -->
-	<div class="btn-back-to-top" id="myBtn">
-		<span class="symbol-btn-back-to-top"> <i
-			class="zmdi zmdi-chevron-up"></i></span>
-	</div>
-
-	<!-- Footer -->
-	<div th:insert="~{user/common/footer.html}"></div>
-
-	<!-- Quick View Modal -->
-	<div class="modal fade" id="quickViewModal" tabindex="-1"
-		aria-labelledby="quickViewModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="quickViewModalLabel">Quick View</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-6">
-								<img ng-src="/assets/images/sanpham/{{form.anh}}"
-									alt="Product Image" class="img-fluid">
-							</div>
-							<div class="col-md-6 product-details">
-								<h4>{{form.tenSP}}</h4>
-								<p class="price">Giá: {{form.gia | currency:'':0}} VND</p>
-								<!-- Add more product details here -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">Thêm vào giỏ
-						hàng</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Đóng</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script th:src="@{/user/angularjs/sanpham.js}"></script>
-
-	<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Fetch and display products when the page loads
-        fetchProducts();
-
-        // Add event listener to the sort select
-        document.getElementById('sortSelect').addEventListener('change', function() {
-            fetchProducts(this.value);
-        });
-    });
-
-    function fetchProducts(sortOption = 'newest') {
-        // Fetch products from the server
-        fetch('/api/sanpham') // URL should point to your API endpoint
-            .then(response => response.json())
-            .then(data => {
-                // Sort products based on the selected option
-                if (sortOption === 'price_asc') {
-                    data.sort((a, b) => a.gia - b.gia);
-                } else if (sortOption === 'price_desc') {
-                    data.sort((a, b) => b.gia - a.gia);
-                } else if (sortOption === 'newest') {
-                    data.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-                }
-                displayProducts(data);
-            })
-            .catch(error => {
-                console.error('Error fetching products:', error);
-            });
-    }
-
-    function displayProducts(products) {
-        const productList = document.getElementById('product-list');
-        productList.innerHTML = ''; // Clear current content
-
-        if (products.length === 0) {
-            productList.innerHTML = '<p>Không có sản phẩm nào.</p>';
-        } else {
-            products.forEach(item => {
-                productList.innerHTML += `
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 product-card">
-                            <img src="/assets/images/sanpham/${item.anh}" class="card-img-top" alt="${item.tenSP}">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">${item.tenSP}</h5>
-                                <p class="text-danger font-weight-bold">${item.gia} VND</p>
-                            </div>
-                            <div class="hover-text" onclick="openQuickView(${item.id})" data-toggle="modal" data-target="#quickViewModal">Xem nhanh</div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-    }
-
-    function openQuickView(productId) {
-        // Fetch and display product details in the modal
-        fetch(`/api/sanpham/${productId}`)
-            .then(response => response.json())
-            .then(product => {
-                document.querySelector('#quickViewModal .modal-title').textContent = product.tenSP;
-                document.querySelector('#quickViewModal .modal-body img').src = `/assets/images/sanpham/${product.anh}`;
-                document.querySelector('#quickViewModal .modal-body .price').textContent = `${product.gia} VND`;
-            })
-            .catch(error => {
-                console.error('Error fetching product details:', error);
-            });
-    }
-</script>
 
 
 </body>

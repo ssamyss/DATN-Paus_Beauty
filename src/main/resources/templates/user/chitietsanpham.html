@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link th:insert="~{user/link/link.html}">
 </head>
-
 <body>
 	<!-- Header -->
 	<span th:insert="~{user/common/header.html}"></span>
@@ -103,19 +102,41 @@
 												style="background-color: #EC6090; border: none; margin-right: 10px;">
 												Mua ngay </a>
 										</div>
-
 									</div>
 								</div>
 							</th:block>
 
 							<!-- Thêm mã JavaScript để hiển thị thông báo -->
 							<script>
-                            document.querySelectorAll('.addToCart').forEach(function(button) {
-                                button.addEventListener('click', function() {
-                                    alert('Sản phẩm đã được thêm vào giỏ hàng thành công!');
-                                });
-                            });
-                        </script>
+								document
+										.querySelectorAll('.addToCart')
+										.forEach(
+												function(button) {
+													button
+															.addEventListener(
+																	'click',
+																	function() {
+																		alert('Sản phẩm đã được thêm vào giỏ hàng thành công!');
+																	});
+												});
+
+								function formatCurrency(amount) {
+									return new Intl.NumberFormat('vi-VN', {
+										style : 'currency',
+										currency : 'VND'
+									}).format(amount).replace('₫', 'VNĐ');
+								}
+
+								document
+										.addEventListener(
+												"DOMContentLoaded",
+												function() {
+													const priceElement = document
+															.querySelector('.formatted-price');
+													const price = parseFloat(priceElement.textContent);
+													priceElement.textContent = formatCurrency(price);
+												});
+							</script>
 						</div>
 					</div>
 				</div>
@@ -123,13 +144,25 @@
 		</div>
 	</div>
 
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top"> <i
+			class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
 	<!-- Footer -->
 	<div th:insert="~{user/common/footer.html}"></div>
 
+	<!-- product-detail -->
+	<div th:insert="~{user/product-detail.html}"></div>
+
 	<!-- AngularJS -->
 	<script th:src="@{/user/angularjs/sanpham.js}"></script>
-</body>
 
+	<!-- link -->
+	<div th:insert="~{user/link/scriptIndex.html}"></div>
+</body>
 <style>
 .product-image {
 	border: 1px solid #000;

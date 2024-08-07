@@ -14,6 +14,8 @@ import com.poly.entity.SanPham;
 import com.poly.entity.ThuongHieu;
 
 public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
+	
+	Page<SanPham> findByDanhMucLoaiSanPham_MaLSP(Integer maLSP, Pageable pageable);
 
 	@Query("SELECT count(o) FROM SanPham o")
 	Integer getCountSP();

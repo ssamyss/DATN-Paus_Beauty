@@ -5,7 +5,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link th:insert="~{user/link/link.html}">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
+.pagination li.active a {
+	background-color: #17a2b8;
+	color: white;
+}
+
+.pagination li a {
+	color: #17a2b8;
+}
+
+.pagination li a:hover {
+	background-color: #e9ecef;
+}
+
+.product-name {
+	font-size: 1.1rem;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 5px;
+}
+
+.product-price {
+	text-align: center;
+    display: block;
+	font-size: 1rem;
+	font-weight: bold;
+	color: #e74c3c;
+}
 </style>
 </head>
 <body ng-app="app" ng-controller="sanpham-index" class="animsition">
@@ -43,12 +72,11 @@
 
 					<!-- Button for each category -->
 					<th:block th:each="category : ${categories}">
-						<a th:href="@{/(category=${category.maLSP})}"
+						<a th:href="@{/category/{maLSP}(maLSP=${category.maLSP})}"
 							class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
 							th:text="${category.tenLSP}"></a>
 					</th:block>
 				</div>
-
 
 				<div class="flex-w flex-c-m m-tb-10">
 					<div
@@ -72,22 +100,19 @@
 			</div>
 
 			<div class="row" id="product-list">
-				<div ng-repeat="item in items"
+				<div ng-repeat="item in pager.items"
 					class="col-sm-6 col-md-4 col-lg-3 p-b-35">
 					<div class="block2">
 						<div class="block2-pic hov-img0">
 							<img ng-src="/assets/images/sanpham/{{item.anh}}"
-								alt="IMG-PRODUCT"> 
-								<a href="" ng-click="edit(item)"
+								alt="IMG-PRODUCT"> <a href="" ng-click="edit(item)"
 								class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 								Xem </a>
-								
-
 						</div>
 						<div class="block2-txt flex-w flex-t p-t-14">
-							<div class="block2-txt-child1 flex-col-l ">
-								<td>{{item.tenSP}}</td>
-								<td>{{item.gia | currency:'':0}} VND</td>
+							<div class="block2-txt-child1 flex-col-l">
+								<span class="product-name">{{item.tenSP}}</span> <span
+									class="text-danger product-price">{{item.gia | currency:'':0}} VNĐ</span>
 							</div>
 						</div>
 					</div>
@@ -95,7 +120,28 @@
 			</div>
 
 			<div class="flex-c-m flex-w w-full p-t-45">
-				<a
+				<nav aria-label="Page navigation">
+					<ul class="pagination justify-content-center">
+						<li class="page-item" ng-class="{disabled: pager.page === 0}">
+							<a class="page-link" ng-click="pager.first()">First</a>
+						</li>
+						<li class="page-item" ng-class="{disabled: pager.page === 0}">
+							<a class="page-link" ng-click="pager.prev()">Previous</a>
+						</li>
+						<li class="page-item active"><a class="page-link">{{pager.page
+								+ 1}}</a></li>
+						<li class="page-item"
+							ng-class="{disabled: pager.page >= pager.count - 1}"><a
+							class="page-link" ng-click="pager.next()">Next</a></li>
+						<li class="page-item"
+							ng-class="{disabled: pager.page >= pager.count - 1}"><a
+							class="page-link" ng-click="pager.last()">Last</a></li>
+					</ul>
+				</nav>
+			</div>
+
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<a ng-click="showAll()"
 					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
 					Xem nhiều </a>
 			</div>
@@ -104,9 +150,8 @@
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
-		<span class="symbol-btn-back-to-top"> <i
-			class="zmdi zmdi-chevron-up"></i>
-		</span>
+		<span class="symbol-btn-back-to-top"><i
+			class="zmdi zmdi-chevron-up"></i></span>
 	</div>
 
 	<!-- Footer -->
@@ -120,6 +165,12 @@
 
 	<!-- link -->
 	<div th:insert="~{user/link/scriptIndex.html}"></div>
-
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
