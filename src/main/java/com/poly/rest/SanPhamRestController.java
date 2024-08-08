@@ -59,4 +59,11 @@ public class SanPhamRestController {
 	    return sanPhamService.findHetHang();
 	}
 	
+	@GetMapping("/totalProductsByDanhMuc")
+	public List<Object[]> getTotalProductsByDanhMuc() {
+	    return sanPhamService.getTotalProductsByDanhMuc();
+	}
+
+
+	
 }

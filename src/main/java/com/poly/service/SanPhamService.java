@@ -22,4 +22,7 @@ public interface SanPhamService {
 	
 	List<SanPham> findHetHang();
 
+	public List<Object[]> getTotalProductsByDanhMuc();
+
+
 }

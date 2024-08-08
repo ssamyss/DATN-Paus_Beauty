@@ -27,9 +27,30 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-	
+
 <link rel="stylesheet" type="text/css"
-	th:href="@{/admin/css/donhangchitiet.css}">	
+	th:href="@{/admin/css/donhangchitiet.css}">
+	
+<style>
+    .status-huy-don {
+        color: red;
+    }
+    .status-dang-xu-ly {
+        color: gold; /* or another shade of yellow */
+    }
+    .status-hoan-tat {
+        color: blue;
+    }
+    .status-field {
+        display: inline-block;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+    }
+</style>	
 </head>
 
 <body ng-app="app" ng-controller="donhangchitiet-ctrl" onload="time()"
@@ -39,25 +60,62 @@
 
 	<main class="app-content">
 		<div class="app-title">
-    <ul class="app-breadcrumb breadcrumb side">
-        <li class="breadcrumb-item active" ng-repeat="dhct in dhchitiets track by $index">
-            <a href="#" ng-if="$index === 0 || dhchitiets[$index-1].donHang.maDH !== dhct.donHang.maDH">
-                <b>Danh sách sản phẩm trong đơn hàng {{dhct.donHang.maDH}}</b>
-            </a>
-        </li>
-    </ul>
-    <div id="clock"></div>
-</div>
-
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active" ng-repeat="dhct in dhchitiets"
+					ng-if="$index === 0 || dhchitiets[$index - 1].donHang.maDH !== dhct.donHang.maDH">
+					<a href="#"><b>Chi tiết đơn hàng {{dhct.donHang.maDH}}</b></a>
+				</li>
+			</ul>
+			<div id="clock"></div>
+		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<div class="tile">	
+				<div class="tile">
 					<div class="tile-body">
 						<div class="row element-button">
 							<div class="col-sm-2">
-								<a class="btn btn-add btn-sm" th:href="@{/dataOrder}">Quay lại</a>
+								<a class="btn btn-add btn-sm" th:href="@{/dataOrder}">Quay
+									lại</a>
 							</div>
 						</div>
+						<h2>Thông tin đơn hàng</h2>
+						<form class="row">
+							<div class="form-group col-md-3">
+								<label class="control-label">Mã đơn hàng</label> <input
+									class="form-control" ng-model="form.maDH" type="text" disabled>
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Tên khách hàng</label> <input
+									class="form-control" ng-model="form.taiKhoan.hoVaTen"
+									type="text" disabled>
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Địa chỉ</label> <input
+									class="form-control" ng-model="form.diaChi" type="text"
+									disabled>
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Số điện thoại</label> <input
+									class="form-control" ng-model="form.sdt" type="text" disabled>
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Tổng tiền</label> <input
+									class="form-control" ng-model="form.tongGia" type="number"
+									disabled>
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Ngày tạo</label> <input
+									class="form-control" ng-model="form.createDate" type="date"
+									disabled>
+							</div>
+							<div class="form-group col-md-3">
+								<label class="control-label">Trạng thái</label> <input
+									class="form-control" ng-model="form.trangThai" type="text"
+									disabled>
+							</div>
+						</form>
+
+
 						<table class="table table-hover table-bordered" id="sampleTable">
 							<thead>
 								<tr>

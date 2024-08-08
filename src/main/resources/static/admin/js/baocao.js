@@ -85,8 +85,18 @@ document.addEventListener('DOMContentLoaded', function() {
 					datasets: [{
 						label: '1 quý  = 3 tháng',
 						data: revenueData,
-						backgroundColor: 'rgba(54, 162, 235, 0.2)',
-						borderColor: 'rgba(54, 162, 235, 1)',
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(128, 0, 128, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(128, 0, 128, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)'
+						],
 						borderWidth: 1
 					}]
 				},
@@ -124,17 +134,43 @@ document.addEventListener('DOMContentLoaded', function() {
 					datasets: [{
 						label: 'Doanh Thu Hàng Tháng',
 						data: revenues,
-						backgroundColor: 'rgba(75, 192, 192, 0.2)',
-						borderColor: 'rgba(75, 192, 192, 1)',
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)',
+							'rgba(255, 99, 71, 0.2)',
+							'rgba(34, 139, 34, 0.2)',
+							'rgba(255, 215, 0, 0.2)',
+							'rgba(0, 191, 255, 0.2)',
+							'rgba(238, 130, 238, 0.2)',
+							'rgba(128, 0, 128, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)',
+							'rgba(255, 99, 71, 1)',
+							'rgba(34, 139, 34, 1)',
+							'rgba(255, 215, 0, 1)',
+							'rgba(0, 191, 255, 1)',
+							'rgba(238, 130, 238, 1)',
+							'rgba(128, 0, 128, 1)'
+						],
 						borderWidth: 1
 					}]
 				},
 				options: {
-					// 	                	plugins: {
-					//                             legend: {
-					//                                 display: false
-					//                             }
-					//                         },
+					plugins: {
+						legend: {
+							display: false
+						}
+					},
 					scales: {
 						x: {
 							beginAtZero: true
@@ -148,3 +184,99 @@ document.addEventListener('DOMContentLoaded', function() {
 		})
 		.catch(error => console.error('Error fetching monthly revenue data:', error));
 });
+
+//Thời Gian
+function time() {
+	var today = new Date();
+	var weekday = new Array(7);
+	weekday[0] = "Chủ Nhật";
+	weekday[1] = "Thứ Hai";
+	weekday[2] = "Thứ Ba";
+	weekday[3] = "Thứ Tư";
+	weekday[4] = "Thứ Năm";
+	weekday[5] = "Thứ Sáu";
+	weekday[6] = "Thứ Bảy";
+	var day = weekday[today.getDay()];
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1;
+	var yyyy = today.getFullYear();
+	var h = today.getHours();
+	var m = today.getMinutes();
+	var s = today.getSeconds();
+	m = checkTime(m);
+	s = checkTime(s);
+	nowTime = h + " giờ " + m + " phút " + s + " giây";
+	if (dd < 10) {
+		dd = '0' + dd
+	}
+	if (mm < 10) {
+		mm = '0' + mm
+	}
+	today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+	tmp = '<span class="date"> ' + today + ' - ' + nowTime + '</span>';
+	document.getElementById("clock").innerHTML = tmp;
+	clocktime = setTimeout("time()", "1000", "Javascript");
+
+	function checkTime(i) {
+		if (i < 10) {
+			i = "0" + i;
+		}
+		return i;
+	}
+}
+
+async function fetchData() {
+    const response = await fetch('http://localhost:8080/rest/sanpham/totalProductsByDanhMuc');
+    const data = await response.json();
+    return data;
+}
+
+async function createChart() {
+    const data = await fetchData();
+
+    const labels = data.map(item => item[0]);
+    const values = data.map(item => item[1]);
+
+    const ctx = document.getElementById('myPieChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Sản phẩm',
+                data: values,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Sản phẩm'
+                }
+            }
+        },
+    });
+}
+
+createChart();

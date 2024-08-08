@@ -72,4 +72,12 @@ public class SanPhamServiceImpl implements SanPhamService {
 		// TODO Auto-generated method stub
 		return spdao.findByTonKho(0);
 	}
+	
+	@Override
+	public List<Object[]> getTotalProductsByDanhMuc() {
+	    return spdao.getTotalProductsByDanhMuc();
+	}
+
+
+	
 }

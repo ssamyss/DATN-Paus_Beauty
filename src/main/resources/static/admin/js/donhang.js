@@ -25,7 +25,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 		});
 	};
 	
-	//xóa tất cả sản phẩm
+	//xóa tất cả đơn hàng
 	$scope.deleteAll = function() {
 		Swal.fire({
 			title: 'Xác nhận',
@@ -38,9 +38,9 @@ app.controller("donhang-ctrl", function($scope, $http) {
 			cancelButtonText: 'Hủy'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				// Call the delete function if the user confirms
+				
 				$http.delete('/rest/donhang').then(resp => {
-					$scope.items = []; // Clear the local list of items
+					$scope.items = []; 
 					Swal.fire({
 						icon: 'success',
 						title: 'Thành công',
@@ -48,7 +48,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 						confirmButtonText: 'OK',
 						confirmButtonColor: '#28a745'
 					});
-					$scope.initialize(); // Refresh the data to ensure UI is updated
+					$scope.initialize(); 
 				}).catch(error => {
 					alert("Lỗi khi xóa tất cả đơn hàng!");
 					console.log("Error", error);
@@ -57,7 +57,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 		});
 	};
 	
-	//xóa sản phẩm theo mã sản phẩm
+	//xóa sản phẩm theo mã đơn hàng
 	$scope.delete = function(item) {
 		Swal.fire({
 			title: 'Xác nhận',
@@ -70,7 +70,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 			cancelButtonText: 'Hủy'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				// Call the delete function if the user confirms
+				
 				$http.delete('/rest/donhang/' + item.maDH, item).then(resp => {
 					var index = $scope.items.findIndex(p => p.maDH == item.maDH);
 					$scope.items.splice(index, 1);
