@@ -72,7 +72,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			$scope.donhang.push(resp.data);
 			$scope.reset();
 			$scope.taiGH();
-			
+
 		}).catch(error => {
 			alert("Lỗi thêm mới đơn hàng!");
 		});
@@ -94,12 +94,12 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 	$scope.taiDH = function(item) {
 		$http.get('/rest/donhangchitiet').then(resp => {
 			$scope.donhangchitiet = resp.data;
-			
+
 			$scope.form.gia = item.sanPham.gia;
 			$scope.form.soLuong = item.soLuong;
 			$scope.form.sanPham = item.sanPham;
 			$scope.form.donHang = $scope.giohangnho;
-			
+
 			var donhangchitiet = angular.copy($scope.form);
 			$scope.themDHCT(donhangchitiet);
 		}).catch(error => {
@@ -122,7 +122,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 		var tentaikhoan = $scope.taikhoan.tenTaiKhoan;
 		$http.delete('/rest/giohang/deleteByTTK/' + tentaikhoan).then(resp => {
 			$scope.initialize();
-			$window.location.href = "/hoa-don/" + $scope.maDH;
+			
 		}).catch(error => {
 			alert("Lỗi xóa giỏ hàng dữ liệu!");
 		});
@@ -153,6 +153,15 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			}
 		}
 		if ($scope.selectedValue == 1) {
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công',
+				text: 'Đơn hàng của bạn đã được tạo!',
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#28a745'
+			}).then(result => {
+				$window.location.href = "/hoa-don/" + $scope.maDH;
+			});
 			$scope.create();
 		} else if ($scope.selectedValue == 2) {
 			$window.location.href = '/vn-pay';

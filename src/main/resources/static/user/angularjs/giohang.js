@@ -51,6 +51,16 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 	$scope.tru = function(item) {
 		var sanpham = angular.copy(item);
 		sanpham.soLuong = sanpham.soLuong - 1;
+		if (sanpham.soLuong < 1) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Giảm số lượng thất bại',
+				text: 'Số lượng đã đạt giới hạn!',
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#28a745'
+			});
+			return;
+		}
 		$http.put('/rest/giohang/' + sanpham.maGH, sanpham).then(resp => {
 			var index = $scope.giohang.findIndex(p => p.maGH == sanpham.maGH);
 			$scope.giohang[index] = angular.copy(sanpham);
@@ -71,10 +81,10 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 			alert("Lỗi giảm số lượng!");
 		});
 	};
-	
+
 	$scope.goToPage = function() {
-        $window.location.href = '/don-hang';
-    };
+		$window.location.href = '/don-hang';
+	};
 
 	$scope.initialize();
 	$scope.reset();

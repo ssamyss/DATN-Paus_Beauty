@@ -6,6 +6,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link th:insert="~{user/link/link.html}">
+	<!-- SweetAlert CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+	<!-- SweetAlert JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body ng-app="app" ng-controller="donhang-ctrl">
@@ -26,18 +31,18 @@
 
 						<div class="tt-container">
 							<div>
-								<input type="text" name="hovaten" id="hovaten" placeholder="Họ và tên" value="{{ taikhoan.hoVaTen }}"
-									required>
+								<input type="text" name="hovaten" id="hovaten" placeholder="Họ và tên"
+									value="{{ taikhoan.hoVaTen }}" required>
 							</div>
 							<div>
-								<input type="text" name="sdt" id="sdt" placeholder="Số điện thoại" value="{{ taikhoan.sdt }}"
-									required>
-								<input type="text" name="email" id="email" placeholder="Email" value="{{ taikhoan.email }}"
-									required>
+								<input type="text" name="sdt" id="sdt" placeholder="Số điện thoại"
+									value="{{ taikhoan.sdt }}" required>
+								<input type="text" name="email" id="email" placeholder="Email"
+									value="{{ taikhoan.email }}" required>
 							</div>
 							<div>
-								<input type="text" name="diachi" id="diachi" placeholder="Địa chỉ" value="{{ taikhoan.diaChi }}"
-									required>
+								<input type="text" name="diachi" id="diachi" placeholder="Địa chỉ"
+									value="{{ taikhoan.diaChi }}" required>
 							</div>
 						</div>
 
@@ -109,7 +114,8 @@
 							</div>
 						</div>
 
-						<button ng-click="goTo()" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						<button ng-click="goTo()"
+							class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 							Xác nhận
 						</button>
 					</div>
