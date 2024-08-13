@@ -1,5 +1,5 @@
 const app = angular.module("app", []);
-app.controller("donhang-ctrl", function($scope, $http) {
+app.controller("donhangHT-ctrl", function($scope, $http) {
 	$scope.form = {
 		status: 'Processsing',
 	};;
@@ -16,7 +16,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 
 	$scope.initialize = function() {
 		// Load đơn hàng
-		$http.get("/rest/donhang/dangxuly").then(resp => {
+		$http.get("/rest/donhang/hoanthanh").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
 				item.createDate = new Date(item.createDate);
@@ -137,7 +137,6 @@ app.controller("donhang-ctrl", function($scope, $http) {
 		}
 
 	}
-	
 
 	$scope.initialize();
 	/*$scope.reset();*/

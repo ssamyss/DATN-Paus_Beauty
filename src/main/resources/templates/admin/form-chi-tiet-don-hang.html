@@ -74,7 +74,7 @@
 					<div class="tile-body">
 						<div class="row element-button">
 							<div class="col-sm-2">
-								<a class="btn btn-add btn-sm" th:href="@{/dataOrder}">Quay
+								<a class="btn btn-add btn-sm" th:href="@{/dataOrder/pending}">Quay
 									lại</a>
 							</div>
 						</div>
@@ -136,7 +136,7 @@
 									<td>{{dhct.sanPham.tenSP}}</td>
 									<td>{{dhct.soLuong}}</td>
 									<td>{{dhct.sanPham.gia | currency:'':0}} VND</td>
-									<td>{{dhct.gia | currency:'':0}} VND</td>
+									<td>{{dhct.gia * dhct.soLuong | currency:'':0}} VND</td>
 									<td>{{dhct.donHang.maDH}}</td>
 								</tr>
 							</tbody>

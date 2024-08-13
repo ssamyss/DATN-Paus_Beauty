@@ -25,4 +25,11 @@ public interface DonHangService {
 	List<Object[]> getQuarterlyRevenue();
 
 	List<DonHang> getOrders(String tentaikhoan);
+	
+	List<DonHang> findAllByTrangThaiDangXuLy();
+	
+	List<DonHang> findAllByTrangThaiHoanThanh();
+
+	List<DonHang> findAllByTrangThaiHuyDon();
+
 }

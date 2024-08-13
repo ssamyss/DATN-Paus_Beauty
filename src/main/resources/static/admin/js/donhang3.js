@@ -1,5 +1,5 @@
 const app = angular.module("app", []);
-app.controller("donhang-ctrl", function($scope, $http) {
+app.controller("donhangHD-ctrl", function($scope, $http) {
 	$scope.form = {
 		status: 'Processsing',
 	};;
@@ -16,7 +16,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 
 	$scope.initialize = function() {
 		// Load đơn hàng
-		$http.get("/rest/donhang/dangxuly").then(resp => {
+		$http.get("/rest/donhang/huydon").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
 				item.createDate = new Date(item.createDate);
@@ -106,7 +106,7 @@ app.controller("donhang-ctrl", function($scope, $http) {
 	            }
 	        };
 	
-	//phân trang tất đơn hàng tất cả trạng thái		
+
 	$scope.pager = {
 		page: 0,
 		size: 5,
@@ -137,7 +137,6 @@ app.controller("donhang-ctrl", function($scope, $http) {
 		}
 
 	}
-	
 
 	$scope.initialize();
 	/*$scope.reset();*/

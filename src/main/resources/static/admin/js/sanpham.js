@@ -144,9 +144,9 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 			cancelButtonText: 'Hủy'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				// Call the delete function if the user confirms
+				// Gọi hàm xóa nếu người dùng xác nhận
 				$http.delete('/rest/sanpham').then(resp => {
-					$scope.items = []; // Clear the local list of items
+					$scope.items = []; // Xóa danh sách các mục cục bộ
 					Swal.fire({
 						icon: 'success',
 						title: 'Thành công',
@@ -154,8 +154,7 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 						confirmButtonText: 'OK',
 						confirmButtonColor: '#28a745'
 					});
-					$scope.initialize(); // Refresh the data to ensure UI is updated
-				}).catch(error => {
+					$scope.initialize();
 					alert("Lỗi khi xóa tất cả sản phẩm!");
 					console.log("Error", error);
 				});
@@ -177,7 +176,7 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 			cancelButtonText: 'Hủy'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				// Call the delete function if the user confirms
+				// Gọi hàm xóa nếu người dùng xác nhận
 				$http.delete('/rest/sanpham/' + item.maSP, item).then(resp => {
 					var index = $scope.items.findIndex(p => p.maSP == item.maSP);
 					$scope.items.splice(index, 1);
@@ -256,7 +255,7 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 			var workbook = new ExcelJS.Workbook();
 			await workbook.xlsx.load(reader.result);
 			const worksheet = workbook.getWorksheet('Sheet1');
-			let successCount = 0; // Counter to keep track of successful imports
+			let successCount = 0; // Bộ đếm để theo dõi các lần nhập thành công
 
 			worksheet.eachRow((row, index) => {
 				if (index > 1) {
@@ -277,14 +276,14 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 					$http.post(url, sanPham).then(resp => {
 						console.log("Success", resp.data);
 						$scope.initialize();
-						successCount++; // Increment the counter for each successful import
+						successCount++; // Tăng bộ đếm cho mỗi lần nhập thành công
 					}).catch(error => {
 						console.log("Error", error);
 					});
 				}
 			});
 
-			// Show success notification after all rows have been processed
+			// Hiển thị thông báo thành công sau khi tất cả các hàng đã được xử lý
 			setTimeout(() => {
 				if (successCount > 0) {
 					Swal.fire({
@@ -295,42 +294,160 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 						confirmButtonColor: '#28a745'
 					});
 				}
-			}, 1000); // Delay to ensure all requests are processed
+			}, 1000); // Trì hoãn để đảm bảo tất cả các yêu cầu được xử lý
 		};
 		reader.readAsArrayBuffer(files[0]);
 	};
-	
-	$scope.pager = {
-			page:0,
-			size:5,
-			get items(){
-				var start =this.page*this.size;
-				return $scope.items.slice(start,start+this.size);
-			},
-			get count(){
-				return Math.ceil(1.0*$scope.items.length/this.size);
-			},
-			first(){
-				this.page=0;
-			},
-			prev(){
-				this.page--;
-				if(this.page<0){
-					this.last();
-				}
-			},
-			next(){
-				this.page++;
-				if(this.page >= this.count){
-					this.first();
-				}
-			},
-			last(){
-				this.page =  this.count -1;
-			}
 
+	$scope.pager = {
+		page: 0,
+		size: 5,
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.items.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
 		}
 
+	}
+
+	//Xuất dữ liệu ra file Excel
+	$scope.exportToExcel = function() {
+		$http.get("/rest/sanpham").then(resp => {
+			$scope.items = resp.data;
+
+			// Tạo một bảng tính mới và thêm một bảng tính
+			var workbook = new ExcelJS.Workbook();
+			var worksheet = workbook.addWorksheet('Danh Sách Sản Phẩm');
+
+			// Thêm tiêu đề vào bảng tính
+			worksheet.columns = [
+				{ header: 'Tên sản phẩm', key: 'tenSP', width: 30 },
+				{ header: 'Tồn kho', key: 'tonKho', width: 15 },
+				{ header: 'Giá tiền', key: 'gia', width: 20 },
+				{ header: 'Loại sản phẩm', key: 'loaiSanPham', width: 20 },
+				{ header: 'Thương hiệu', key: 'thuongHieu', width: 20 },
+				{ header: 'Tình trạng', key: 'trangThai', width: 15 },
+				{ header: 'Ngày cập nhật', key: 'createDate', width: 20 }
+			];
+
+			// Thêm dữ liệu sản phẩm vào bảng tính
+			$scope.items.forEach(function(item) {
+				worksheet.addRow({
+					tenSP: item.tenSP,
+					tonKho: item.tonKho,
+					gia: item.gia + ' VND',
+					loaiSanPham: item.loaiSanPham.tenPL,
+					thuongHieu: item.thuongHieu.tenTH,
+					trangThai: item.trangThai ? 'Còn hàng' : 'Hết hàng',
+					createDate: new Date(item.createDate).toLocaleDateString('vi-VN')
+				});
+			});
+
+			// Tạo một tệp Excel và tải xuống
+			workbook.xlsx.writeBuffer().then(function(buffer) {
+				var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'Danh_Sach_San_Pham.xlsx';
+				link.click();
+			});
+
+		}).catch(error => {
+			console.error("Lỗi khi tải sản phẩm:", error);
+		});
+	};
+	
+	
+	//Xuất dữ liệu ra file PDF
+	$scope.exportToPDF = function() {
+	    let docDefinition = {
+	        pageOrientation: 'landscape', // Đặt hướng trang là chiều ngang
+	        content: [
+	            { text: 'Danh sách sản phẩm', style: 'header' },
+	            {
+	                style: 'tableExample',
+	                table: {
+	                    widths: [ '*', '*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+	                    body: [
+	                        [
+	                            { text: 'Tên sản phẩm', style: 'tableHeader' },
+	                            { text: 'Ảnh', style: 'tableHeader' },
+	                            { text: 'Tồn kho', style: 'tableHeader' },
+	                            { text: 'Giá tiền', style: 'tableHeader' },
+	                            { text: 'Loại sản phẩm', style: 'tableHeader' },
+	                            { text: 'Thương hiệu', style: 'tableHeader' },
+	                            { text: 'Tình trạng', style: 'tableHeader' },
+	                            { text: 'Ngày cập nhật', style: 'tableHeader' },
+	                        ]
+	                    ]
+	                }
+	            }
+	        ],
+	        styles: {
+	            header: {
+	                fontSize: 18,
+	                bold: true,
+	                margin: [0, 0, 0, 10]
+	            },
+	            tableExample: {
+	                margin: [0, 5, 0, 15],
+	                fontSize: 10
+	            },
+	            tableHeader: {
+	                bold: true,
+	                fontSize: 11,
+	                color: 'black',
+	                alignment: 'center'
+	            }
+	        },
+	        defaultStyle: {
+	            // Thêm các kiểu mặc định ở đây nếu cần
+	        }
+	    };
+
+	    // Thêm các hàng sản phẩm
+	    $scope.items.forEach(item => {
+	        docDefinition.content[1].table.body.push([
+	            item.tenSP,
+	            item.anh,
+	            item.tonKho,
+	            item.gia,
+	            item.loaiSanPham.tenPL,
+	            item.thuongHieu.tenTH,
+	            item.trangThai ? 'Còn hàng' : 'Hết hàng',
+	            new Date(item.createDate).toLocaleDateString(),
+	        ]);
+	    });
+
+	    // Tạo PDF
+	    pdfMake.createPdf(docDefinition).download('DanhSachSanPham.pdf');
+	};
+
+	
 	$scope.initialize();
 	$scope.reset();
+	
 });
+
+
+

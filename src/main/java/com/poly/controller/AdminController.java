@@ -55,11 +55,21 @@ public class AdminController {
 		return "admin/table-data-product";
 	}
 
-	@GetMapping("/dataOrder")
-	public String dataOrder() {
-		return "admin/table-data-order";
+	@GetMapping("/dataOrder/pending")
+	public String dataOrderDangxuly() {
+		return "admin/table-data-order-DXL";
+	}
+	
+	@GetMapping("/dataOrder/completed")
+	public String dataOrderHoanthanh() {
+		return "admin/table-data-order-HT";
 	}
 
+	@GetMapping("/dataOrder/cancelled")
+	public String dataOrderHuydon() {
+		return "admin/table-data-order-HD";
+	}
+	
 	@GetMapping("/baocao")
 	public String baoCao(Model model) {
 		model.addAttribute("product_count", spdao.getCountSP());

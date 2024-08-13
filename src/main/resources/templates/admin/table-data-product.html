@@ -38,6 +38,9 @@
 
 <link rel="stylesheet" type="text/css"
 	th:href="@{/admin/css/dssanpham.css}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
 
 </head>
 
@@ -73,13 +76,16 @@
 									onchange="angular.element(this).scope().import(this.files)">
 							</div>
 							<div class="col-sm-2">
-								<a class="btn btn-excel btn-sm" href="" title="In"><i
-									class="fas fa-file-excel"></i> Xuất Excel</a>
+								<a class="btn btn-excel btn-sm" href="#" title="Xuất Excel"
+									ng-click="exportToExcel()"> <i class="fas fa-file-excel"></i>
+									Xuất Excel
+								</a>
 							</div>
 							<div class="col-sm-2">
 								<a class="btn btn-delete btn-sm pdf-file" type="button"
-									title="In" onclick="myFunction(this)"><i
-									class="fas fa-file-pdf"></i> Xuất PDF</a>
+									title="Xuất PDF" ng-click="exportToPDF()"> <i
+									class="fas fa-file-pdf"></i> Xuất PDF
+								</a>
 							</div>
 							<div class="col-sm-2">
 								<a class="btn btn-delete btn-sm" type="button" title="Xóa"
@@ -104,7 +110,8 @@
 							<tbody>
 								<tr ng-repeat="item in pager.items">
 									<td>{{ getFirstFiveWords(item.tenSP) }}</td>
-									<td><img ng-src="/assets/images/sanpham/{{item.anh}}" style="width: 100px; height: auto;" /></td>
+									<td><img ng-src="/assets/images/sanpham/{{item.anh}}"
+										style="width: 100px; height: auto;" /></td>
 									<td>{{item.tonKho}}</td>
 									<td>{{item.gia | currency:'':0}} VND</td>
 									<td>{{item.loaiSanPham.tenPL}}</td>

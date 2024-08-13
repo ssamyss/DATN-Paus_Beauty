@@ -71,4 +71,19 @@ public class DonHangRestController {
     public List<Object[]> getQuarterlyRevenue() {
         return donHangService.getQuarterlyRevenue();
     }
+    
+    @GetMapping("/dangxuly")
+    public List<DonHang> getDangXuLyOrders() {
+        return donHangService.findAllByTrangThaiDangXuLy();
+    }
+
+    @GetMapping("/hoanthanh")
+    public List<DonHang> getHoanThanhOrders() {
+        return donHangService.findAllByTrangThaiHoanThanh();
+    }
+    
+    @GetMapping("/huydon")
+    public List<DonHang> getHuyDonrders() {
+        return donHangService.findAllByTrangThaiHuyDon();
+    }
 }

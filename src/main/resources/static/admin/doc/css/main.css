@@ -13924,114 +13924,97 @@ be a descendant of the grid when it is being dragged.
   margin-bottom: 0;
 }
 
+/* Main Menu Styling */
 .app-menu {
   margin-bottom: 0;
   padding-bottom: 40px;
 }
 
 .app-menu__item {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   border-radius: .375rem;
   margin-bottom: 10px;
-  padding: 15px 15px;
+  padding: 15px 20px;
   font-size: 1.08em;
-  border-left: 0px;
-  box-shadow: none;
-  -webkit-transition: border-left-color 0.3s ease, background-color 0.3s ease;
-  -o-transition: border-left-color 0.3s ease, background-color 0.3s ease;
-  transition: border-left-color 0.3s ease, background-color 0.3s ease;
   color: white;
   border: 1px solid transparent;
-  /* border-bottom: 1px solid #ddd; */
+  transition: all 0.3s ease;
 }
 
-.app-menu__item.active, .app-menu__item:hover, .app-menu__item:focus {
+.app-menu__item.active,
+.app-menu__item:hover,
+.app-menu__item:focus {
   background: #c6defd;
-  text-decoration: none;
-  color: rgb(22 22 72);
-  box-shadow: none;
-  border: 1px solid rgb(22 22 72);
+  color: rgb(22, 22, 72);
+  border: 1px solid rgb(22, 22, 72);
 }
 
 .app-menu__icon {
   font-size: 23px;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
   width: 40px;
 }
 
 .app-menu__label {
   white-space: nowrap;
-  -webkit-box-flex: 1;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
+  flex: 1;
   font-size: 15px;
   font-weight: 500;
 }
 
-.treeview.is-expanded [data-toggle='treeview'] {
-  border-left-color: rgb(0, 28, 64);
-  background: #0d1214;
+/* Treeview (Submenu) Styling */
+.treeview .treeview-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.treeview .treeview-item:hover,
+.treeview .treeview-item:focus {
+  background: #c6defd;
+  color: rgb(22, 22, 72);
+  border: 1px solid rgb(22, 22, 72);
+}
+
+.treeview .treeview-indicator {
+  margin-left: auto;
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.treeview.is-expanded .treeview-indicator {
+  transform: rotate(90deg);
 }
 
 .treeview.is-expanded .treeview-menu {
   max-height: 100vh;
-}
-
-.treeview.is-expanded .treeview-indicator {
-  -webkit-transform: rotate(90deg);
-      -ms-transform: rotate(90deg);
-          transform: rotate(90deg);
+  overflow: visible;
+  border-left: 3px solid #0d1214;
+  background: rgb(0, 28, 64);
+  transition: all 0.3s ease;
 }
 
 .treeview-menu {
   max-height: 0;
   overflow: hidden;
-  -webkit-transition: max-height 0.3s ease;
-  -o-transition: max-height 0.3s ease;
+  background: rgb(0, 28, 64);
   transition: max-height 0.3s ease;
-  background: #2a383e;
+}
+        
+.treeview-menu.open {
+  max-height: 500px; /* Adjust this value based on the content height */
 }
 
-.treeview-item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 5px 5px 5px 20px;
-  font-size: 1em;
-  color: #fff;
-}
-
-.treeview-item.active, .treeview-item:hover, .treeview-item:focus {
-  background: #0d1214;
-  text-decoration: none;
-  color: #fff;
-}
-
-.treeview-item .icon {
-  margin-right: 5px;
-}
-
-.treeview-indicator {
-  -webkit-transform-origin: center;
-      -ms-transform-origin: center;
-          transform-origin: center;
-  -webkit-transition: -webkit-transform 0.3s ease;
-  transition: -webkit-transform 0.3s ease;
-  -o-transition: transform 0.3s ease;
+.treeview-indicator.open {
+  transform: rotate(90deg);
   transition: transform 0.3s ease;
-  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
 }
+
 
 @media (min-width: 768px) {
   .sidebar-mini.sidenav-toggled .app-sidebar__user-name,

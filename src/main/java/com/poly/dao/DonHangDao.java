@@ -38,4 +38,13 @@ public interface DonHangDao extends JpaRepository<DonHang, String> {
 
 	@Query("SELECT QUARTER(dh.createDate), SUM(dh.tongGia) FROM DonHang dh WHERE dh.trangThai = 'HOAN_TAT' GROUP BY QUARTER(dh.createDate)")
     List<Object[]> getQuarterlyRevenue();
+    
+    @Query("SELECT dh FROM DonHang dh WHERE dh.trangThai = 'DANG_XU_LY'")
+    List<DonHang> findAllByTrangThaiDangXuLy();
+
+    @Query("SELECT dh FROM DonHang dh WHERE dh.trangThai = 'HOAN_TAT'")
+    List<DonHang> findAllByTrangThaiHoanThanh();
+    
+    @Query("SELECT dh FROM DonHang dh WHERE dh.trangThai = 'HUY_DON'")
+    List<DonHang> findAllByTrangThaiHuyDon();
 }

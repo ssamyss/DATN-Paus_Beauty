@@ -1,83 +1,76 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Menu</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Main CSS-->
-<link rel="stylesheet" type="text/css"
-	th:href="@{/admin/doc/css/main.css}">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <title>Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" th:href="@{/admin/doc/css/main.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 </head>
 <body>
-	<!-- Navbar-->
-	<header class="app-header">
-		<!-- Sidebar toggle button-->
-		<a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
-			aria-label="Hide Sidebar"></a>
-		<!-- Navbar Right Menu-->
-		<ul class="app-nav">
-			<!-- User Menu-->
-			<li><a class="app-nav__item" th:href="@{admin/index}"><i
-					class='bx bx-log-out bx-rotate-180'></i> </a></li>
-		</ul>
-	</header>
-	<!-- Sidebar menu-->
-	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-	<aside class="app-sidebar">
-		<div class="app-sidebar__user">
-			<img class="app-sidebar__user-avatar"
-				src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/440415209_1620552845368987_2750180453414901523_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=NjF2-Xvd7DUQ7kNvgHT9LgJ&_nc_ht=scontent.fsgn2-7.fna&oh=00_AYCauTVN4FAuj8g1bK6FM16QGbZ420S29dTtccb5fgEBRg&oe=66B251C2"
-				width="50px" alt="User Image">
-			<div>
-				<p class="app-sidebar__user-name">
-					<b>Hoàng Mỹ</b>
-				</p>
-				<p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
-			</div>
-		</div>
-		<hr>
-		<ul class="app-menu">
-			<li><a class="app-menu__item" th:href="@{/admin}"><i
-					class='app-menu__icon bx bx-tachometer'></i><span
-					class="app-menu__label">Bảng điều khiển</span></a></li>
+    <!-- Navbar-->
+    <header class="app-header">
+        <!-- Sidebar toggle button-->
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+        <!-- Navbar Right Menu-->
+        <ul class="app-nav">
+            <!-- User Menu-->
+            <li><a class="app-nav__item" th:href="@{admin/index}"><i class='bx bx-log-out bx-rotate-180'></i> </a></li>
+        </ul>
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+        <div class="app-sidebar__user">
+            <img class="app-sidebar__user-avatar"
+                src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/440415209_1620552845368987_2750180453414901523_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=NjF2-Xvd7DUQ7kNvgHT9LgJ&_nc_ht=scontent.fsgn2-7.fna&oh=00_AYCauTVN4FAuj8g1bK6FM16QGbZ420S29dTtccb5fgEBRg&oe=66B251C2"
+                width="50px" alt="User Image">
+            <div>
+                <p class="app-sidebar__user-name">
+                    <b>Hoàng Mỹ</b>
+                </p>
+                <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+            </div>
+        </div>
+        <hr>
+        <ul class="app-menu">
+            <li><a class="app-menu__item" th:href="@{/admin}"><i class='app-menu__icon bx bx-tachometer'></i><span class="app-menu__label">Bảng điều khiển</span></a></li>
 
-			<li><a class="app-menu__item" th:href="@{/dataDanhmuc}"><i
-					class='app-menu__icon bx bx-id-card'></i> <span
-					class="app-menu__label">Quản lý danh mục</span></a></li>
+            <li><a class="app-menu__item" th:href="@{/dataDanhmuc}"><i class='app-menu__icon bx bx-id-card'></i> <span class="app-menu__label">Quản lý danh mục</span></a></li>
 
-			<li><a class="app-menu__item" th:href="@{/dataProduct}"><i
-					class='app-menu__icon bx bx-purchase-tag-alt'></i><span
-					class="app-menu__label">Quản lý sản phẩm</span></a></li>
+            <li><a class="app-menu__item" th:href="@{/dataProduct}"><i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản phẩm</span></a></li>
 
-			<li><a class="app-menu__item" th:href="@{/dataOrder}"><i
-					class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản
-						lý đơn hàng</span></a></li>
+            <li class="treeview">
+                <a class="app-menu__item" href="#" onclick="toggleMenu(event)"><i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý đơn hàng</span>
+                    <i class="treeview-indicator bx bx-chevron-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a class="treeview-item" th:href="@{/dataOrder/pending}">Đơn hàng chờ xử lý</a></li>
+                    <li><a class="treeview-item" th:href="@{/dataOrder/completed}">Đơn hàng đã hoàn thành</a></li>
+                    <li><a class="treeview-item" th:href="@{/dataOrder/cancelled}">Đơn hàng đã hủy</a></li>
+                </ul>
+            </li>
 
-			<li><a class="app-menu__item" th:href="@{/baocao}"><i
-					class='app-menu__icon bx bx-pie-chart-alt-2'></i><span
-					class="app-menu__label">Báo cáo thống kê</span></a></li>
-		</ul>
-	</aside>
-	<!-- Script for highlighting current menu item -->
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-  		const menuItems = document.querySelectorAll(".app-menu__item");
+            <li><a class="app-menu__item" th:href="@{/baocao}"><i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo thống kê</span></a></li>
+        </ul>
+    </aside>
 
-  menuItems.forEach(item => {
-    item.addEventListener("click", function() {
-      // Remove active class from all menu items
-      menuItems.forEach(menuItem => {
-        menuItem.classList.remove("active");
-      });
+    <!-- Script for toggling the sub-menu -->
+    <script>
+        function toggleMenu(event) {
+            event.preventDefault(); // Prevent the default link behavior
+            const menu = event.currentTarget.nextElementSibling;
+            const indicator = event.currentTarget.querySelector('.treeview-indicator');
 
-      // Add active class to the clicked menu item
-      this.classList.add("active");
-    });
-  });
-});
-
-  </script>
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                indicator.classList.remove('open');
+            } else {
+                menu.classList.add('open');
+                indicator.classList.add('open');
+            }
+        }
+    </script>
 </body>
 </html>
