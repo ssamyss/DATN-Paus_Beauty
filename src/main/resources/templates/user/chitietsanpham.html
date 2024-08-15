@@ -39,9 +39,8 @@
 							<h3 class="card-title" th:text="${product.tenSP}"></h3>
 							<div style="display: flex;">
 								<p style="font-weight: bold;">Giá bán:</p>
-								<p style="color: red; font-weight: bold; margin-left: 20px;">
+								<p style="color: red; font-weight: bold; margin-left: 10px;">
 									<span class="formatted-price" th:text="${product.gia}"></span>
-									VNĐ
 								</p>
 							</div>
 							<hr>
@@ -58,9 +57,9 @@
 										tạm hết hàng</div>
 								</div>
 							</th:block>
-							<div style="display: flex;">
-								<div style="font-weight: bold;">Mô tả: &nbsp;</div>
-								<div th:text="${product.mota}"></div>
+							<div style="display: flex; align-items: flex-start;">
+								<div style="font-weight: bold; margin-right: 10px;">Mô tả:</div>
+								<div th:text="${product.mota}" style="max-width: 100%;"></div>
 							</div>
 							<hr />
 							<th:block th:if="${product.tonKho > 0}">

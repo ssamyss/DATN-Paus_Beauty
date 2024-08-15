@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,13 +30,16 @@ public class UserController {
 
 	@Autowired
 	DanhMucLoaiSanPhamDao dmlspDao;
-	
+
 	@Autowired
 	SanPhamService spService;
 
+	@Autowired
+	private JavaMailSender mailSender;
+
 	@GetMapping("")
 	public String index(Model model) {
-		 model.addAttribute("categories", dmlspDao.findAll());
+		model.addAttribute("categories", dmlspDao.findAll());
 		return "user/index";
 	}
 
@@ -43,7 +49,7 @@ public class UserController {
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
 		Page<SanPham> sanphamPage = spDao.findAll(pageable);
 		model.addAttribute("sanphamPage", sanphamPage);
-		 model.addAttribute("categories", dmlspDao.findAll());
+		model.addAttribute("categories", dmlspDao.findAll());
 		return "user/sanpham";
 	}
 
@@ -56,7 +62,8 @@ public class UserController {
 	}
 
 	@GetMapping("/category/{maLSP}")
-	public String getProductByCategory(@PathVariable("maLSP") Integer maLSP, Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+	public String getProductByCategory(@PathVariable("maLSP") Integer maLSP, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page) {
 		int pageSize = 8;
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
 		Page<SanPham> sanphamPage = spDao.findByDanhMucLoaiSanPham_MaLSP(maLSP, pageable);
@@ -100,15 +107,31 @@ public class UserController {
 	public String thongTin() {
 		return "user/thong-tin-ca-nhan";
 	}
-	
+
 	@GetMapping("/chitietsanpham")
 	public String chitietsanpham(@RequestParam(name = "maSP") Integer maSP, Model model) {
-	    SanPham product = spService.findById(maSP);
-	    if (product != null) {
-	        model.addAttribute("product", product);
-	        return "user/chitietsanpham";
-	    } else {
-	        return "redirect:/error";
-	    }
+		SanPham product = spService.findById(maSP);
+		if (product != null) {
+			model.addAttribute("product", product);
+			return "user/chitietsanpham";
+		} else {
+			return "redirect:/error";
+		}
 	}
+	
+	 @PostMapping("/sendEmail")
+	    public String sendEmail(@RequestParam("email") String email, @RequestParam("message") String message) {
+	        try {
+	            SimpleMailMessage mailMessage = new SimpleMailMessage();
+	            mailMessage.setTo("phambin984@gmail.com"); 
+	            mailMessage.setSubject("Contact submission from: " + email);
+	            mailMessage.setText(message);
+	            mailMessage.setFrom(email);
+
+	            mailSender.send(mailMessage);
+	            return "redirect:/contact?success"; 
+	        } catch (Exception e) {
+	            return "redirect:/contact?error"; 
+	        }
+	    }
 }
