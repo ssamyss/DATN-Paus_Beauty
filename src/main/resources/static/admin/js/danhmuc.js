@@ -49,6 +49,11 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 				text: 'Thêm loại sản phẩm thành công!',
 				confirmButtonText: 'OK',
 				confirmButtonColor: '#28a745'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Hide the modal
+					$('#addProductCategoryModal').modal('hide');
+				}
 			});
 			$scope.reset();
 			$scope.initialize();
@@ -61,7 +66,7 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 
 
 
-	//Thương hiệu
+	// Thương hiệu
 	$scope.createTH = function() {
 		var item = angular.copy($scope.form);
 		$http.post('/rest/thuonghieu', item).then(resp => {
@@ -69,9 +74,14 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 			Swal.fire({
 				icon: 'success',
 				title: 'Thành công',
-				text: 'Thêm sản phẩm thành công!',
+				text: 'Thêm thương hiệu thành công!',
 				confirmButtonText: 'OK',
 				confirmButtonColor: '#28a745'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Hide the modal
+					$('#addBrandModal').modal('hide');
+				}
 			});
 			$scope.reset();
 			$scope.initialize();
@@ -80,6 +90,7 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		});
 	};
+
 
 
 	$scope.imageChanged = function(files) {
@@ -240,7 +251,7 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 			this.page = this.count - 1;
 		}
 	}
-	
+
 	// Thêm dữ liệu từ file Excel
 	$scope.importDanhMuc = function(files) {
 		var reader = new FileReader();
@@ -281,7 +292,7 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 		};
 		reader.readAsArrayBuffer(files[0]);
 	};
-	
+
 	// Thêm dữ liệu từ file Excel
 	$scope.importLoaiSP = function(files) {
 		var reader = new FileReader();
@@ -294,7 +305,7 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 			worksheet.eachRow((row, index) => {
 				if (index > 1) {
 					let loaisanpham = {
-						maPL:row.getCell(1).value,
+						maPL: row.getCell(1).value,
 						tenPL: row.getCell(2).value,
 						danhMucLoaiSanPham: { maLSP: row.getCell(3).value }
 					};
@@ -323,7 +334,7 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 		};
 		reader.readAsArrayBuffer(files[0]);
 	};
-	
+
 	// Thêm dữ liệu từ file Excel
 	$scope.importTH = function(files) {
 		var reader = new FileReader();
@@ -338,7 +349,7 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 					let thuonghieu = {
 						maTH: row.getCell(1).value,
 						tenTH: row.getCell(3).value,
-						 anhTH: row.getCell(2).value
+						anhTH: row.getCell(2).value
 					};
 
 					var url = "http://localhost:8080/rest/thuonghieu";

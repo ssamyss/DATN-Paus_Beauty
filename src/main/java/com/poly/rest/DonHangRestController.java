@@ -48,7 +48,7 @@ public class DonHangRestController {
 	}
 	
 	@PutMapping("{maDH}")
-	public DonHang update(@PathVariable("maDHCT") Integer maDHCT, @RequestBody DonHang donHang) {
+	public DonHang update(@PathVariable("maDH") String maDH, @RequestBody DonHang donHang) {
 		return donHangService.update(donHang);
 	}
 	

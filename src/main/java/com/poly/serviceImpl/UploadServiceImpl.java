@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,35 +18,38 @@ import jakarta.servlet.ServletContext;
 @Service
 public class UploadServiceImpl implements UploadService {
 
-	// Set the upload directory relative to your project or an absolute path
-	private static final String UPLOAD_DIR = "src/main/resources/static/assets/images/";
+    @Autowired
+    ServletContext servletContext;
 
-	@Override
-	public File save(MultipartFile file, String folder) {
-		try {
-			// Construct the path to the directory
-			Path uploadPath = Paths.get(UPLOAD_DIR, folder);
+    @Override
+    public File save(MultipartFile file, String folder) {
+        try {
+            // Resolve the static folder path dynamically
+            String uploadDir = servletContext.getRealPath("/assets/images/" + folder);
 
-			// Create directories if they do not exist
-			if (!Files.exists(uploadPath)) {
-				Files.createDirectories(uploadPath);
-			}
+            // Construct the path to the directory
+            Path uploadPath = Paths.get(uploadDir);
 
-			// Clean and create a unique filename
-			String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-			String fileName = System.currentTimeMillis() + "-" + originalFileName;
+            // Create directories if they do not exist
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
 
-			// Construct the file path and save the file
-			Path filePath = uploadPath.resolve(fileName).normalize();
-			Files.copy(file.getInputStream(), filePath);
+            // Clean and create a unique filename
+            String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+            String fileName = System.currentTimeMillis() + "-" + originalFileName;
 
-			// Return the saved file
-			File saveFile = filePath.toFile();
-			System.out.println("File saved at: " + saveFile.getAbsolutePath());
-			return saveFile;
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Error saving file: " + e.getMessage());
-		}
-	}
+            // Construct the file path and save the file
+            Path filePath = uploadPath.resolve(fileName).normalize();
+            Files.copy(file.getInputStream(), filePath);
+
+            // Return the saved file
+            File saveFile = filePath.toFile();
+            System.out.println("File saved at: " + saveFile.getAbsolutePath());
+            return saveFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error saving file: " + e.getMessage());
+        }
+    }
 }

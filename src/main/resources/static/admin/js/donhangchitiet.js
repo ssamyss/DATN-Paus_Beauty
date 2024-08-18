@@ -1,8 +1,6 @@
 const app = angular.module("app", []);
 app.controller("donhangchitiet-ctrl", function($scope, $http, $location) {
-	$scope.form = {
-		status: 'Processsing',
-	};;
+	$scope.form = {};
 	$scope.accounts = [];
 	$scope.dhchitiets = [];
 	$scope.sanpham = [];
@@ -56,6 +54,57 @@ app.controller("donhangchitiet-ctrl", function($scope, $http, $location) {
 				return 'Chưa rõ';
 		}
 	};
+	
+	
+	$scope.update = function() {
+	        Swal.fire({
+	            title: 'Xác nhận',
+	            text: "Bạn có chắc chắn muốn cập nhật đơn hàng không?",
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: 'Cập nhật',
+	            cancelButtonText: 'Hủy'
+	        }).then((result) => {
+	            if (result.isConfirmed) {
+	                $scope.form.trangThai = "HOAN_TAT";
+	                $scope.form.createDate = new Date(); // Set the current date and time
+
+	                var item = angular.copy($scope.form);
+	                console.log('Payload being sent:', item);
+
+	                $http.put('/rest/donhang/' + item.maDH, item).then(response => {
+	                    // Ensure donhang is an array before using findIndex
+	                    if (Array.isArray($scope.donhang)) {
+	                        var index = $scope.donhang.findIndex(p => p.maDH == item.maDH);
+	                        if (index !== -1) {
+	                            $scope.donhang[index] = angular.copy(item);
+	                        }
+	                    }
+	                    Swal.fire({
+	                        icon: 'success',
+	                        title: 'Thành công',
+	                        text: 'Cập nhật đơn hàng thành công!',
+	                        confirmButtonText: 'OK',
+	                        confirmButtonColor: '#28a745'
+	                    });
+	                }).catch(error => {
+	                    Swal.fire({
+	                        icon: 'error',
+	                        title: 'Lỗi',
+	                        text: 'Có lỗi xảy ra khi cập nhật.',
+	                        confirmButtonText: 'OK',
+	                        confirmButtonColor: '#d33'
+	                    });
+	                    console.log("Error", error);
+	                });
+	            }
+	        });
+	    };
+
+	
+	
 
 	$scope.initialize();
 	/*$scope.reset();*/
