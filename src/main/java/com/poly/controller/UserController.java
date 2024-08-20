@@ -123,7 +123,7 @@ public class UserController {
 	        try {
 	            SimpleMailMessage mailMessage = new SimpleMailMessage();
 	            mailMessage.setTo("phambin984@gmail.com"); 
-	            mailMessage.setSubject("Contact submission from: " + email);
+	            mailMessage.setSubject("Thông tin liên hệ từ: " + email);
 	            mailMessage.setText(message);
 	            mailMessage.setFrom(email);
 

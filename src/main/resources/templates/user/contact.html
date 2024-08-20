@@ -30,6 +30,25 @@ footer {
 .p-b-120 {
 	padding-bottom: 0 !important;
 }
+
+.alert {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.alert-success {
+	color: #155724;
+	background-color: #d4edda;
+	border-color: #c3e6cb;
+}
+
+.alert-danger {
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+}
 </style>
 <body class="animsition">
 	<!-- Header -->
@@ -38,6 +57,12 @@ footer {
 	<!-- Content page -->
 	<section class="bg0 p-t-104 p-b-116">
 		<div class="container">
+			<!-- Display success or error message -->
+			<div th:if="${param.success}" class="alert alert-success">Tin
+				nhắn đã được gửi thành công!</div>
+			<div th:if="${param.error}" class="alert alert-danger">Có lỗi
+				xảy ra khi gửi tin nhắn. Vui lòng thử lại sau.</div>
+
 			<div class="flex-w flex-tr">
 				<div
 					class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
@@ -106,13 +131,8 @@ footer {
 		</div>
 	</section>
 
-
 	<!-- Map -->
-	<div class="map">
-		<div class="size-303" id="google_map" data-map-x="40.691446"
-			data-map-y="-73.886787" data-pin="images/icons/pin.png"
-			data-scrollwhell="0" data-draggable="1" data-zoom="11"></div>
-	</div>
+	<div id="map" style="height: 400px; width: 100%;"></div>
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
@@ -132,6 +152,28 @@ footer {
 
 	<!-- link -->
 	<div th:insert="~{user/link/scriptIndex.html}"></div>
+
+	<script>
+    function initMap() {
+        // Cấu hình bản đồ
+        var location = { lat: 10.762622, lng: 106.660172 }; // Tọa độ địa chỉ của bạn (TP.HCM)
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: location
+        });
+
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: 'CĐ FPT Polytechnic'
+        });
+    }
+</script>
+
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+</script>
 
 </body>
 </html>
