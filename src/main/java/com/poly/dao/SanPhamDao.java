@@ -10,12 +10,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.poly.entity.LoaiSanPham;
 import com.poly.entity.SanPham;
 import com.poly.entity.ThuongHieu;
 
 public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 	
 	Page<SanPham> findByDanhMucLoaiSanPham_MaLSP(Integer maLSP, Pageable pageable);
+	
+	 Page<SanPham> findByLoaiSanPhamIn(List<LoaiSanPham> loaiSanPham, Pageable pageable);
 
 	@Query("SELECT count(o) FROM SanPham o")
 	Integer getCountSP();

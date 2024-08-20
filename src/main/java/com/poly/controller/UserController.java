@@ -76,8 +76,7 @@ public class UserController {
 	public String productDetail(Model model, @PathVariable("id") Integer maSP) {
 		SanPham sp = spDao.findById(maSP).orElse(null);
 		if (sp == null) {
-			// Xử lý khi không tìm thấy sản phẩm
-			return "redirect:/"; // Chuyển hướng về trang chủ hoặc trang thông báo lỗi
+			return "redirect:/";
 		}
 		model.addAttribute("sanpham", sp);
 		return "user/product-detail";

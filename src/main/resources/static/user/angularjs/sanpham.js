@@ -225,8 +225,7 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		} else if ($scope.selectedSortOption === 'newest') {
 			sortedItems.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
 		} else if ($scope.selectedSortOption === 'best_selling') {
-			// Giả sử có một thuộc tính để đánh giá sản phẩm bán chạy nhất
-			// Bạn có thể sắp xếp dựa trên thuộc tính này nếu có
+			
 		}
 
 		$scope.items = sortedItems;
