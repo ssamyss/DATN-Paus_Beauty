@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -13,13 +14,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.poly.dao.DanhMucLoaiSanPhamDao;
 import com.poly.dao.SanPhamDao;
+import com.poly.dao.TaiKhoanDao;
 import com.poly.entity.DanhMucLoaiSanPham;
 import com.poly.entity.SanPham;
+import com.poly.entity.TaiKhoan;
 import com.poly.service.SanPhamService;
 
 @Controller
@@ -27,6 +32,9 @@ public class UserController {
 
 	@Autowired
 	SanPhamDao spDao;
+	
+	@Autowired
+	TaiKhoanDao tkDao;
 
 	@Autowired
 	DanhMucLoaiSanPhamDao dmlspDao;
@@ -103,9 +111,29 @@ public class UserController {
 	}
 
 	@GetMapping("/thong-tin-ca-nhan")
-	public String thongTin() {
-		return "user/thong-tin-ca-nhan";
-	}
+    public String thongTinCaNhan(Model model) {
+        // Assuming that you have a method to get the currently logged-in user
+        TaiKhoan taiKhoan = tkDao.findByTenTaiKhoan("currentUsername"); // Replace with actual method to get the logged-in user
+        model.addAttribute("taikhoan", taiKhoan);
+        return "user/thong-tin-ca-nhan";
+    }
+
+    @PutMapping("/rest/taikhoan")
+    @ResponseBody
+    public ResponseEntity<TaiKhoan> updateTaiKhoan(@RequestBody TaiKhoan taiKhoan) {
+        // Find the existing account by username or ID
+        TaiKhoan existingTaiKhoan = tkDao.findById(taiKhoan.getTenTaiKhoan()).orElse(null);
+        if (existingTaiKhoan != null) {
+            // Update the existing account details
+            existingTaiKhoan.setHoVaTen(taiKhoan.getHoVaTen());
+            existingTaiKhoan.setDiaChi(taiKhoan.getDiaChi());
+            existingTaiKhoan.setSDT(taiKhoan.getSDT());
+            existingTaiKhoan.setEmail(taiKhoan.getEmail());
+            tkDao.save(existingTaiKhoan);
+            return ResponseEntity.ok(existingTaiKhoan);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 	@GetMapping("/chitietsanpham")
 	public String chitietsanpham(@RequestParam(name = "maSP") Integer maSP, Model model) {
