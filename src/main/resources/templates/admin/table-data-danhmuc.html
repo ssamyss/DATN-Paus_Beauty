@@ -70,6 +70,14 @@
 									data-toggle="modal" data-target="#addBrandModal" title="Thêm"><i
 									class="fas fa-plus"></i> Thêm thương hiệu</a>
 							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
+									title="Nhập"
+									onclick="document.getElementById('fileInput').click()"><i
+									class="fas fa-file-upload"></i> Tải từ file</a> <input
+									id="fileInput" type="file" style="display: none"
+									onchange="angular.element(this).scope().importLoaiSP(this.files)">
+							</div>
 						</div>
 						<h2 class="table-title">Danh sách thương hiệu</h2>
 						<table class="table table-hover table-bordered" id="sampleTable">

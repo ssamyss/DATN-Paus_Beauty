@@ -347,9 +347,8 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 			worksheet.eachRow((row, index) => {
 				if (index > 1) {
 					let thuonghieu = {
-						maTH: row.getCell(1).value,
-						tenTH: row.getCell(3).value,
-						anhTH: row.getCell(2).value
+						tenTH: row.getCell(2).value,
+						anhTH: row.getCell(1).value
 					};
 
 					var url = "http://localhost:8080/rest/thuonghieu";

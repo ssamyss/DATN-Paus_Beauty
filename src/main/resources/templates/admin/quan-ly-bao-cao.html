@@ -27,6 +27,11 @@
 <link rel="stylesheet" type="text/css"
 	th:href="@{/admin/css/baocao.css}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl" ng-app="app"
@@ -121,14 +126,19 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
+				<button ng-click="XuatDTTheoThang()" class="btn btn-success">Xuất
+					Excel</button>
 				<div class="tile">
 					<h3 class="tile-title">DOANH THU HÀNG THÁNG</h3>
+
 					<div>
 						<canvas id="revenueChart" width="400" height="200"></canvas>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
+				<button ng-click="XuatDTTheoQuy()" class="btn btn-success">Xuất
+					Excel</button>
 				<div class="tile">
 					<h3 class="tile-title">THỐNG KÊ DOANH THU THEO QUÝ</h3>
 					<div>
