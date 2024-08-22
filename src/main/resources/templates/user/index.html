@@ -111,9 +111,11 @@
 						</div>
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l">
-								<span class="product-name">{{item.tenSP}}</span> <span
-									class="text-danger product-price">{{item.gia |
-									currency:'':0}} VNĐ</span>
+								<a class="product-name"
+									ng-href="/chitietsanpham?maSP={{item.maSP}}">{{item.tenSP}} 
+								</a> 
+									<span class="text-danger product-price">{{item.gia
+									| currency:'':0}} VNĐ </span>
 							</div>
 						</div>
 					</div>
