@@ -69,28 +69,42 @@ app.controller("sanpham-ctrl", function($scope, $http) {
 	}
 
 	$scope.create = function() {
-		// Cập nhật giá trị CKEditor vào ng-model
-		$scope.form.mota = CKEDITOR.instances.mota.getData();
+	  // Cập nhật giá trị CKEditor vào ng-model
+	  $scope.form.mota = CKEDITOR.instances.mota.getData();
 
-		// Xử lý mô tả để loại bỏ các thẻ <p>
-		$scope.form.mota = CKEDITOR.instances.mota.getData().replace(/<\/?[^>]+(>|$)/g, "");
-		var item = angular.copy($scope.form);
-		$http.post('/rest/sanpham', item).then(resp => {
-			$scope.items.push(resp.data);
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công',
-				text: 'Thêm sản phẩm thành công!',
-				confirmButtonText: 'OK',
-				confirmButtonColor: '#28a745'
-			});
-			CKEDITOR.instances.mota.setData('');
-			$scope.reset();
-		}).catch(error => {
-			alert("Lỗi thêm mới!");
-			console.log("Error", error);
-		});
+	  // Xử lý mô tả để loại bỏ các thẻ <p>
+	  $scope.form.mota = $scope.form.mota.replace(/<\/?[^>]+(>|$)/g, "");
+
+	  if ($scope.productForm.$valid && $scope.imageURL) {
+	    var item = angular.copy($scope.form);
+	    $http.post('/rest/sanpham', item).then(resp => {
+	      $scope.items.push(resp.data);
+	      Swal.fire({
+	        icon: 'success',
+	        title: 'Thành công',
+	        text: 'Thêm sản phẩm thành công!',
+	        confirmButtonText: 'OK',
+	        confirmButtonColor: '#28a745'
+	      });
+	      CKEDITOR.instances.mota.setData('');
+	      $scope.reset();
+	    }).catch(error => {
+	      alert("Lỗi thêm mới!");
+	      console.log("Error", error);
+	    });
+	  } else {
+	    Swal.fire({
+	      icon: 'error',
+	      title: 'Lỗi',
+	      text: 'Vui lòng kiểm tra lại thông tin nhập.',
+	      confirmButtonText: 'OK',
+	      confirmButtonColor: '#dc3545'
+	    });
+	  }
 	};
+
+
+
 
 	$scope.update = function() {
 		Swal.fire({

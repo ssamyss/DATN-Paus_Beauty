@@ -27,9 +27,11 @@
 <script type="text/javascript" th:src="@{/admin/ckeditor/ckeditor.js}"></script>
 <script src="http://code.jquery.com/jquery.min.js"
 	type="text/javascript"></script>
-<link rel="stylesheet" type="text/css" th:href="@{/admin/css/sanpham.css}">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/admin/css/sanpham.css}">
 <!-- SweetAlert CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <!-- SweetAlert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -51,61 +53,92 @@
 				<div class="tile">
 					<h3 class="tile-title">Tạo mới sản phẩm</h3>
 					<div class="tile-body">
-						<form class="row">
+						<form class="row" name="productForm" novalidate>
 							<div class="form-group col-md-3">
 								<label class="control-label">Mã sản phẩm </label> <input
-									class="form-control" ng-model="form.maSP" type="number">
-							</div>
-							<div class="form-group col-md-3">
-								<label class="control-label">Tên sản phẩm</label> <input
-									class="form-control" ng-model="form.tenSP" type="text">
+									class="form-control" ng-model="form.maSP" type="number"
+									name="maSP" required> <span class="text-danger"
+									ng-show="productForm.maSP.$dirty && productForm.maSP.$error.required"></span>
 							</div>
 
-							<div class="form-group  col-md-3">
-								<label class="control-label">Số lượng</label> <input
-									class="form-control" ng-model="form.tonKho" type="number">
+							<div class="form-group col-md-3">
+								<label class="control-label">Tên sản phẩm</label> <input
+									class="form-control" ng-model="form.tenSP" type="text"
+									name="tenSP" required> <span class="text-danger"
+									ng-show="productForm.tenSP.$dirty && productForm.tenSP.$error.required"></span>
 							</div>
-							<div class="form-group col-md-3 ">
+
+							<div class="form-group col-md-3">
+								<label class="control-label">Số lượng</label> <input
+									class="form-control" ng-model="form.tonKho" type="number"
+									name="tonKho" min="0" required> <span
+									class="text-danger"
+									ng-show="productForm.tonKho.$dirty && productForm.tonKho.$error.required">Số
+									lượng là bắt buộc.</span> <span class="text-danger"
+									ng-show="productForm.tonKho.$error.min">Số lượng phải
+									lớn hơn hoặc bằng 0.</span>
+							</div>
+
+							<div class="form-group col-md-3">
 								<label for="exampleSelect1" class="control-label">Tình
 									trạng</label> <select class="form-control" ng-model="form.trangThai"
-									id="exampleSelect1">
-									<option>-- Chọn tình trạng --</option>
+									id="exampleSelect1" name="trangThai" required>
+									<option value="">-- Chọn tình trạng --</option>
 									<option ng-value="true">Còn hàng</option>
 									<option ng-value="false">Hết hàng</option>
-								</select>
+								</select> <span class="text-danger"
+									ng-show="productForm.trangThai.$dirty && productForm.trangThai.$error.required"></span>
 							</div>
+
 							<div class="form-group col-md-3">
 								<label for="exampleSelect1" class="control-label">Danh
 									Mục Sản Phẩm</label> <select class="form-control" ng-model="form.maLSP"
-									ng-change="loadProductTypes(form.maLSP)">
+									ng-change="loadProductTypes(form.maLSP)" name="maLSP" required>
 									<option value disabled selected>Chọn danh mục sản phẩm</option>
 									<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
-								</select>
+								</select> <span class="text-danger"
+									ng-show="productForm.maLSP.$dirty && productForm.maLSP.$error.required"></span>
 							</div>
+
 							<div class="form-group col-md-3">
 								<label for="exampleSelect1" class="control-label">Loại
 									Sản Phẩm</label> <select class="form-control"
-									ng-model="form.loaiSanPham.maPL" ng-disabled="!form.maLSP">
+									ng-model="form.loaiSanPham.maPL" ng-disabled="!form.maLSP"
+									name="loaiSanPham" required>
 									<option value disabled selected>Chọn loại sản phẩm</option>
 									<option ng-repeat="c in cates" ng-value="c.maPL">{{c.tenPL}}</option>
-								</select>
+								</select> <span class="text-danger"
+									ng-show="productForm.loaiSanPham.$dirty && productForm.loaiSanPham.$error.required"></span>
 							</div>
-							<div class="form-group col-md-3 ">
+
+							<div class="form-group col-md-3">
 								<label for="exampleSelect1" class="control-label">Thương
 									hiệu</label> <select class="form-control"
-									ng-model="form.thuongHieu.maTH">
+									ng-model="form.thuongHieu.maTH" name="thuongHieu" required>
 									<option value disabled selected>Chọn thương hiệu</option>
 									<option ng-repeat="b in bras" ng-value="b.maTH">{{b.tenTH}}</option>
-								</select>
+								</select> <span class="text-danger"
+									ng-show="productForm.thuongHieu.$dirty && productForm.thuongHieu.$error.required"></span>
 							</div>
+
 							<div class="form-group col-md-3">
 								<label class="control-label">Giá bán</label> <input
-									class="form-control" ng-model="form.gia" type="text">
+									class="form-control" ng-model="form.gia" type="text" name="gia"
+									required ng-pattern="/^\d+(\.\d{1,2})?$/" /> <span
+									class="text-danger"
+									ng-show="productForm.gia.$dirty && productForm.gia.$error.required">Giá
+									bán là bắt buộc.</span> <span class="text-danger"
+									ng-show="productForm.gia.$error.pattern">Giá bán không
+									hợp lệ. Vui lòng nhập số.</span>
 							</div>
+
 							<div class="form-group col-md-3">
 								<label class="control-label">Ngày</label> <input
-									class="form-control" ng-model="form.createDate" type="date">
+									class="form-control" ng-model="form.createDate" type="date"
+									name="createDate" required> <span class="text-danger"
+									ng-show="productForm.createDate.$dirty && productForm.createDate.$error.required"></span>
 							</div>
+
 							<div class="form-group col-md-12">
 								<label class="control-label">Ảnh sản phẩm</label>
 								<div style="margin-bottom: 10px;">
@@ -117,84 +150,41 @@
 										<img ng-src="{{ imageURL }}"
 											class="image-preview border border-5">
 									</div>
-
 								</div>
 								<div>
 									<!-- Input để chọn ảnh -->
 									<div class="input-file-container">
 										<input type="file" id="anh"
 											class="form-control w-50 input-file"
-											onchange="angular.element(this).scope().imageChanged(this.files)" />
-										<label for="anh" class="input-file-trigger"><i
-											class="fas fa-upload"></i> Chọn ảnh</label>
+											onchange="angular.element(this).scope().imageChanged(this.files)"
+											required /> <label for="anh" class="input-file-trigger"><i
+											class="fas fa-upload"></i> Chọn ảnh</label> <span class="text-danger"
+											ng-show="!imageURL">Ảnh sản phẩm là bắt buộc.</span>
 									</div>
 								</div>
 							</div>
+
 							<div class="form-group col-md-12">
 								<label class="control-label">Mô tả sản phẩm</label>
 								<textarea class="form-control" ng-model="form.mota" name="mota"
-									id="mota" type="text"></textarea>
+									id="mota" required></textarea>
 								<script>
 									CKEDITOR.replace('mota');
 								</script>
+								<span class="text-danger" ng-show="!form.mota"></span>
 							</div>
+
+							<button ng-click="create()" class="btn btn-save" type="button"
+								ng-disabled="productForm.$invalid">Lưu lại</button>
+							<a class="btn btn-cancel" th:href="@{/dataProduct}">Hủy bỏ</a>
+						</form>
+
+
+
 					</div>
-					<button ng-click="create()" class="btn btn-save" type="button">Lưu
-						lại</button>
-					<a class="btn btn-cancel" th:href="@{/dataProduct}">Hủy bỏ</a>
-
-					</form>
-
 				</div>
-	</main>
-
-	<!--
-  MODAL DANH MỤC
--->
-	<div class="modal fade" id="adddanhmuc" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" data-backdrop="static"
-		data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-
-				<div class="modal-body">
-					<div class="row">
-						<div class="form-group  col-md-12">
-							<span class="thong-tin-thanh-toan">
-								<h5>Thêm mới loại sản phẩm</h5>
-							</span>
-						</div>
-						<div class="form-group col-md-12">
-							<label for="exampleSelect1" class="control-label">Danh
-								Mục Sản Phẩm</label> <select class="form-control" ng-model="form.maLSP">
-								<option value disabled selected>Chọn danh mục sản phẩm</option>
-								<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
-							</select>
-						</div>
-						<div class="form-group col-md-12">
-							<label class="control-label">Nhập tên loại sản phẩm mới</label> <input
-								class="form-control" ng-model="form.tenPL" type="text" required>
-						</div>
-						<div class="form-group col-md-12">
-							<label class="control-label">Loại sản phẩm hiện đang có</label>
-							<ul class="horizontal-list">
-								<li ng-repeat="c in cates" ng-value="c.maPL">{{c.tenPL}}</li>
-							</ul>
-						</div>
-					</div>
-					<br>
-					<button class="btn btn-save" type="button">Lưu lại</button>
-					<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-					<br>
-				</div>
-				<div class="modal-footer"></div>
 			</div>
-		</div>
-	</div>
-	<!--
-MODAL
--->
-		$('#sampleTable').DataTable();
+	</main>
 	<script type="text/javascript">
 		//Thời Gian
 		function time() {

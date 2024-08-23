@@ -169,90 +169,101 @@
 		</div>
 	</main>
 
-	<!-- Add Product Category Modal -->
-	<div class="modal fade" id="addProductCategoryModal" tabindex="-1"
-		role="dialog" aria-labelledby="addProductCategoryModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form>
-					<div class="modal-header">
-						<h5 class="modal-title" id="addProductCategoryModalLabel">Thêm
-							loại sản phẩm</h5>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="categorySelect">Danh Mục Sản Phẩm</label> <select
-								class="form-control" id="categorySelect"
-								ng-model="form.danhMucLoaiSanPham.maLSP"
-								ng-change="loadProductTypes(form.maLSP)" required>
-								<option value disabled selected>Chọn danh mục sản phẩm</option>
-								<option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="productCategoryName">Tên loại sản phẩm</label> <input
-								type="text" class="form-control" id="productCategoryName"
-								ng-model="form.tenPL" required>
-						</div>
-						<button ng-click="createLoaiSP()" class="btn btn-save" type="button">Lưu lại</button>
-						<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<!-- Add Product Category Modal -->
+<div class="modal fade" id="addProductCategoryModal" tabindex="-1"
+    role="dialog" aria-labelledby="addProductCategoryModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Thêm form name và ng-submit cho việc validate -->
+            <form name="productCategoryForm" ng-submit="createLoaiSP()" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductCategoryModalLabel">Thêm
+                        loại sản phẩm</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Danh Mục Sản Phẩm -->
+                    <div class="form-group">
+                        <label for="categorySelect">Danh Mục Sản Phẩm</label>
+                        <select class="form-control" id="categorySelect"
+                            ng-model="form.danhMucLoaiSanPham.maLSP"
+                            ng-change="loadProductTypes(form.maLSP)"
+                            required>
+                            <option value disabled selected>Chọn danh mục sản phẩm</option>
+                            <option ng-repeat="d in dmucsp" ng-value="d.maLSP">{{d.tenLSP}}</option>
+                        </select>
+                        <!-- Hiển thị lỗi khi không chọn danh mục sản phẩm -->
+                        <span ng-show="productCategoryForm.categorySelect.$touched && productCategoryForm.categorySelect.$error.required" class="text-danger">Vui lòng chọn danh mục sản phẩm!</span>
+                    </div>
+                    <!-- Tên loại sản phẩm -->
+                    <div class="form-group">
+                        <label for="productCategoryName">Tên loại sản phẩm</label>
+                        <input type="text" class="form-control" id="productCategoryName"
+                            ng-model="form.tenPL" name="productCategoryName" required>
+                        <!-- Hiển thị lỗi khi tên loại sản phẩm rỗng -->
+                        <span ng-show="productCategoryForm.productCategoryName.$touched && productCategoryForm.productCategoryName.$error.required" class="text-danger">Tên loại sản phẩm không được để trống!</span>
+                    </div>
+                    <!-- Nút lưu lại với ng-disabled khi form không hợp lệ -->
+                    <button ng-click="createLoaiSP()" class="btn btn-save" type="button" ng-disabled="productCategoryForm.$invalid">Lưu lại</button>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-	<!-- Add Brand Modal -->
-	<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog"
-		aria-labelledby="addBrandModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form action="">
-					<div class="modal-header">
-						<h4 class="modal-title" id="addBrandModalLabel">Thêm thương
-							hiệu</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label class="control-label">Nhập tên thương hiệu mới</label> <input
-								class="form-control" ng-model="form.tenTH" type="text" required>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Ảnh sản phẩm</label>
-							<div style="margin-bottom: 10px;">
-								<!-- Hiển thị trước ảnh đã chọn -->
-								<div class="image-preview-container" ng-show="!imageURL">
-									<img class="image-preview border border-5">
-								</div>
-								<div class="image-preview-container" ng-show="imageURL">
-									<img ng-src="{{imageURL}}"
-										class="image-preview border border-5">
-								</div>
 
-							</div>
-							<div>
-								<!-- Input để chọn ảnh -->
-								<div class="input-file-container">
-									<input type="file" id="anhTH"
-										class="form-control w-50 input-file"
-										onchange="angular.element(this).scope().imageChanged(this.files)" />
-									<label for="anhTH" class="input-file-trigger"><i
-										class="fas fa-upload"></i> Chọn ảnh</label>
-								</div>
-							</div>
-						</div>
-						<button class="btn btn-save" ng-click="createTH()" type="button">Lưu</button>
-						<a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<!-- Add Brand Modal -->
+<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog"
+    aria-labelledby="addBrandModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Thêm name cho form để dùng validate -->
+            <form name="brandForm" ng-submit="createTH()" novalidate>
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addBrandModalLabel">Thêm thương hiệu</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">Nhập tên thương hiệu mới</label>
+                        <input class="form-control" ng-model="form.tenTH" type="text" name="tenTH" required>
+                        <!-- Hiển thị lỗi khi tên thương hiệu rỗng -->
+                        <span ng-show="brandForm.tenTH.$touched && brandForm.tenTH.$error.required" class="text-danger">Tên thương hiệu không được để trống!</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Ảnh sản phẩm</label>
+                        <div style="margin-bottom: 10px;">
+                            <!-- Hiển thị trước ảnh đã chọn -->
+                            <div class="image-preview-container" ng-show="!imageURL">
+                                <img class="image-preview border border-5">
+                            </div>
+                            <div class="image-preview-container" ng-show="imageURL">
+                                <img ng-src="{{imageURL}}" class="image-preview border border-5">
+                            </div>
+                        </div>
+                        <div>
+                            <!-- Input để chọn ảnh -->
+                            <div class="input-file-container">
+                                <input type="file" id="anhTH" class="form-control w-50 input-file" name="anhTH"
+                                    onchange="angular.element(this).scope().imageChanged(this.files)" required />
+                                <!-- Hiển thị lỗi khi chưa chọn ảnh -->
+                                <span ng-show="brandForm.anhTH.$touched && brandForm.anhTH.$error.required" class="text-danger">Vui lòng chọn ảnh sản phẩm!</span>
+                                <label for="anhTH" class="input-file-trigger"><i class="fas fa-upload"></i> Chọn ảnh</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Nút lưu lại với ng-disabled khi form không hợp lệ -->
+                    <button class="btn btn-save" ng-click="createTH()" type="button" ng-disabled="brandForm.$invalid">Lưu</button>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 

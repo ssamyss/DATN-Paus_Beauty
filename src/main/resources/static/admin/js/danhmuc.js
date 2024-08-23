@@ -38,58 +38,82 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 		});
 	};
 
-	//Loại Sản Phẩm
+	//Thêm loại sản phẩm
 	$scope.createLoaiSP = function() {
-		var item = angular.copy($scope.form);
-		$http.post('/rest/loaisanpham', item).then(resp => {
-			$scope.items.push(resp.data);
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công',
-				text: 'Thêm loại sản phẩm thành công!',
-				confirmButtonText: 'OK',
-				confirmButtonColor: '#28a745'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					// Hide the modal
-					$('#addProductCategoryModal').modal('hide');
-				}
-			});
-			$scope.reset();
-			$scope.initialize();
-		}).catch(error => {
-			alert("Lỗi thêm mới!");
-			console.log("Error", error);
-		});
+	    if ($scope.productCategoryForm.$valid) {
+	        var item = angular.copy($scope.form);
+	        $http.post('/rest/loaisanpham', item).then(resp => {
+	            $scope.items.push(resp.data);
+	            Swal.fire({
+	                icon: 'success',
+	                title: 'Thành công',
+	                text: 'Thêm loại sản phẩm thành công!',
+	                confirmButtonText: 'OK',
+	                confirmButtonColor: '#28a745'
+	            }).then((result) => {
+	                if (result.isConfirmed) {
+	                    // Hide the modal
+	                    $('#addProductCategoryModal').modal('hide');
+	                }
+	            });
+	            $scope.reset();
+	            $scope.initialize();
+	        }).catch(error => {
+	            alert("Lỗi thêm mới!");
+	            console.log("Error", error);
+	        });
+	    } else {
+	        // Nếu form không hợp lệ, thông báo lỗi
+	        Swal.fire({
+	            icon: 'error',
+	            title: 'Lỗi',
+	            text: 'Vui lòng điền đầy đủ thông tin!',
+	            confirmButtonText: 'OK',
+	            confirmButtonColor: '#d33'
+	        });
+	    }
 	};
+
 
 
 
 
 	// Thương hiệu
 	$scope.createTH = function() {
-		var item = angular.copy($scope.form);
-		$http.post('/rest/thuonghieu', item).then(resp => {
-			$scope.items.push(resp.data);
-			Swal.fire({
-				icon: 'success',
-				title: 'Thành công',
-				text: 'Thêm thương hiệu thành công!',
-				confirmButtonText: 'OK',
-				confirmButtonColor: '#28a745'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					// Hide the modal
-					$('#addBrandModal').modal('hide');
-				}
-			});
-			$scope.reset();
-			$scope.initialize();
-		}).catch(error => {
-			alert("Lỗi thêm mới!");
-			console.log("Error", error);
-		});
+	    if ($scope.brandForm.$valid) {
+	        var item = angular.copy($scope.form);
+	        $http.post('/rest/thuonghieu', item).then(resp => {
+	            $scope.items.push(resp.data);
+	            Swal.fire({
+	                icon: 'success',
+	                title: 'Thành công',
+	                text: 'Thêm thương hiệu thành công!',
+	                confirmButtonText: 'OK',
+	                confirmButtonColor: '#28a745'
+	            }).then((result) => {
+	                if (result.isConfirmed) {
+	                    // Hide the modal
+	                    $('#addBrandModal').modal('hide');
+	                }
+	            });
+	            $scope.reset();
+	            $scope.initialize();
+	        }).catch(error => {
+	            alert("Lỗi thêm mới!");
+	            console.log("Error", error);
+	        });
+	    } else {
+	        // Nếu form không hợp lệ, thông báo lỗi
+	        Swal.fire({
+	            icon: 'error',
+	            title: 'Lỗi',
+	            text: 'Vui lòng điền đầy đủ thông tin!',
+	            confirmButtonText: 'OK',
+	            confirmButtonColor: '#d33'
+	        });
+	    }
 	};
+
 
 
 
