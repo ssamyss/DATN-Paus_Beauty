@@ -214,11 +214,10 @@
 
 
 <!-- Add Brand Modal -->
-<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog"
-    aria-labelledby="addBrandModalLabel" aria-hidden="true">
+<div class="modal fade" id="addBrandModal" tabindex="-1" role="dialog" aria-labelledby="addBrandModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <!-- Thêm name cho form để dùng validate -->
+            <!-- Add name attribute for form validation -->
             <form name="brandForm" ng-submit="createTH()" novalidate>
                 <div class="modal-header">
                     <h4 class="modal-title" id="addBrandModalLabel">Thêm thương hiệu</h4>
@@ -227,16 +226,19 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <!-- Brand Name Field -->
                     <div class="form-group">
                         <label class="control-label">Nhập tên thương hiệu mới</label>
                         <input class="form-control" ng-model="form.tenTH" type="text" name="tenTH" required>
-                        <!-- Hiển thị lỗi khi tên thương hiệu rỗng -->
+                        <!-- Display error when the brand name is empty -->
                         <span ng-show="brandForm.tenTH.$touched && brandForm.tenTH.$error.required" class="text-danger">Tên thương hiệu không được để trống!</span>
                     </div>
+
+                    <!-- Image Upload Field -->
                     <div class="form-group">
                         <label class="control-label">Ảnh sản phẩm</label>
                         <div style="margin-bottom: 10px;">
-                            <!-- Hiển thị trước ảnh đã chọn -->
+                            <!-- Preview selected image -->
                             <div class="image-preview-container" ng-show="!imageURL">
                                 <img class="image-preview border border-5">
                             </div>
@@ -245,24 +247,27 @@
                             </div>
                         </div>
                         <div>
-                            <!-- Input để chọn ảnh -->
+                            <!-- Input for selecting image -->
                             <div class="input-file-container">
-                                <input type="file" id="anhTH" class="form-control w-50 input-file" name="anhTH"
-                                    onchange="angular.element(this).scope().imageChanged(this.files)" required />
-                                <!-- Hiển thị lỗi khi chưa chọn ảnh -->
+                                <input type="file" id="anhTH" class="form-control w-50 input-file" name="anhTH" ng-model="form.anhTH"
+                                    onchange="angular.element(this).scope().imageChanged(this.files)" required>
+                                <!-- Display error when no image is selected -->
                                 <span ng-show="brandForm.anhTH.$touched && brandForm.anhTH.$error.required" class="text-danger">Vui lòng chọn ảnh sản phẩm!</span>
                                 <label for="anhTH" class="input-file-trigger"><i class="fas fa-upload"></i> Chọn ảnh</label>
                             </div>
                         </div>
                     </div>
-                    <!-- Nút lưu lại với ng-disabled khi form không hợp lệ -->
-                    <button class="btn btn-save" ng-click="createTH()" type="button" ng-disabled="brandForm.$invalid">Lưu</button>
+
+                    <!-- Save Button with ng-disabled when the form is invalid or no image is selected -->
+                    <button class="btn btn-save" type="button" ng-click="createTH()" ng-disabled="brandForm.$invalid || !form.anhTH">Lưu</button>
                     <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
 
 
 

@@ -49,6 +49,9 @@ public class DonHang implements Serializable{
 	@Column(name = "dia_chi", columnDefinition = "nvarchar(max)")
 	private String diaChi;
 	
+	@Column(name = "note", columnDefinition = "nvarchar(max)")
+	private String note;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "ngay_tao")
 	private Date createDate = new Date();

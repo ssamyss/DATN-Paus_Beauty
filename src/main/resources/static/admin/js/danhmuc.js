@@ -74,13 +74,10 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 	    }
 	};
 
-
-
-
-
 	// Thương hiệu
 	$scope.createTH = function() {
-	    if ($scope.brandForm.$valid) {
+	    // Check if form and image are valid
+	    if ($scope.brandForm.$valid && $scope.form.anhTH) {
 	        var item = angular.copy($scope.form);
 	        $http.post('/rest/thuonghieu', item).then(resp => {
 	            $scope.items.push(resp.data);
@@ -92,7 +89,6 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 	                confirmButtonColor: '#28a745'
 	            }).then((result) => {
 	                if (result.isConfirmed) {
-	                    // Hide the modal
 	                    $('#addBrandModal').modal('hide');
 	                }
 	            });
@@ -103,16 +99,16 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 	            console.log("Error", error);
 	        });
 	    } else {
-	        // Nếu form không hợp lệ, thông báo lỗi
 	        Swal.fire({
 	            icon: 'error',
 	            title: 'Lỗi',
-	            text: 'Vui lòng điền đầy đủ thông tin!',
+	            text: 'Vui lòng điền đầy đủ thông tin và chọn ảnh!',
 	            confirmButtonText: 'OK',
 	            confirmButtonColor: '#d33'
 	        });
 	    }
 	};
+
 
 
 
