@@ -8,17 +8,42 @@
 
 </head>
 <body>
-	<div class="container">
-		<h1>Quên mật khẩu</h1>
-		<form th:action="@{/forgotpass}" method="post">
-			<input type="email" name="email" placeholder="Nhập email của bạn"
-				required>
-			<button type="submit">Gửi mã PIN</button>
-		</form>
-		<p class="text-muted">
-			Ghi nhớ mật khẩu của bạn? <a th:href="@{/login}">Đăng nhập</a>
-		</p>
-	</div>
+	<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+    <title>Paus Beauty - Quên mật khẩu</title>
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Quên mật khẩu</h1>
+        <form th:action="@{/forgotpass}" method="post">
+            <div class="form-group">
+                <input type="email" name="email" class="form-control"
+					placeholder="Nhập email của bạn" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Gửi</button>
+        </form>
+
+        <!-- Thông báo thành công -->
+        <div th:if="${message}" class="alert alert-success mt-3"
+			role="alert" th:text="${message}"></div>
+        <!-- Thông báo lỗi -->
+        <div th:if="${error}" class="alert alert-danger mt-3"
+			role="alert" th:text="${error}"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
 </body>
 <style>
 body {
@@ -81,5 +106,18 @@ a:hover {
 	color: #0056b3;
 	text-decoration: underline;
 }
+
+body {
+	font-family: Arial, sans-serif;
+	background-image:
+		url('https://img6.thuthuatphanmem.vn/uploads/2022/03/03/background-my-pham-hien-dai_094504423.jpg');
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+}
 </style>
 </html>
+

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poly.dao.TaiKhoanDao;
 import com.poly.entity.TaiKhoan;
@@ -167,41 +168,53 @@ public class TaiKhoanController {
 		return "user/register-success";
 	}
 
-	//Quên mật khẩu
+	// Quên mật khẩu
 	@GetMapping("/forgotpass")
 	public String forgotPass(Model model) {
 		return "user/forgotpass";
 	}
 
 	@PostMapping("/forgotpass")
-	public String forgotPass(TaiKhoan taikhoan) {
+	public String forgotPass(TaiKhoan taikhoan, RedirectAttributes redirectAttributes) {
 		if (taikhoan.getEmail() != null && !taikhoan.getEmail().isEmpty()) {
 			String link = taikhoanService.generateAndSendLinkResetPass(taikhoan.getEmail());
+			redirectAttributes.addFlashAttribute("message", "Email đã được gửi thành công!");
+			return "redirect:/forgotpass";
 		} else {
 			// Xử lý trường hợp email null hoặc rỗng
-			return "redirect:/error"; // Chuyển hướng đến trang lỗi hoặc xử lý khác
+			redirectAttributes.addFlashAttribute("error", "Email không hợp lệ!");
+			return "redirect:/forgotpass";
 		}
-		return "user/forgotpass";
 	}
 
 	@GetMapping("/resetpassword/{email}")
-	public String resetpassword(Model model) {
+	public String resetPasswordPage(@PathVariable("email") String email, Model model) {
+		model.addAttribute("userEmail", email);
 		return "user/reset-pass";
 	}
 
-	
 	@PostMapping("/resetpassword/{email}")
-	public String resetPassword(@PathVariable("email") String email,
-			@RequestParam("newPassword") String newPassword) {
+	public String resetPassword(@PathVariable("email") String email, @RequestParam("newPassword") String newPassword,
+			@RequestParam("confirmPassword") String confirmPassword, RedirectAttributes redirectAttributes) {
+		if (newPassword.length() < 6 || confirmPassword.length() < 6) {
+			redirectAttributes.addFlashAttribute("error", "Mật khẩu phải có ít nhất 6 ký tự.");
+			return "redirect:/resetpassword/" + email;
+		}
+
+		if (!newPassword.equals(confirmPassword)) {
+			redirectAttributes.addFlashAttribute("error", "Mật khẩu xác nhận không khớp.");
+			return "redirect:/resetpassword/" + email;
+		}
+
 		TaiKhoan taikhoan = tkdao.findByEmail(email);
 		if (taikhoan != null) {
-			// Cập nhật mật khẩu mới
-			taikhoan.setMatKhau(newPassword); // Đảm bảo mã hóa mật khẩu trước khi lưu
 			taikhoan.setMatKhau(bcrypt.encode(newPassword));
 			tkdao.save(taikhoan);
-			return "redirect:/login"; // Chuyển hướng đến trang đăng nhập
+			return "redirect:/login";
 		}
-		return "redirect:/resetpassword/{email}"; 
+
+		redirectAttributes.addFlashAttribute("error", "Email không hợp lệ.");
+		return "redirect:/resetpassword/" + email;
 	}
 
 	// Đăng nhập
