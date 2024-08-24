@@ -71,15 +71,15 @@ public class UserController {
 
 	@GetMapping("/category/{maLSP}")
 	public String getProductByCategory(@PathVariable("maLSP") Integer maLSP, Model model,
-			@RequestParam(value = "page", defaultValue = "1") int page) {
-		int pageSize = 8;
-		Pageable pageable = PageRequest.of(page - 1, pageSize);
-		Page<SanPham> sanphamPage = spDao.findByDanhMucLoaiSanPham_MaLSP(maLSP, pageable);
-		model.addAttribute("sanphamPage", sanphamPage);
-		model.addAttribute("categories", dmlspDao.findAll());
-		return "user/sanpham";
+	        @RequestParam(value = "page", defaultValue = "1") int page) {
+	    int pageSize = 8;
+	    Pageable pageable = PageRequest.of(page - 1, pageSize);
+	    Page<SanPham> sanphamPage = spDao.findByDanhMucLoaiSanPhamMaLSP(maLSP, pageable);
+	    model.addAttribute("sanphamPage", sanphamPage);
+	    model.addAttribute("categories", dmlspDao.findAll());
+	    return "user/sanpham";
 	}
-
+	
 	@GetMapping("/detail/{id}")
 	public String productDetail(Model model, @PathVariable("id") Integer maSP) {
 		SanPham sp = spDao.findById(maSP).orElse(null);

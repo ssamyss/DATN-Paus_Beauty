@@ -15,10 +15,13 @@ import com.poly.entity.SanPham;
 import com.poly.entity.ThuongHieu;
 
 public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
-	
+
 	Page<SanPham> findByDanhMucLoaiSanPham_MaLSP(Integer maLSP, Pageable pageable);
-	
-	 Page<SanPham> findByLoaiSanPhamIn(List<LoaiSanPham> loaiSanPham, Pageable pageable);
+
+	Page<SanPham> findByLoaiSanPhamIn(List<LoaiSanPham> loaiSanPham, Pageable pageable);
+
+	@Query("SELECT sp FROM SanPham sp WHERE sp.loaiSanPham.danhMucLoaiSanPham.maLSP = :maLSP")
+	Page<SanPham> findByDanhMucLoaiSanPhamMaLSP(@Param("maLSP") Integer maLSP, Pageable pageable);
 
 	@Query("SELECT count(o) FROM SanPham o")
 	Integer getCountSP();
@@ -42,11 +45,11 @@ public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 	@Query("SELECT sp, SUM(ct.soLuong) AS totalQuantity " + "FROM DonHangChiTiet ct " + "JOIN ct.sanPham sp "
 			+ "GROUP BY sp " + "ORDER BY totalQuantity DESC")
 	List<Object[]> findTop5SanPhamBanChay(Pageable pageable);
-	
+
 	@Query("SELECT sp FROM SanPham sp WHERE sp.tonKho = 0")
 	List<SanPham> findByTonKho(@Param("tonKho") Integer tonKho);
 
 	@Query("SELECT dm.tenLSP, COUNT(sp) FROM SanPham sp JOIN sp.loaiSanPham lsp JOIN lsp.danhMucLoaiSanPham dm GROUP BY dm.tenLSP")
 	List<Object[]> getTotalProductsByDanhMuc();
-	
+
 }

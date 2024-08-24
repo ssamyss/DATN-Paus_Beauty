@@ -97,8 +97,9 @@ footer {
 						<div class="size-212 p-t-2">
 							<span class="mtext-110 cl2"> Địa chỉ </span>
 
-							<p class="stext-115 cl6 size-213 p-t-18">CĐ FPT Polytechnic,
-								Quận 12, TP.HCM</p>
+							<p class="stext-115 cl6 size-213 p-t-18">Trường Cao đẳng FPT
+								Polytechnic QTSC 9 Building, Đ. Tô Ký, Tân Chánh Hiệp, Quận 12,
+								Hồ Chí Minh</p>
 						</div>
 					</div>
 
@@ -132,7 +133,10 @@ footer {
 	</section>
 
 	<!-- Map -->
-	<div id="map" style="height: 400px; width: 100%;"></div>
+	<iframe
+		src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2006243.4110726814!2d104.31892799375!3d10.853782900000011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752b6c59ba4c97%3A0x535e784068f1558b!2zVHLGsOG7nW5nIENhbyDEkeG6s25nIEZQVCBQb2x5dGVjaG5pYw!5e0!3m2!1svi!2s!4v1724485099863!5m2!1svi!2s"
+		width="100%" height="450" style="border: 0;" allowfullscreen=""
+		loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">
@@ -154,26 +158,30 @@ footer {
 	<div th:insert="~{user/link/scriptIndex.html}"></div>
 
 	<script>
-    function initMap() {
-        // Cấu hình bản đồ
-        var location = { lat: 10.762622, lng: 106.660172 }; // Tọa độ địa chỉ của bạn (TP.HCM)
+		function initMap() {
+			// Cấu hình bản đồ
+			var location = {
+				lat : 10.762622,
+				lng : 106.660172
+			}; // Tọa độ địa chỉ của bạn (TP.HCM)
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: location
-        });
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom : 12,
+				center : location
+			});
 
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            title: 'CĐ FPT Polytechnic'
-        });
-    }
-</script>
+			var marker = new google.maps.Marker({
+				position : location,
+				map : map,
+				title : 'CĐ FPT Polytechnic'
+			});
+		}
+	</script>
 
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-</script>
+		
+	</script>
 
 </body>
 </html>

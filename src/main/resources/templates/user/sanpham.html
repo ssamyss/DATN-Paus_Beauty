@@ -17,12 +17,13 @@
 				<div class="card mb-4">
 					<div class="card-header">Danh mục</div>
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item"><th:block
-								th:each="category : ${categories}">
-								<a th:href="@{/category/{maLSP}(maLSP=${category.maLSP})}"
-									class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-									th:text="${category.tenLSP}"></a>
-							</th:block></li>
+						 <li class="list-group-item">
+                            <th:block th:each="category : ${categories}">
+                                <a th:href="@{/category/{maLSP}(maLSP=${category.maLSP})}"
+                                    class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+                                    th:text="${category.tenLSP}"></a>
+                            </th:block>
+                        </li>
 					</ul>
 				</div>
 				<div class="card mb-4">
@@ -48,27 +49,26 @@
 
 				</div>
 				<div class="row" id="product-list">
-					<div class="col-md-4 mb-4" ng-repeat="item in pager.items">
-						<div class="card h-100 product-card">
-							<img ng-src="/assets/images/sanpham/{{item.anh}}"
-								class="card-img-top" alt="Product 1">
-							<div class="card-body text-center">
-								<h5 class="card-title">
-									<a class="product-name"
-										ng-href="/chitietsanpham?maSP={{item.maSP}}">
-										{{item.tenSP}} </a>
-								</h5>
-								<p class="text-danger font-weight-bold">{{item.gia |
-									currency:'':0}} VNĐ</p>
+					<th:block th:if="${sanphamPage.hasContent()}">
+						<div class="col-md-4 mb-4" th:each="item : ${sanphamPage.content}">
+							<div class="card h-100 product-card">
+								<img th:src="@{/assets/images/sanpham/{anh}(anh=${item.anh})}" class="card-img-top" alt="Product Image">
+								<div class="card-body text-center">
+									<h5 class="card-title">
+										<a th:href="@{/chitietsanpham(maSP=${item.maSP})}" class="product-name" th:text="${item.tenSP}"></a>
+									</h5>
+									<p class="text-danger font-weight-bold" th:text="${item.gia + ' VNĐ'}"></p>
+								</div>
+								<div class="hover-text" onclick="openQuickView()" data-toggle="modal" data-target="#quickViewModal">Xem nhanh</div>
 							</div>
-							<div class="hover-text" ng-click="openQuickView(item)"
-								data-toggle="modal" data-target="#quickViewModal">Xem
-								nhanh</div>
 						</div>
-					</div>
+					</th:block>
+					<th:block th:if="${!sanphamPage.hasContent()}">
+						<p>Không có sản phẩm nào.</p>
+					</th:block>
 				</div>
 				<div class="flex-c-m flex-w w-full p-t-45"></div>
-				<nav aria-label="Page navigation">
+				<!-- <nav aria-label="Page navigation">
 					<ul class="pagination justify-content-center">
 						<li class="page-item" ng-class="{disabled: pager.page === 0}">
 							<a class="page-link" href="#" ng-click="pager.first()">|&lt;</a>
@@ -91,7 +91,7 @@
 					<a ng-click="showAll()"
 						class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
 						Xem nhiều </a>
-				</div>
+				</div> -->
 
 			</section>
 		</div>
