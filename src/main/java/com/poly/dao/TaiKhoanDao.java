@@ -11,4 +11,6 @@ public interface TaiKhoanDao extends JpaRepository<TaiKhoan, String> {
 
 	@Query("SELECT tk FROM TaiKhoan tk WHERE tk.TenTaiKhoan = ?1")
 	TaiKhoan findByTenTaiKhoan(String TenTaiKhoan);
+	
+	TaiKhoan findByEmail(String email);
 }

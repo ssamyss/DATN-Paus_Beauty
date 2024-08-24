@@ -1,7 +1,6 @@
 package com.poly.entity;
 
 import java.io.Serializable;
-
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,43 +36,33 @@ import lombok.NoArgsConstructor;
 @Table(name = "tai_khoan")
 public class TaiKhoan implements Serializable {
 
-	/* @NotBlank(message = "Vui lòng nhập username") */
-	@Id
-	@Column(name = "ten_tai_khoan")
-	private String TenTaiKhoan;
+    @Id
+    @Column(name = "ten_tai_khoan")
+    private String TenTaiKhoan;
 
-	/* @NotBlank(message = "Vui lòng nhập password") */
-	@Column(name = "mat_khau")
-	private String MatKhau;
+    @Column(name = "mat_khau")
+    private String MatKhau;
 
-	@Column(name = "ho_va_ten", columnDefinition = "nvarchar(max)")
-	/* @NotEmpty(message = "Vui lòng nhập họ tên") */
-	private String HoVaTen;
+    @Column(name = "ho_va_ten", columnDefinition = "nvarchar(max)")
+    private String HoVaTen;
 
-//	@NotBlank(message = "Vui lòng nhập số điện thoại")
-//	@Size(min = 10, max = 10, message = "Số điện thoại phải có 10 chữ số")
-//	@Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không hợp lệ")
-	@Column(name = "sdt")
-	private String SDT;
+    @Column(name = "sdt")
+    private String SDT;
 
-//	@NotBlank(message = "Vui lòng nhập địa chỉ")
-	@Column(name = "dia_chi", columnDefinition = "nvarchar(max)")
-	private String DiaChi;
+    @Column(name = "dia_chi", columnDefinition = "nvarchar(max)")
+    private String DiaChi;
 
-//	@NotBlank(message = "Vui lòng nhập email")
-//	@Email(message = "Email sai định dạng")
-	@Column(name = "email")
-	private String Email;
-	
-	/* @NotNull(message = "Role không được bỏ trống") */
-	@Column(name = "role")
-	private boolean Role;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "taiKhoan")
-	private List<DonHang> donHang;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "taiKhoan")
-	private List<GioHang> gioHang;
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "role")
+    private boolean Role;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "taiKhoan")
+    private List<DonHang> donHang;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "taiKhoan")
+    private List<GioHang> gioHang;
 }

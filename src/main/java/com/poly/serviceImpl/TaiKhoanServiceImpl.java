@@ -82,7 +82,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 	@Override
 	public String generateAndSendPIN(String email) {
 		String pin = generateRandomPIN();
-		sendEmail(email, "Your PIN for password reset", "Your PIN is: " + pin);
+		sendEmail(email, "Your PIN for password reset", "Your PIN is: http://localhost:8080/resetpassword " + pin);
 		return pin;
 	}
 
@@ -107,5 +107,15 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 			throw new SQLException("Tên tài khoản đã tồn tại");
 		}
 	}
+
+	@Override
+	public String generateAndSendLinkResetPass(String email) {
+		sendEmail(email, "Paus Beauty", "Nhấn vào link để đổi mật khẩu mới: http://localhost:8080/resetpassword/" + email);
+		return email;
+	}
+
+	
+	
+	
 
 }

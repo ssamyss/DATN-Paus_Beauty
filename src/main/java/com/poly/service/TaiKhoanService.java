@@ -23,6 +23,8 @@ public interface TaiKhoanService {
 	
 	String generateAndSendPIN(String email);
 	
+	String generateAndSendLinkResetPass(String email);
+	
 	void checkTenTaiKhoan(TaiKhoan taikhoanRequest) throws SQLException;
-
+	
 }
