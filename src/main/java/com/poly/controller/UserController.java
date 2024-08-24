@@ -53,7 +53,7 @@ public class UserController {
 
 	@GetMapping("/product")
 	public String productList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
-		int pageSize = 8;
+		int pageSize = 50;
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
 		Page<SanPham> sanphamPage = spDao.findAll(pageable);
 		model.addAttribute("sanphamPage", sanphamPage);
@@ -72,7 +72,7 @@ public class UserController {
 	@GetMapping("/category/{maLSP}")
 	public String getProductByCategory(@PathVariable("maLSP") Integer maLSP, Model model,
 	        @RequestParam(value = "page", defaultValue = "1") int page) {
-	    int pageSize = 8;
+	    int pageSize = 50;
 	    Pageable pageable = PageRequest.of(page - 1, pageSize);
 	    Page<SanPham> sanphamPage = spDao.findByDanhMucLoaiSanPhamMaLSP(maLSP, pageable);
 	    model.addAttribute("sanphamPage", sanphamPage);

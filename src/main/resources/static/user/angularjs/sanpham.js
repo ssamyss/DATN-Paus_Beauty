@@ -172,7 +172,6 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 
 	$scope.pager = {
 		page: 0,
-		size: 8, // Điều chỉnh số lượng sản phẩm trên mỗi trang
 		get items() {
 			var start = this.page * this.size;
 			return $scope.items.slice(start, start + this.size);
