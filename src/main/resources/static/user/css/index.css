@@ -1,0 +1,142 @@
+h1.heading {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+/* Categories */
+.categories {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.category-link {
+  font-size: 1.3rem;
+  color: #ff4081;
+  padding: 10px 20px;
+/*   border: 1px solid #ff4081; */
+/*   border-radius: 5px; */
+  transition: all 0.3s ease;
+}
+
+/* .category-link:hover { */
+/*   background-color: #ff4081; */
+/*   color: #fff; */
+/* } */
+
+/* Products Grid */
+.products {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.product-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  width: calc(100% / 2 - 20px); /* Two columns for larger screens */
+  max-width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.product-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #eee;
+}
+
+.quick-view {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.product-card:hover .quick-view {
+  opacity: 1;
+}
+
+.quick-view {
+  border-radius: 50px;
+}
+
+.quick-view:hover {
+	 background-color: #ff4081;
+  color: #fff;
+}
+
+.product-info {
+  padding: 15px;
+}
+
+.product-info h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.product-info p {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 1.1rem;
+  color: #ff4081;
+  font-weight: bold;
+}
+
+/* View All Button */
+.view-all-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.view-all {
+  font-size: 1rem;
+  padding: 10px 20px;
+  background-color: #ff4081;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.view-all:hover {
+  background-color: #e33370;
+  color: aqua;
+  text-decoration: none
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product-card {
+    width: calc(100% / 2 - 10px); /* Two columns for tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card {
+    width: 100%; /* Full width for smaller screens */
+  }
+}

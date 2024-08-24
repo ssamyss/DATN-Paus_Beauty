@@ -2,6 +2,7 @@ package com.poly.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poly.entity.SanPham;
@@ -63,7 +65,15 @@ public class SanPhamRestController {
 	public List<Object[]> getTotalProductsByDanhMuc() {
 	    return sanPhamService.getTotalProductsByDanhMuc();
 	}
+	
+	@GetMapping("/5spbanchay")
+	public List<SanPham> getTop5SanPhamBanChay() {
+	    return sanPhamService.getTop5SanPhamBanChay();
+	}
 
-
+	@GetMapping("/randomProductsByCategory")
+    public List<SanPham> getRandomProductsByCategory(@RequestParam("categoryName") String categoryName) {
+        return sanPhamService.findRandomByCategory(categoryName, PageRequest.of(0, 5));
+    }
 	
 }

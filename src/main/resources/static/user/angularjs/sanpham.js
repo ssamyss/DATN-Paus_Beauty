@@ -8,6 +8,9 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 	$scope.tentaikhoan = [];
 	$scope.giohang = [];
 	$scope.dem = 0;
+	$scope.sanpham = [];
+		$scope.sanphambanchay = [];
+
 
 	$scope.reset = function() {
 		$scope.form = {};
@@ -62,6 +65,26 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		}).catch(error => {
 			console.error(error);
 		});
+		
+
+		$http.get("/rest/sanpham/randomProductsByCategory?categoryName=Trang điểm").then(resp => {
+			$scope.sanpham = resp.data;
+			$scope.sanpham.forEach(item => {
+				item.createDate = new Date(item.createDate);
+			});
+		}).catch(error => {
+			console.error("Lỗi khi tải sản phẩm:", error);
+		});
+
+		$http.get("/rest/sanpham/5spbanchay").then(resp => {
+			$scope.sanphambanchay = resp.data;
+			$scope.sanphambanchay.forEach(item => {
+				item.createDate = new Date(item.createDate);
+			});
+		}).catch(error => {
+			console.error("Lỗi khi tải sản phẩm:", error);
+		});
+
 	};
 
 	$scope.tong = function() {
@@ -111,6 +134,17 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 			console.log("Error", error);
 		});
 	};
+	
+	// Lấy 5 chữ đầu
+		$scope.getFirstFiveWords = function(str) {
+			if (!str) return '';
+			var words = str.split(' ');
+			if (words.length > 5) {
+				return words.slice(0, 5).join(' ');
+			}
+			return str;
+		};
+
 
 	$scope.brandImageChanged = function(files) {
 		var reader = new FileReader();

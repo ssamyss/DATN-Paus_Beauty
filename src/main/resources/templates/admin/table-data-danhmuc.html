@@ -35,7 +35,7 @@
 	href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <!-- SweetAlert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+	<link rel="shortcut icon" th:href="@{/assets/images/logo.png}" type="image/x-icon">
 
 <link rel="stylesheet" type="text/css"
 	th:href="@{/admin/css/dmsanpham.css}">
@@ -69,6 +69,11 @@
 								<a class="btn btn-add btn-sm btn-primary w-100"
 									data-toggle="modal" data-target="#addBrandModal" title="Thêm"><i
 									class="fas fa-plus"></i> Thêm thương hiệu</a>
+							</div>
+							<div class="col-sm-6 col-md-2 mb-2">
+								<a class="btn btn-add btn-sm btn-primary w-100"
+									data-toggle="modal" data-target="#addDanhMucModal" title="Thêm"><i
+									class="fas fa-plus"></i> Thêm danh mục</a>
 							</div>
 							<div class="col-sm-2">
 								<a class="btn btn-delete btn-sm nhap-tu-file" type="button"
@@ -178,7 +183,7 @@
             <!-- Thêm form name và ng-submit cho việc validate -->
             <form name="productCategoryForm" ng-submit="createLoaiSP()" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductCategoryModalLabel">Thêm
+                    <h5 style="color: black" class="modal-title" id="addProductCategoryModalLabel">Thêm
                         loại sản phẩm</h5>
                 </div>
                 <div class="modal-body">
@@ -220,10 +225,7 @@
             <!-- Add name attribute for form validation -->
             <form name="brandForm" ng-submit="createTH()" novalidate>
                 <div class="modal-header">
-                    <h4 class="modal-title" id="addBrandModalLabel">Thêm thương hiệu</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 style="color: black" class="modal-title" id="addBrandModalLabel">Thêm thương hiệu</h4>
                 </div>
                 <div class="modal-body">
                     <!-- Brand Name Field -->
@@ -267,6 +269,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="addDanhMucModal" tabindex="-1"
+    role="dialog" aria-labelledby="addDanhMucModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Thêm form name và ng-submit cho việc validate -->
+            <form name="danhMucForm" ng-submit="createDanhMuc()" novalidate>
+                <div class="modal-header">
+                    <h5 style="color: black" class="modal-title" id="addDanhMucModalLabel">Thêm
+                        danh mục sản phẩm</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Tên loại sản phẩm -->
+                    <div class="form-group">
+                        <label for="danhMucName">Tên danh mục sản phẩm</label>
+                        <input type="text" class="form-control" id="danhMucName"
+                            ng-model="form.tenLSP" name="danhMucName" required>
+                    </div>
+                    <!-- Nút lưu lại với ng-disabled khi form không hợp lệ -->
+                    <button ng-click="createDanhMuc()" class="btn btn-save" type="button" ng-disabled="danhMucForm.$invalid">Lưu lại</button>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 

@@ -27,6 +27,7 @@
 <link rel="stylesheet" type="text/css"
 	th:href="@{/admin/css/index.css}">	
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<link rel="shortcut icon" th:href="@{/assets/images/logo.png}" type="image/x-icon">
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl" ng-app="app"
@@ -113,62 +114,6 @@
 					<!-- col-12 -->
 					<div class="col-md-12">
 						<div class="tile">
-							<h3 class="tile-title">Tình trạng đơn hàng</h3>
-							<div>
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>ID đơn hàng</th>
-											<th>Tên khách hàng</th>
-											<th>Tổng tiền</th>
-											<th>Trạng thái</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>AL3947</td>
-											<td>Phạm Thị Ngọc</td>
-											<td>19.770.000 đ</td>
-											<td><span class="badge bg-info">Chờ xử lý</span></td>
-										</tr>
-										<tr>
-											<td>ER3835</td>
-											<td>Nguyễn Thị Mỹ Yến</td>
-											<td>16.770.000 đ</td>
-											<td><span class="badge bg-warning">Đang vận
-													chuyển</span></td>
-										</tr>
-										<tr>
-											<td>MD0837</td>
-											<td>Triệu Thanh Phú</td>
-											<td>9.400.000 đ</td>
-											<td><span class="badge bg-success">Đã hoàn thành</span></td>
-										</tr>
-										<tr>
-											<td>MT9835</td>
-											<td>Đặng Hoàng Phúc</td>
-											<td>40.650.000 đ</td>
-											<td><span class="badge bg-danger">Đã hủy</span></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--END left-->
-			<!--Right-->
-			<div class="col-md-12 col-lg-6">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="tile">
-							<h3 class="tile-title">Biểu đồ tổng sản phẩm theo danh mục</h3>
-							<canvas id="myPieChart" width="400" height="400"></canvas>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="tile">
 							<h3 class="tile-title">SẢN PHẨM ĐÃ HẾT</h3>
 							<div>
 								<table class="table table-bordered">
@@ -192,6 +137,18 @@
 									</tbody>
 								</table>
 							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--END left-->
+			<!--Right-->
+			<div class="col-md-12 col-lg-6">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="tile">
+							<h3 class="tile-title">Biểu đồ tổng sản phẩm theo danh mục</h3>
+							<canvas id="myPieChart" width="400" height="400"></canvas>
 						</div>
 					</div>
 				</div>

@@ -34,6 +34,7 @@
 	href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <!-- SweetAlert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link rel="shortcut icon" th:href="@{/assets/images/logo.png}" type="image/x-icon">
 </head>
 
 <body ng-app="app" ng-controller="donhangHD-ctrl" onload="time()"
@@ -45,7 +46,7 @@
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách đơn hàng</b></a></li>
+							sách đơn hàng đã hủy</b></a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -53,9 +54,8 @@
 			<div class="col-md-12">
 				<div class="tile">
 					<div class="tile-body">
-						<div class="row element-button">
-							<!-- <div class="col-sm-2">
-
+<!-- 						<div class="row element-button">
+							<div class="col-sm-2">
 								<a class="btn btn-add btn-sm" th:href="@{/sanpham}" title="Thêm"><i
 									class="fas fa-plus"></i>Tạo mới đơn hàng</a>
 							</div>
@@ -66,7 +66,7 @@
 									class="fas fa-file-upload"></i> Tải từ file</a> <input
 									id="fileInput" type="file" style="display: none"
 									onchange="angular.element(this).scope().import(this.files)">
-							</div> -->
+							</div> 
 							<div class="col-sm-2">
 								<a class="btn btn-excel btn-sm" href="" title="In"><i
 									class="fas fa-file-excel"></i> Xuất Excel</a>
@@ -81,7 +81,7 @@
 									ng-click="deleteAll()"><i class="fas fa-trash-alt"></i> Xóa
 									tất cả </a>
 							</div>
-						</div>
+						</div> -->
 						<table class="table table-hover table-bordered" id="sampleTable">
 							<thead>
 								<tr>

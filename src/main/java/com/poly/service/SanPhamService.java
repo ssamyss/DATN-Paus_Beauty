@@ -2,6 +2,8 @@ package com.poly.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.poly.entity.SanPham;
 
 public interface SanPhamService {
@@ -24,5 +26,5 @@ public interface SanPhamService {
 
 	public List<Object[]> getTotalProductsByDanhMuc();
 
-
+	List<SanPham> findRandomByCategory(String categoryName, Pageable pageable);
 }

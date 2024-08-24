@@ -37,6 +37,42 @@ app.controller("danhmuc-ctrl", function($scope, $http) {
 			console.error("Lỗi khi tải thương hiệu:", error);
 		});
 	};
+	
+	
+	$scope.createDanhMuc = function() {
+	    if ($scope.danhMucForm.$valid) {
+	        var item = angular.copy($scope.form);
+	        $http.post('/rest/danhmucsanpham', item).then(resp => {
+	            $scope.items.push(resp.data);
+	            Swal.fire({
+	                icon: 'success',
+	                title: 'Thành công',
+	                text: 'Thêm mới danh mục thành công!',
+	                confirmButtonText: 'OK',
+	                confirmButtonColor: '#28a745'
+	            }).then((result) => {
+	                if (result.isConfirmed) {
+	                    // Hide the modal
+	                    $('#addDanhMucModal').modal('hide');
+	                }
+	            });
+	            $scope.reset();
+	            $scope.initialize();
+	        }).catch(error => {
+	            alert("Lỗi thêm mới!");
+	            console.log("Error", error);
+	        });
+	    } else {
+	        // Nếu form không hợp lệ, thông báo lỗi
+	        Swal.fire({
+	            icon: 'error',
+	            title: 'Lỗi',
+	            text: 'Vui lòng điền đầy đủ thông tin!',
+	            confirmButtonText: 'OK',
+	            confirmButtonColor: '#d33'
+	        });
+	    }
+	};
 
 	//Thêm loại sản phẩm
 	$scope.createLoaiSP = function() {

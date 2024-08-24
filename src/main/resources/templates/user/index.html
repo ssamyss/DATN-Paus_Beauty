@@ -7,6 +7,7 @@
 <link th:insert="~{user/link/link.html}">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/user/css/index.css}">
 <style>
 .pagination li.active a {
 	background-color: #17a2b8;
@@ -59,9 +60,50 @@
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-140">
 		<div class="container">
-			<div class="p-b-10">
-				<h3 class="ltext-103 cl5">Sản phẩm</h3>
+			<h1 class="heading">XU HƯỚNG LÀM ĐẸP</h1>
+
+			<div class="categories">
+				<a href="#" class="category-link">Trang điểm</a>
 			</div>
+
+			<div class="products">
+				<div class="product-card" ng-repeat="item in sanpham">
+					<div class="product-image">
+						<img ng-src="/assets/images/sanpham/{{item.anh}}"
+							alt="Product Image">
+						<div class="quick-view" ng-click="openQuickView(item)">Xem
+							nhanh</div>
+					</div>
+					<div class="product-info">
+						<h2>{{item.thuongHieu.tenTH}}</h2>
+						<p>{{getFirstFiveWords(item.tenSP)}}</p>
+						<div class="price">{{item.gia | currency:'':0}} VNĐ</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="view-all-container">
+				<a class="view-all" href="/product">Xem tất cả</a>
+			</div>
+			<br>
+			<h1 class="heading">TOP 5 SẢN PHẨM BÁN CHẠY</h1>
+
+			<div class="products">
+				<div class="product-card" ng-repeat="item in sanphambanchay">
+					<div class="product-image">
+						<img ng-src="/assets/images/sanpham/{{item.anh}}"
+							alt="Product Image">
+						<div class="quick-view" ng-click="openQuickView(item)">Xem
+							nhanh</div>
+					</div>
+					<div class="product-info">
+						<h2>{{item.thuongHieu.tenTH}}</h2>
+						<p>{{getFirstFiveWords(item.tenSP)}}</p>
+						<div class="price">{{item.gia | currency:'':0}} VNĐ</div>
+					</div>
+				</div>
+			</div>
+
 
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
@@ -112,10 +154,9 @@
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l">
 								<a class="product-name"
-									ng-href="/chitietsanpham?maSP={{item.maSP}}">{{item.tenSP}} 
-								</a> 
-									<span class="text-danger product-price">{{item.gia
-									| currency:'':0}} VNĐ </span>
+									ng-href="/chitietsanpham?maSP={{item.maSP}}">{{item.tenSP}}
+								</a> <span class="text-danger product-price">{{item.gia |
+									currency:'':0}} VNĐ </span>
 							</div>
 						</div>
 					</div>
@@ -150,6 +191,41 @@
 			</div>
 		</div>
 	</section>
+
+	<div class="modal fade" id="quickViewModal" tabindex="-1"
+		aria-labelledby="quickViewModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header"></div>
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-6">
+								<img ng-src="/assets/images/sanpham/{{form.anh}}"
+									alt="Product Image" class="img-fluid rounded shadow-sm">
+							</div>
+							<div
+								class="col-md-6 product-details d-flex flex-column justify-content-center">
+								<h4 class="text-primary font-weight-bold mb-3">{{form.tenSP}}</h4>
+								<p class="price text-danger font-weight-bold mb-4">Giá:
+									{{form.gia | currency:'':0}} VNĐ</p>
+								<!-- Add more product details here if needed -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<a href="/chitietsanpham?maSP={{form.maSP}}" class="btn btn-danger">Chi
+						tiết sản phẩm</a>
+					<button type="button" class="btn btn-danger">Thêm vào giỏ
+						hàng</button>
+					<button type="button" class="btn btn-secondary btn-lg"
+						data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<!-- Back to top -->
 	<div class="btn-back-to-top" id="myBtn">

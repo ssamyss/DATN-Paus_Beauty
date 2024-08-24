@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.poly.dao.SanPhamDao;
@@ -77,6 +78,11 @@ public class SanPhamServiceImpl implements SanPhamService {
 	public List<Object[]> getTotalProductsByDanhMuc() {
 	    return spdao.getTotalProductsByDanhMuc();
 	}
+	
+	@Override
+    public List<SanPham> findRandomByCategory(String categoryName, Pageable pageable) {
+        return spdao.findRandomByCategory(categoryName, pageable);
+    }
 
 
 	
