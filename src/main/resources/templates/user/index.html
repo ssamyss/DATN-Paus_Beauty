@@ -9,6 +9,14 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" th:href="@{/user/css/index.css}">
 <style>
+a:hover {
+    text-decoration: none;
+}
+
+p:hover {
+	color: pink;
+}
+
 .pagination li.active a {
 	background-color: #17a2b8;
 	color: white;
@@ -76,7 +84,9 @@
 					</div>
 					<div class="product-info">
 						<h2>{{item.thuongHieu.tenTH}}</h2>
-						<p>{{getFirstFiveWords(item.tenSP)}}</p>
+						<a class="product-name"
+							ng-href="/chitietsanpham?maSP={{item.maSP}}"><p>{{getFirstFiveWords(item.tenSP)}}</p>
+						</a>
 						<div class="price">{{item.gia | currency:'':0}} VNĐ</div>
 					</div>
 				</div>
@@ -98,7 +108,9 @@
 					</div>
 					<div class="product-info">
 						<h2>{{item.thuongHieu.tenTH}}</h2>
-						<p>{{getFirstFiveWords(item.tenSP)}}</p>
+						<a class="product-name"
+							ng-href="/chitietsanpham?maSP={{item.maSP}}"><p>{{getFirstFiveWords(item.tenSP)}}</p>
+						</a>
 						<div class="price">{{item.gia | currency:'':0}} VNĐ</div>
 					</div>
 				</div>
@@ -110,7 +122,8 @@
 			<div class="products">
 				<div class="product-card" ng-repeat="item in thuonghieu">
 					<div class="product-image">
-						<a th:href="@{/brand2/{{item.maTH}}}"> <img ng-src="/assets/images/thuonghieu/{{item.anhTH}}"
+						<a th:href="@{/brand2/{{item.maTH}}}"> <img
+							ng-src="/assets/images/thuonghieu/{{item.anhTH}}"
 							alt="Product Image">
 						</a>
 					</div>
@@ -248,8 +261,8 @@
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
-					<a href="/chitietsanpham?maSP={{form.maSP}}"
-						class="btn btn-danger">Chi tiết sản phẩm</a>
+					<a href="/chitietsanpham?maSP={{form.maSP}}" class="btn btn-danger">Chi
+						tiết sản phẩm</a>
 					<button th:if="${session.tentaikhoan != null}"
 						ng-click="themGH(form)" class="btn btn-danger">Thêm vào
 						giỏ hàng</button>
