@@ -18,4 +18,7 @@ public interface ThuongHieuDao extends JpaRepository<ThuongHieu, Integer> {
 
 	@Query("SELECT th FROM ThuongHieu th WHERE th.tenTH LIKE :prefix% ORDER BY th.tenTH ASC")
 	List<ThuongHieu> findByTenTHStartingWith(@Param("prefix") String prefix);
+	
+	@Query(value = "SELECT th FROM ThuongHieu th ORDER BY FUNCTION('NEWID') ASC")
+    List<ThuongHieu> findRandomThuongHieu(Pageable pageable);
 }

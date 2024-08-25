@@ -3,6 +3,7 @@ package com.poly.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.poly.dao.ThuongHieuDao;
@@ -44,5 +45,10 @@ public class ThuongHieuServiceImpl implements ThuongHieuService {
 		// TODO Auto-generated method stub
 		thdao.deleteById(maTH);
 	}
+	
+	@Override
+    public List<ThuongHieu> findRandomThuongHieu(Pageable pageable) {
+        return thdao.findRandomThuongHieu(pageable);
+    }
 
 }

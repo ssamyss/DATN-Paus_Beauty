@@ -9,7 +9,8 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 	$scope.giohang = [];
 	$scope.dem = 0;
 	$scope.sanpham = [];
-		$scope.sanphambanchay = [];
+	$scope.sanphambanchay = [];
+	$scope.thuonghieu = [];
 
 
 	$scope.reset = function() {
@@ -79,6 +80,16 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		$http.get("/rest/sanpham/5spbanchay").then(resp => {
 			$scope.sanphambanchay = resp.data;
 			$scope.sanphambanchay.forEach(item => {
+				item.createDate = new Date(item.createDate);
+			});
+		}).catch(error => {
+			console.error("Lỗi khi tải sản phẩm:", error);
+		});
+		
+		// Load sản phẩm
+		$http.get("/rest/thuonghieu/random").then(resp => {
+			$scope.thuonghieu = resp.data;
+			$scope.thuonghieu.forEach(item => {
 				item.createDate = new Date(item.createDate);
 			});
 		}).catch(error => {

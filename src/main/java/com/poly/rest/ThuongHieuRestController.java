@@ -3,6 +3,7 @@ package com.poly.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,4 +49,10 @@ public class ThuongHieuRestController {
 	public void delete(@PathVariable("maTH") Integer maTH) {
 		thuongHieuService.delete(maTH);
 	}
+	
+	 @GetMapping("/random")
+	    public List<ThuongHieu> getRandomBrands() {
+	        return thuongHieuService.findRandomThuongHieu(PageRequest.of(0, 5));
+	    }
+
 }

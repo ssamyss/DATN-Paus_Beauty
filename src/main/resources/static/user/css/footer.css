@@ -1,0 +1,73 @@
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.footer-top-item {
+    text-align: center;
+    flex: 1;
+    padding: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.footer-top-item img {
+    width: 80px; /* Fixed width for consistency */
+    height: 80px; /* Fixed height for consistency */
+    object-fit: contain; /* Ensures images maintain aspect ratio within set dimensions */
+    margin-bottom: 10px;
+    background-color: transparent; /* Ensure the image background is transparent */
+    border-radius: 8px; /* Optional: adds rounded corners */
+}
+
+
+.footer-top-item p {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #ffffff;
+}
+
+.footer-top-item:hover {
+    transform: translateY(-10px); /* Add a hover effect for interactivity */
+}
+
+
+h4 {
+  color: #f8f9fa;
+}
+
+ul {
+  padding: 0;
+}
+
+ul li a {
+  color: #f8f9fa;
+  transition: color 0.3s ease;
+}
+
+ul li a:hover {
+  color: #007bff;
+}
+
+.d-flex a {
+  transition: color 0.3s ease;
+}
+
+.d-flex a:hover {
+  color: #007bff;
+}
+
+.input-group .form-control {
+  border-radius: 0;
+}
+
+.input-group .btn {
+  border-radius: 0;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.input-group .btn:hover {
+  background-color: #0056b3;
+}

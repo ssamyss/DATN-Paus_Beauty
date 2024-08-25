@@ -2,6 +2,8 @@ package com.poly.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.poly.entity.ThuongHieu;
 
 public interface ThuongHieuService {
@@ -15,5 +17,8 @@ public interface ThuongHieuService {
 	ThuongHieu update(ThuongHieu thuonghieu);
 
 	void delete(Integer maTH);
+	
+	List<ThuongHieu> findRandomThuongHieu(Pageable pageable);
+
 
 }
