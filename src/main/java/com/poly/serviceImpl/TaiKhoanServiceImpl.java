@@ -26,7 +26,6 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 	@Autowired
 	TaiKhoanDao dhdao;
 
-	@Autowired
 	public TaiKhoanServiceImpl(JavaMailSender javaMailSender, TaiKhoanDao dhdao) {
 		this.javaMailSender = javaMailSender;
 		this.dhdao = dhdao;
@@ -82,7 +81,7 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 	@Override
 	public String generateAndSendPIN(String email) {
 		String pin = generateRandomPIN();
-		sendEmail(email, "Your PIN for password reset", "Your PIN is: http://localhost:8080/resetpassword " + pin);
+		sendEmail(email, "Your PIN for password reset", "Your PIN is: " + pin);
 		return pin;
 	}
 
