@@ -1,8 +1,12 @@
 package com.poly.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poly.dao.TaiKhoanDao;
@@ -100,35 +105,52 @@ public class TaiKhoanController {
 		return "user/dangky";
 	}
 
-//	@PostMapping("/register")
-//    public String doPostRegister(@ModelAttribute("taikhoanRequest") TaiKhoan taikhoanRequest, HttpSession session) {
-//        try {
-//            TaiKhoan taikhoan = taikhoanService.save(taikhoanRequest);
-//            if (taikhoan != null) {
-//            	session.setAttribute("tentaikhoan", taikhoan);             
-//                return "redirect:/"; 
-//            } else {
-//                return "redirect:/register";
-//            }
-//        } catch (SQLException e) {
-//            return "redirect:/register";
-//        }
-//    }
-
 	@PostMapping("/register")
-	public String processSignUp(@ModelAttribute TaiKhoan taikhoan, HttpSession session, Model model) {
-		session.setAttribute("taikhoan", taikhoan);
-		try {
-			taikhoanService.checkTenTaiKhoan((TaiKhoan) session.getAttribute("taikhoan"));
-			String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
-			session.setAttribute("registerPIN", pin);
-			return "redirect:/verify-register-pin";
+	@ResponseBody
+	public Map<String, Object> processSignUp(@ModelAttribute TaiKhoan taikhoan, 
+	                                         @RequestParam String xnmatKhau, 
+	                                         HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
 
-		} catch (Exception e) {
-			model.addAttribute("kttaikhoan", true);
-			return "user/dangky";
-		}
+	    // Kiểm tra mật khẩu và xác nhận mật khẩu
+	    if (!taikhoan.getMatKhau().equals(xnmatKhau)) {
+	        response.put("success", false);
+	        response.put("errors", List.of("Mật khẩu và xác nhận mật khẩu không khớp."));
+	        return response;
+	    }
 
+	    // Kiểm tra chiều dài mật khẩu
+	    if (taikhoan.getMatKhau().length() < 6) {
+	        response.put("success", false);
+	        response.put("errors", List.of("Mật khẩu phải dài hơn 6 ký tự."));
+	        return response;
+	    }
+
+	    // Kiểm tra định dạng số điện thoại
+	    if (!taikhoan.getSDT().matches("\\d{10}")) {
+	        response.put("success", false);
+	        response.put("errors", List.of("Số điện thoại phải là 10 số và không chứa chữ cái."));
+	        return response;
+	    }
+
+	    // Kiểm tra tính duy nhất của email
+	    if (taikhoanService.isEmailExists(taikhoan.getEmail())) {
+	        response.put("success", false);
+	        response.put("errors", List.of("Email đã tồn tại trong hệ thống."));
+	        return response;
+	    }
+
+	    try {
+	        taikhoanService.checkTenTaiKhoan(taikhoan);
+	        String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
+	        session.setAttribute("registerPIN", pin);
+	        response.put("success", true);
+	        return response;
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("errors", List.of("Tên tài khoản đã tồn tại."));
+	        return response;
+	    }
 	}
 
 	@GetMapping("/verify-register-pin")
