@@ -18,6 +18,7 @@ app.controller("tracuudonhang-ctrl", function($scope, $http, $window) {
 		};
 	};
 	
+	
 	$scope.initialize = function() {
 		//Load tài khoản đăng nhập
 		$http.get("rest/taikhoan/tentaikhoan").then(resp => {
