@@ -27,4 +27,6 @@ public interface TaiKhoanService {
 	
 	void checkTenTaiKhoan(TaiKhoan taikhoanRequest) throws SQLException;
 	
+	boolean isEmailExists(String email);
+	
 }

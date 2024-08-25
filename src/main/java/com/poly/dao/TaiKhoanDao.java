@@ -13,4 +13,6 @@ public interface TaiKhoanDao extends JpaRepository<TaiKhoan, String> {
 	TaiKhoan findByTenTaiKhoan(String TenTaiKhoan);
 	
 	TaiKhoan findByEmail(String email);
+	
+	boolean existsByEmail(String email);
 }

@@ -32,7 +32,7 @@ public class UserController {
 
 	@Autowired
 	SanPhamDao spDao;
-	
+
 	@Autowired
 	TaiKhoanDao tkDao;
 
@@ -71,15 +71,15 @@ public class UserController {
 
 	@GetMapping("/category/{maLSP}")
 	public String getProductByCategory(@PathVariable("maLSP") Integer maLSP, Model model,
-	        @RequestParam(value = "page", defaultValue = "1") int page) {
-	    int pageSize = 50;
-	    Pageable pageable = PageRequest.of(page - 1, pageSize);
-	    Page<SanPham> sanphamPage = spDao.findByDanhMucLoaiSanPhamMaLSP(maLSP, pageable);
-	    model.addAttribute("sanphamPage", sanphamPage);
-	    model.addAttribute("categories", dmlspDao.findAll());
-	    return "user/sanpham";
+			@RequestParam(value = "page", defaultValue = "1") int page) {
+		int pageSize = 50;
+		Pageable pageable = PageRequest.of(page - 1, pageSize);
+		Page<SanPham> sanphamPage = spDao.findByDanhMucLoaiSanPhamMaLSP(maLSP, pageable);
+		model.addAttribute("sanphamPage", sanphamPage);
+		model.addAttribute("categories", dmlspDao.findAll());
+		return "user/sanpham";
 	}
-	
+
 	@GetMapping("/detail/{id}")
 	public String productDetail(Model model, @PathVariable("id") Integer maSP) {
 		SanPham sp = spDao.findById(maSP).orElse(null);
@@ -111,54 +111,49 @@ public class UserController {
 	}
 
 	@GetMapping("/thong-tin-ca-nhan")
-    public String thongTinCaNhan(Model model) {
-        // Assuming that you have a method to get the currently logged-in user
-        TaiKhoan taiKhoan = tkDao.findByTenTaiKhoan("currentUsername"); // Replace with actual method to get the logged-in user
-        model.addAttribute("taikhoan", taiKhoan);
-        return "user/thong-tin-ca-nhan";
-    }
+	public String thongTinCaNhan(Model model) {
+		// Assuming that you have a method to get the currently logged-in user
+		TaiKhoan taiKhoan = tkDao.findByTenTaiKhoan("currentUsername"); // Replace with actual method to get the
+																		// logged-in user
+		model.addAttribute("taikhoan", taiKhoan);
+		return "user/thong-tin-ca-nhan";
+	}
 
-    @PutMapping("/rest/taikhoan")
-    @ResponseBody
-    public ResponseEntity<TaiKhoan> updateTaiKhoan(@RequestBody TaiKhoan taiKhoan) {
-        // Find the existing account by username or ID
-        TaiKhoan existingTaiKhoan = tkDao.findById(taiKhoan.getTenTaiKhoan()).orElse(null);
-        if (existingTaiKhoan != null) {
-            // Update the existing account details
-            existingTaiKhoan.setHoVaTen(taiKhoan.getHoVaTen());
-            existingTaiKhoan.setDiaChi(taiKhoan.getDiaChi());
-            existingTaiKhoan.setSDT(taiKhoan.getSDT());
-            existingTaiKhoan.setEmail(taiKhoan.getEmail());
-            tkDao.save(existingTaiKhoan);
-            return ResponseEntity.ok(existingTaiKhoan);
-        }
-        return ResponseEntity.notFound().build();
-    }
+	@PutMapping("/rest/taikhoan")
+	@ResponseBody
+	public ResponseEntity<TaiKhoan> updateTaiKhoan(@RequestBody TaiKhoan taiKhoan) {
+		// Find the existing account by username or ID
+		TaiKhoan existingTaiKhoan = tkDao.findById(taiKhoan.getTenTaiKhoan()).orElse(null);
+		if (existingTaiKhoan != null) {
+			// Update the existing account details
+			existingTaiKhoan.setHoVaTen(taiKhoan.getHoVaTen());
+			existingTaiKhoan.setDiaChi(taiKhoan.getDiaChi());
+			existingTaiKhoan.setSDT(taiKhoan.getSDT());
+			existingTaiKhoan.setEmail(taiKhoan.getEmail());
+			tkDao.save(existingTaiKhoan);
+			return ResponseEntity.ok(existingTaiKhoan);
+		}
+		return ResponseEntity.notFound().build();
+	}
 
-	@GetMapping("/chitietsanpham")
-	public String chitietsanpham(@RequestParam(name = "maSP") Integer maSP, Model model) {
-		SanPham product = spService.findById(maSP);
-		if (product != null) {
-			model.addAttribute("product", product);
-			return "user/chitietsanpham";
-		} else {
-			return "redirect:/error";
+	@GetMapping("/chitietsanpham/{maSP}")
+	public String chitietsanpham(@PathVariable("maSP") Integer maSP) {
+		return "user/chitietsanpham";
+	}
+
+	@PostMapping("/sendEmail")
+	public String sendEmail(@RequestParam("email") String email, @RequestParam("message") String message) {
+		try {
+			SimpleMailMessage mailMessage = new SimpleMailMessage();
+			mailMessage.setTo("phambin984@gmail.com");
+			mailMessage.setSubject("Thông tin liên hệ từ: " + email);
+			mailMessage.setText(message);
+			mailMessage.setFrom(email);
+
+			mailSender.send(mailMessage);
+			return "redirect:/contact?success";
+		} catch (Exception e) {
+			return "redirect:/contact?error";
 		}
 	}
-	
-	 @PostMapping("/sendEmail")
-	    public String sendEmail(@RequestParam("email") String email, @RequestParam("message") String message) {
-	        try {
-	            SimpleMailMessage mailMessage = new SimpleMailMessage();
-	            mailMessage.setTo("phambin984@gmail.com"); 
-	            mailMessage.setSubject("Thông tin liên hệ từ: " + email);
-	            mailMessage.setText(message);
-	            mailMessage.setFrom(email);
-
-	            mailSender.send(mailMessage);
-	            return "redirect:/contact?success"; 
-	        } catch (Exception e) {
-	            return "redirect:/contact?error"; 
-	        }
-	    }
 }

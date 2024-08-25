@@ -113,6 +113,10 @@ public class TaiKhoanServiceImpl implements TaiKhoanService {
 		sendEmail(email, "Paus Beauty", "Nhấn vào link để đổi mật khẩu mới: http://localhost:8080/resetpassword/" + email);
 		return email;
 	}
+	
+	public boolean isEmailExists(String email) {
+	    return dhdao.existsByEmail(email);
+	}
 
 	
 	
