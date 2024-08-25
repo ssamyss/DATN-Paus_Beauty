@@ -56,5 +56,13 @@ public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 			+ "WHERE dm.tenLSP = :categoryName " + "ORDER BY NEWID()")
 	List<SanPham> findRandomByCategory(@Param("categoryName") String categoryName, Pageable pageable);
 	
-
+	@Query("SELECT sp FROM SanPham sp WHERE sp.gia <500000")
+	Page<SanPham> findByPriceLessThan(@Param("gia") Long gia, Pageable pageable);
+	@Query("SELECT sp FROM SanPham sp WHERE sp.gia >1000000")
+	Page<SanPham> findByPriceLargeThan(@Param("gia") Long gia, Pageable pageable);
+	@Query("SELECT sp FROM SanPham sp WHERE sp.gia between 500000 And 1000000")
+	Page<SanPham> findByPriceBetween(@Param("gia") String string, Pageable pageable);
+	
+	@Query("SELECT sp FROM SanPham sp ORDER BY sp.gia DESC")
+	Page<SanPham> getProductsSortedByPrice(String sortOrder, Pageable pageable);
 }

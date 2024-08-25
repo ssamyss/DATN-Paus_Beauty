@@ -1142,8 +1142,12 @@
 }
 
 .item-slick1 {
+<<<<<<< HEAD
+  height: calc(400px - 40px);
+=======
 	width: 100%;	
   height: 400px;
+>>>>>>> branch 'master' of https://github.com/ssamyss/DATN-Paus_Beauty.git
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

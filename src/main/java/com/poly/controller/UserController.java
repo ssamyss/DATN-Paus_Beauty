@@ -1,11 +1,15 @@
 package com.poly.controller;
 
 import java.util.List;
+import java.util.Locale;
+import java.text.NumberFormat;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -51,15 +55,52 @@ public class UserController {
 		return "user/index";
 	}
 
+//	@GetMapping("/product")
+//	public String productList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
+//		int pageSize = 50;
+//		Pageable pageable = PageRequest.of(page - 1, pageSize);
+//		Page<SanPham> sanphamPage = spDao.findAll(pageable);
+//		model.addAttribute("sanphamPage", sanphamPage);
+//		model.addAttribute("categories", dmlspDao.findAll());
+//		return "user/sanpham";
+//	}
 	@GetMapping("/product")
-	public String productList(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
-		int pageSize = 50;
-		Pageable pageable = PageRequest.of(page - 1, pageSize);
-		Page<SanPham> sanphamPage = spDao.findAll(pageable);
-		model.addAttribute("sanphamPage", sanphamPage);
-		model.addAttribute("categories", dmlspDao.findAll());
-		return "user/sanpham";
+	public String productList(Model model,
+	                          @RequestParam(value = "page", defaultValue = "1") int page,
+	                          @RequestParam(value = "price", required = false) String price,
+	                          @RequestParam(value = "sort", required = false) String sortOrder) {
+
+	    int pageSize = 200;
+	    Pageable pageable = PageRequest.of(page - 1, pageSize);
+	    Page<SanPham> sanphamPage;
+	   
+	    
+	    if ("under500".equals(price)) {
+	    	
+	        sanphamPage = spDao.findByPriceLessThan((long) 500000, pageable);
+	    } else if ("over1000".equals(price)) {
+	        sanphamPage = spDao.findByPriceLargeThan((long) 1000000, pageable);
+	        
+	    } else if ("between500-1000".equals(price)) {
+	        sanphamPage = spDao.findByPriceBetween("between500-1000", pageable);
+	    } else if ("desc".equals(sortOrder)) {
+	    	
+	        sanphamPage = spDao.getProductsSortedByPrice(sortOrder, pageable); // Ensure method name matches
+	    } else {
+	    	
+	        sanphamPage = spDao.findAll(pageable);
+	    }
+	    
+	    model.addAttribute("sanphamPage", sanphamPage);
+	    model.addAttribute("categories", dmlspDao.findAll());
+	    return "user/sanpham";
 	}
+
+	
+	
+	
+	
+
 
 	@GetMapping("/search")
 	public String search(Model model, @RequestParam("keyword") String keyword) {
@@ -136,9 +177,15 @@ public class UserController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/chitietsanpham/{maSP}")
-	public String chitietsanpham(@PathVariable("maSP") Integer maSP) {
-		return "user/chitietsanpham";
+	@GetMapping("/chitietsanpham")
+	public String chitietsanpham(@RequestParam(name = "maSP") Integer maSP, Model model) {
+		SanPham product = spService.findById(maSP);
+		if (product != null) {
+			model.addAttribute("product", product);
+			return "user/chitietsanpham";
+		} else {
+			return "redirect:/error";
+		}
 	}
 
 	@PostMapping("/sendEmail")

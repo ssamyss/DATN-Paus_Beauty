@@ -125,8 +125,9 @@
 						<div class="block2-txt-child1 flex-col-l">
 							<a th:href="@{'/chitietsanpham?maSP=' + ${sanPham.maSP}}"
 								th:text="${sanPham.tenSP}"
-								class="stext-105 cl3 hov-cl1 trans-04"></a> <span
-								th:text="${sanPham.gia} + ' VNĐ'" class="stext-105 cl3"></span>
+								class="stext-105 cl3 hov-cl1 trans-04"></a> 
+								
+								<span th:text="${sanPham.gia} + ' VNĐ'" class="formatted-price" style="color: red; font-weight: bold; margin-left: 10px;"></span>
 						</div>
 					</div>
 				</div>
@@ -140,7 +141,7 @@
 			class="zmdi zmdi-chevron-up"></i>
 		</span>
 	</div>
-
+	
 	<!-- Footer -->
 	<div th:insert="~{user/common/footer.html}"></div>
 
@@ -160,5 +161,22 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+	function formatCurrency(amount) {
+	    return new Intl.NumberFormat('vi-VN', {
+	        style: 'currency',
+	        currency: 'VND'
+	    }).format(amount).replace('₫', 'VNĐ');   
+
+	}
+
+	document.addEventListener("DOMContentLoaded", function() {
+	    const priceElements = document.querySelectorAll('.formatted-price');
+	    priceElements.forEach(function(priceElement) {
+	        const price = parseFloat(priceElement.textContent);
+	        priceElement.textContent = formatCurrency(price);
+	    });
+	});
+	</script>
 </body>
 </html>

@@ -2,7 +2,9 @@ package com.poly.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import com.poly.entity.SanPham;
 
@@ -27,4 +29,10 @@ public interface SanPhamService {
 	public List<Object[]> getTotalProductsByDanhMuc();
 
 	List<SanPham> findRandomByCategory(String categoryName, Pageable pageable);
+	
+	Page<SanPham> findByPriceLessThan(Long price, Pageable pageable);
+	Page<SanPham> findByPriceLargeThan(Long price, Pageable pageable);
+	Page<SanPham> findByPriceBetween(String price, Pageable pageable);
+	
+	Page<SanPham> getProductsSortedByPrice(String sortOrder, Pageable pageable);
 }
