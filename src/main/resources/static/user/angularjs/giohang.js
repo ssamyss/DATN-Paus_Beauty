@@ -21,6 +21,7 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 				$scope.giohang = resp.data;
 				$scope.dem = $scope.giohang.length;
 				$scope.tong();
+				$scope.updateCartIcon();
 			}).catch(error => {
 				alert("Lỗi khi tải giỏ hàng!");
 			});
@@ -32,8 +33,12 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 	$scope.tong = function() {
 		$scope.tongtien = 0;
 		for (let i = 0; i < $scope.dem; i++) {
-			$scope.tongtien = $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong + $scope.tongtien;
+			$scope.tongtien += $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong;
 		}
+	};
+
+	$scope.updateCartIcon = function() {
+		$scope.dem = $scope.giohang.reduce((acc, item) => acc + item.soLuong, 0);
 	};
 
 	$scope.create = function(item) {

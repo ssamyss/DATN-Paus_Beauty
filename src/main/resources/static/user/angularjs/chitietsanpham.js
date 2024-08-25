@@ -13,10 +13,6 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 		$scope.form = {};
 	};
 
-	$scope.muangay = function(item) {
-		themGH(item);
-		$window.location.href = "/cart";
-	}
 
 	$scope.initialize = function() {
 
@@ -40,31 +36,36 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 			console.error("Lỗi khi tải sản phẩm:", error);
 		});
 
-		//Load tài khoản đăng nhập
-		$http.get("rest/taikhoan/tentaikhoan").then(resp => {
-			$scope.tentaikhoan = resp.data;
-			//Load giỏ hàng
-			$http.get('/rest/giohang/byttk/' + $scope.tentaikhoan.tenTaiKhoan).then(resp => {
-				$scope.giohang = resp.data;
-				$scope.giohang.forEach(item => {
-					item.createDate = new Date(item.createDate);
-				});
-				$scope.dem = $scope.giohang.length;
-				$scope.tong();
-			}).catch(error => {
-				alert("Lỗi khi tải giỏ hàng!");
-			});
-		}).catch(error => {
-			console.error(error);
-		});
-	};
+		// Load tài khoản đăng nhập
+		    $http.get("rest/taikhoan/tentaikhoan").then(resp => {
+		        $scope.tentaikhoan = resp.data;
+		        // Load giỏ hàng
+		        $http.get('/rest/giohang/byttk/' + $scope.tentaikhoan.tenTaiKhoan).then(resp => {
+		            $scope.giohang = resp.data;
+		            $scope.giohang.forEach(item => {
+		                item.createDate = new Date(item.createDate);
+		            });
+		            $scope.dem = $scope.giohang.length;
+		            $scope.tong();
+		            $scope.updateCartIcon();
+		        }).catch(error => {
+		            alert("Lỗi khi tải giỏ hàng!");
+		        });
+		    }).catch(error => {
+		        console.error(error);
+		    });
+		};
 
-	$scope.tong = function() {
-		$scope.tongtien = 0;
-		for (let i = 0; i < $scope.dem; i++) {
-			$scope.tongtien = $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong + $scope.tongtien;
-		}
-	};
+		$scope.tong = function() {
+		    $scope.tongtien = 0;
+		    for (let i = 0; i < $scope.dem; i++) {
+		        $scope.tongtien += $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong;
+		    }
+		};
+
+		$scope.updateCartIcon = function() {
+		    $scope.dem = $scope.giohang.reduce((acc, item) => acc + item.soLuong, 0);
+		};
 
 	$scope.openQuickView = function(item) {
 		$scope.form = angular.copy(item);
@@ -135,33 +136,63 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 		});
 	};
 
-	$scope.themGH = function(item) {
+	//Thêm nhanh
+	$scope.themNhanh = function(item, successCallback, errorCallback) {  // Thêm successCallback và errorCallback
 		$http.post('/rest/giohang/ghtontai', item).then(resp => {
 			$scope.ghtontai = resp.data;
 			var count = $scope.ghtontai.length;
-			if (count == 0) {
+			if (count === 0) {
 				$http.post('/rest/giohang', item).then(resp => {
 					$scope.giohang.push(resp.data);
-					alert("Sản phẩm đã được thêm vào giỏ hàng!");
+					console.log("Sản phẩm đã được thêm vào giỏ hàng!"); // Log message không chặn
 					$scope.initialize();
 					$scope.reset();
+					if (successCallback) successCallback();  // Gọi successCallback nếu có
 				}).catch(error => {
-					console.error("Lỗi khi thêm mới sp vào giỏ hàng: ", error);
+					console.error("Lỗi khi thêm mới sản phẩm vào giỏ hàng: ", error);
+					if (errorCallback) errorCallback();  // Gọi errorCallback nếu có lỗi
 				});
 			} else {
 				$http.put('/rest/giohang/create2/' + $scope.ghtontai[0].maGH, $scope.ghtontai[0]).then(resp => {
-					// Update the item in the items array
 					var index = $scope.giohang.findIndex(p => p.maGH == $scope.ghtontai[0].maGH);
-					$scope.giohang[index].soLuong = $scope.giohang[index].soLuong + 1;
-					alert("Thêm sp vào giỏ hàng thành công!");
+					$scope.giohang[index].soLuong += 1;
+					console.log("Thêm sản phẩm vào giỏ hàng thành công!"); // Log message không chặn
+					if (successCallback) successCallback();  // Gọi successCallback nếu có
 				}).catch(error => {
-					console.error("Lỗi khi thêm sp vào giỏ hàng: ", error);
+					console.error("Lỗi khi thêm sản phẩm vào giỏ hàng: ", error);
+					if (errorCallback) errorCallback();  // Gọi errorCallback nếu có lỗi
 				});
 			}
 		}).catch(error => {
 			console.error("Lỗi khi lấy giỏ hàng tồn tại: ", error);
+			if (errorCallback) errorCallback();  // Gọi errorCallback nếu có lỗi
 		});
 	};
+
+	$scope.muangay = function(item) {
+		$scope.themNhanh(item,
+			function() {  // successCallback
+				$window.location.href = "/cart";
+			},
+			function() {  // errorCallback
+				alert("Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại sau."); // Hiển thị thông báo lỗi cho người dùng
+			}
+		);
+	};
+
+	// Thêm giỏ hàng
+	$scope.themGH = function(item) {
+	    $http.post('/rest/giohang/ghtontai', item).then(resp => {
+	        $scope.giohang = resp.data;
+	        alert("Sản phẩm đã được thêm vào giỏ hàng!");
+	        $scope.initialize();
+	        $scope.reset();
+	    }).catch(error => {
+	        console.error("Lỗi khi thêm sản phẩm vào giỏ hàng: ", error);
+	        alert("Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng!");
+	    });
+	};
+
 
 	$scope.pager = {
 		page: 0,

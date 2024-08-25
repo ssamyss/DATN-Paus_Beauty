@@ -34,8 +34,9 @@
 							<ul class="sub-menu">
 								<li><a th:href="@{/thong-tin-ca-nhan}">Thông Tin</a></li>
 								<li><a th:href="@{/quan-ly-don-hang}">Đơn hàng</a></li>
-								<li><a th:href="@{/logout}">Đăng Xuất</a></li>
+								<li><a th:href="@{/logout2}">Đăng Xuất</a></li>
 							</ul></li>
+							<div style="font-size:20px;"th:text="${session.tentaikhoan}"></div>
 					</div>
 					<div th:if="${session.tentaikhoan == null}"
 						class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 main-menu">
@@ -89,7 +90,7 @@
 
 								<div class="w-full">
 									<div class="header-cart-total w-full p-tb-40">Tổng tiền:
-										{{ tongtien }}</div>
+										{{ tongtien | currency:'': 0 }} VNĐ</div>
 								</div>
 							</div>
 							<div class="header-cart-buttons flex-w w-full">
