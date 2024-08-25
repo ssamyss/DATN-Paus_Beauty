@@ -25,7 +25,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String uri = request.getRequestURI();
 		TaiKhoan user = (TaiKhoan) session.getAttribute("user"); // lấy từ session
 		
-		System.out.println("Interceptor: "+ session.getAttribute("user"));
+		
 		String error = "";
 		if (!(user != null)) { // chưa đăng nhập
 			error = "Vui lòng đăng nhập để truy cập !";

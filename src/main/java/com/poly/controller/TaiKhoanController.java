@@ -261,9 +261,7 @@ public class TaiKhoanController {
 					}
 					HttpSession session = request.getSession();
 					session.setAttribute("tentaikhoan", TenTaiKhoan);
-					System.out.println("TaiKhoanController4: "+TenTaiKhoan);
-					System.out.println("TaiKhoanController5: "+taikhoan);
-					System.out.println("TaiKhoanController6: "+session.getAttribute("tentaikhoan"));	
+					
 					
 					// Redirect đến trang tương ứng dựa vào vai trò của người dùng
 					
@@ -292,9 +290,7 @@ public class TaiKhoanController {
 				if (BCrypt.checkpw(password, taikhoan.getMatKhau())) {
 					HttpSession session = request.getSession();
 					session.setAttribute("user", taikhoan);
-					System.out.println("TaiKhoanController1: "+username);
-					System.out.println("TaiKhoanController2: "+taikhoan);
-					System.out.println("TaiKhoanController3: "+session.getAttribute("user"));	
+					
 					if (taikhoan.isRole() ) {
 						return "redirect:/admin";
 					} else {
