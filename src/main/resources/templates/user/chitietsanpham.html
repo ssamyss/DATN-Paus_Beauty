@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Paus Beauty - Chi tiết sản phẩm</title>
+<title>Paus Beauty - Trang Chủ</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link th:insert="~{user/link/link.html}">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/user/css/index.css}">
 </head>
-<body>
+<body ng-app="app" ng-controller="chitietsanpham-ctl">
+
 	<!-- Header -->
 	<span th:insert="~{user/common/header.html}"></span>
 
@@ -18,124 +22,84 @@
 			<img th:src="@{/user/images/icons/icon-close.png}" alt="CLOSE">
 		</button>
 
-		<!-- Xử lý hiển thị sản phẩm không tìm thấy -->
-		<div th:if="${product == null}">
-			<p>Không tìm thấy sản phẩm.</p>
-		</div>
 
 		<!-- Hiển thị thông tin sản phẩm -->
-		<div th:if="${product != null}">
+		<div>
 			<div class="row">
 				<!-- Cột hình ảnh -->
 				<div class="col-md-5">
-					<img th:src="@{'/assets/images/sanpham/' + ${product.anh}}"
-						class="img-fluid" alt="${product.tenSP}">
+					<div class="image-container">
+						<img ng-src="/assets/images/sanpham/{{sanpham.anh}}"
+							alt="Ảnh sản phẩm" class="img-fluid">
+					</div>
 				</div>
 
 				<!-- Cột thông tin -->
 				<div class="col-md-7">
 					<div class="card">
 						<div class="card-body">
-							<h3 class="card-title" th:text="${product.tenSP}"></h3>
+							<h3 class="card-title">Sản phẩm {{sanpham.maSP}}</h3>
 							<div style="display: flex;">
 								<p style="font-weight: bold;">Giá bán:</p>
 								<p style="color: red; font-weight: bold; margin-left: 10px;">
-									<span class="formatted-price" th:text="${product.gia}"></span>
+									<span>{{sanpham.gia}} VNĐ</span>
 								</p>
 							</div>
 							<hr>
 							<div style="display: flex;">
 								<div style="font-weight: bold;">
-									Tồn kho: <span th:text="${product.tonKho}"></span>
+									Tồn kho: <span>{{sanpham.tonKho}}</span>
 								</div>
 							</div>
 							<hr>
 
-							<th:block th:if="${product.tonKho < 1}">
-								<div style="display: flex;">
-									<div style="font-weight: bold; color: red;">Sản phẩm đang
-										tạm hết hàng</div>
-								</div>
-							</th:block>
-							<div style="display: flex; align-items: flex-start;">
-								<div style="font-weight: bold; margin-right: 10px;">Mô tả:</div>
-								<div th:text="${product.mota}" style="max-width: 100%;"></div>
-							</div>
-							<hr />
-							<th:block th:if="${product.tonKho > 0}">
-								<div style="display: flex;">
-									<div style="font-weight: bold;">Trạng thái: &nbsp;</div>
-									<div>Còn hàng</div>
-								</div>
-								<hr>
+							<!-- 							<th:block> -->
+							<!-- 								<div style="display: flex;"> -->
+							<!-- 									<div style="font-weight: bold; color: red;">Sản phẩm đang -->
+							<!-- 										tạm hết hàng</div> -->
+							<!-- 								</div> -->
+							<!-- 							</th:block> -->
 
-								<div class="flex-w flex-r-m p-b-10">
-									<div class="size-204 flex-w flex-m respon6-next">
-										<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-											<div
-												class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-											<input class="mtext-104 cl3 num-product text-center"
-												type="number" name="num-product" value="1">
-											<div
-												class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
+							<div style="display: flex; align-items: flex-start;">
+								<div style="font-weight: bold; margin-right: 10px;">Mô tả:
+									{{sanpham.mota}}</div>
+								<div style="max-width: 100%;"></div>
+							</div>
+							<!-- 							<hr /> -->
+
+							<!-- 								<div style="display: flex;"> -->
+							<!-- 									<div style="font-weight: bold;">Trạng thái: &nbsp;</div> -->
+							<!-- 									<div>Còn hàng</div> -->
+							<!-- 								</div> -->
+							<hr>
+
+							<div class="flex-w flex-r-m p-b-10">
+								<div class="size-204 flex-w flex-m respon6-next">
+									<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+										<div
+											class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+											<i class="fs-16 zmdi zmdi-minus"></i>
 										</div>
-										<div class="text-center mt-4">
-											<button th:if="${session.username != null}"
-												th:onclick="'themGH(' + ${product.id} + ')'"
-												class="btn btn-primary addToCart"
-												style="background-color: #EC6090; border: none; margin-right: 10px;">
-												Thêm vào giỏ hàng</button>
-											<a th:if="!${session.username != null}" th:href="@{'/login'}"
-												class="btn btn-primary"
-												style="background-color: #EC6090; border: none; margin-right: 10px;">
-												Thêm vào giỏ hàng </a> <a th:if="${session.username != null}"
-												th:href="@{'/cart/add/' + ${product.id}}"
-												class="btn btn-primary"
-												style="background-color: #EC6090; border: none; margin-right: 10px;">
-												Mua ngay </a> <a th:if="!${session.username != null}"
-												th:href="@{'/login'}" class="btn btn-primary"
-												style="background-color: #EC6090; border: none; margin-right: 10px;">
-												Mua ngay </a>
+										<input class="mtext-104 cl3 num-product text-center"
+											type="number" name="num-product" value="1">
+										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+											<i class="fs-16 zmdi zmdi-plus"></i>
 										</div>
 									</div>
+									<div class="text-center mt-4">
+										<button th:if="${session.tentaikhoan != null}"
+											ng-click="themGH(sanpham)"
+											class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m"
+											type="button">Thêm vào giỏ hàng</button>
+
+										<button th:if="${session.tentaikhoan != null}"
+											ng-click="muangay(sanpham)"
+											class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m"
+											type="button">Mua ngay</button>
+									</div>
 								</div>
+							</div>
 							</th:block>
-
-							<!-- Thêm mã JavaScript để hiển thị thông báo -->
-							<script>
-								document
-										.querySelectorAll('.addToCart')
-										.forEach(
-												function(button) {
-													button
-															.addEventListener(
-																	'click',
-																	function() {
-																		alert('Sản phẩm đã được thêm vào giỏ hàng thành công!');
-																	});
-												});
-
-								function formatCurrency(amount) {
-									return new Intl.NumberFormat('vi-VN', {
-										style : 'currency',
-										currency : 'VND'
-									}).format(amount).replace('₫', 'VNĐ');
-								}
-
-								document
-										.addEventListener(
-												"DOMContentLoaded",
-												function() {
-													const priceElement = document
-															.querySelector('.formatted-price');
-													const price = parseFloat(priceElement.textContent);
-													priceElement.textContent = formatCurrency(price);
-												});
-							</script>
 						</div>
 					</div>
 				</div>
@@ -157,10 +121,12 @@
 	<div th:insert="~{user/product-detail.html}"></div>
 
 	<!-- AngularJS -->
-	<script th:src="@{/user/angularjs/sanpham.js}"></script>
+	<script th:src="@{/user/angularjs/chitietsanpham.js}"></script>
 
 	<!-- link -->
 	<div th:insert="~{user/link/scriptIndex.html}"></div>
+
+
 </body>
 <style>
 .product-image {
