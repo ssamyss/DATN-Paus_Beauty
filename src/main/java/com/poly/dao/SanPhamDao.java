@@ -53,7 +53,7 @@ public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 	List<Object[]> getTotalProductsByDanhMuc();
 
 	@Query("SELECT sp FROM SanPham sp " + "JOIN sp.loaiSanPham lsp " + "JOIN lsp.danhMucLoaiSanPham dm "
-			+ "WHERE dm.tenLSP = :categoryName " + "ORDER BY RAND()")
+			+ "WHERE dm.tenLSP = :categoryName " + "ORDER BY NEWID()")
 	List<SanPham> findRandomByCategory(@Param("categoryName") String categoryName, Pageable pageable);
 	
 

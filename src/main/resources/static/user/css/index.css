@@ -140,3 +140,59 @@ h1.heading {
     width: 100%; /* Full width for smaller screens */
   }
 }
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: none;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    color: #ff4c4c;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000;
+    border-radius: 50%;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.product-details .price {
+    font-size: 1.5rem;
+}
+
+.product-details .text-primary{
+    margin-top: 50px
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+}
+
+.quantity button {
+    border: 1px solid #ddd;
+}
+
+.quantity input {
+    max-width: 50px;
+    margin: 0 10px;
+}
+
+.purchase-method p {
+    margin-bottom: 0.5rem;
+}
+
+.modal-footer a,
+.modal-footer button {
+    width: 32%;
+    font-size: 1rem;
+}
+

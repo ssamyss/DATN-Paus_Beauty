@@ -48,11 +48,11 @@
 		<div class="wrap-slick1">
 			<div class="slick1">
 				<div class="item-slick1"
-					style="background-image: url(user/images/slide1.png);"></div>
+					style="background-image: url(user/images/slide1.jpg);"></div>
 				<div class="item-slick1"
-					style="background-image: url(user/images/slide2.png);"></div>
+					style="background-image: url(user/images/slide2.jpg);"></div>
 				<div class="item-slick1"
-					style="background-image: url(user/images/slide3.png);"></div>
+					style="background-image: url(user/images/slide3.jpg);"></div>
 			</div>
 		</div>
 	</section>
@@ -103,7 +103,7 @@
 					</div>
 				</div>
 			</div>
-
+			
 
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
@@ -192,39 +192,53 @@
 		</div>
 	</section>
 
-	<div class="modal fade" id="quickViewModal" tabindex="-1"
-		aria-labelledby="quickViewModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header"></div>
-				<div class="modal-body">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-md-6">
-								<img ng-src="/assets/images/sanpham/{{form.anh}}"
-									alt="Product Image" class="img-fluid rounded shadow-sm">
-							</div>
-							<div
-								class="col-md-6 product-details d-flex flex-column justify-content-center">
-								<h4 class="text-primary font-weight-bold mb-3">{{form.tenSP}}</h4>
-								<p class="price text-danger font-weight-bold mb-4">Giá:
-									{{form.gia | currency:'':0}} VNĐ</p>
-								<!-- Add more product details here if needed -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer justify-content-between">
-					<a href="/chitietsanpham?maSP={{form.maSP}}" class="btn btn-danger">Chi
-						tiết sản phẩm</a>
-					<button type="button" class="btn btn-danger">Thêm vào giỏ
-						hàng</button>
-					<button type="button" class="btn btn-secondary btn-lg"
-						data-dismiss="modal">Đóng</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="modal fade" id="quickViewModal" tabindex="-1"
+    aria-labelledby="quickViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 d-flex align-items-center">
+                            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img ng-src="/assets/images/sanpham/{{form.anh}}"
+                                            alt="Product Image" class="img-fluid rounded shadow-sm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 product-details">
+                            <h4 class="text-primary font-weight-bold mb-3">{{form.tenSP}}</h4>
+                            <p class="price text-danger font-weight-bold mb-4">Giá:
+                                {{form.gia | currency:'' :0}} VNĐ</p>
+                            <!-- Add more product details here if needed -->
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div class="quantity">
+                                    <button class="btn btn-light btn-sm" type="button">-</button>
+                                    <input type="number" value="1" class="form-control text-center w-50">
+                                    <button class="btn btn-light btn-sm" type="button">+</button>
+                                </div>
+                                <p class="text-muted mb-0">Còn lại: {{form.tonKho}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <a href="/chitietsanpham?maSP={{form.maSP}}" class="btn btn-outline-danger">Chi tiết sản phẩm</a>
+                <button type="button" class="btn btn-danger">Thêm vào giỏ hàng</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 	<!-- Back to top -->
