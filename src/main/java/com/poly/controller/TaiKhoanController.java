@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.poly.dao.TaiKhoanDao;
 import com.poly.entity.TaiKhoan;
 import com.poly.service.TaiKhoanService;
@@ -107,51 +107,50 @@ public class TaiKhoanController {
 
 	@PostMapping("/register")
 	@ResponseBody
-	public Map<String, Object> processSignUp(@ModelAttribute TaiKhoan taikhoan, 
-	                                         @RequestParam String xnmatKhau, 
-	                                         HttpSession session) {
-	    Map<String, Object> response = new HashMap<>();
+	public Map<String, Object> processSignUp(@ModelAttribute TaiKhoan taikhoan, @RequestParam String xnmatKhau,
+			HttpSession session) {
+		Map<String, Object> response = new HashMap<>();
 
-	    // Kiểm tra mật khẩu và xác nhận mật khẩu
-	    if (!taikhoan.getMatKhau().equals(xnmatKhau)) {
-	        response.put("success", false);
-	        response.put("errors", List.of("Mật khẩu và xác nhận mật khẩu không khớp."));
-	        return response;
-	    }
+		// Kiểm tra mật khẩu và xác nhận mật khẩu
+		if (!taikhoan.getMatKhau().equals(xnmatKhau)) {
+			response.put("success", false);
+			response.put("errors", List.of("Mật khẩu và xác nhận mật khẩu không khớp."));
+			return response;
+		}
 
-	    // Kiểm tra chiều dài mật khẩu
-	    if (taikhoan.getMatKhau().length() < 6) {
-	        response.put("success", false);
-	        response.put("errors", List.of("Mật khẩu phải dài hơn 6 ký tự."));
-	        return response;
-	    }
+		// Kiểm tra chiều dài mật khẩu
+		if (taikhoan.getMatKhau().length() < 6) {
+			response.put("success", false);
+			response.put("errors", List.of("Mật khẩu phải dài hơn 6 ký tự."));
+			return response;
+		}
 
-	    // Kiểm tra định dạng số điện thoại
-	    if (!taikhoan.getSDT().matches("\\d{10}")) {
-	        response.put("success", false);
-	        response.put("errors", List.of("Số điện thoại phải là 10 số và không chứa chữ cái."));
-	        return response;
-	    }
+		// Kiểm tra định dạng số điện thoại
+		if (!taikhoan.getSDT().matches("\\d{10}")) {
+			response.put("success", false);
+			response.put("errors", List.of("Số điện thoại phải là 10 số và không chứa chữ cái."));
+			return response;
+		}
 
-	    // Kiểm tra tính duy nhất của email
-	    if (taikhoanService.isEmailExists(taikhoan.getEmail())) {
-	        response.put("success", false);
-	        response.put("errors", List.of("Email đã tồn tại trong hệ thống."));
-	        return response;
-	    }
+		// Kiểm tra tính duy nhất của email
+		if (taikhoanService.isEmailExists(taikhoan.getEmail())) {
+			response.put("success", false);
+			response.put("errors", List.of("Email đã tồn tại trong hệ thống."));
+			return response;
+		}
 
-	    try {
-	        taikhoanService.checkTenTaiKhoan(taikhoan);
-	        String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
-	        session.setAttribute("registerPIN", pin);
-	        response.put("success", true);
-	        session.setAttribute("taikhoan", taikhoan);
-	        return response;
-	    } catch (Exception e) {
-	        response.put("success", false);
-	        response.put("errors", List.of("Tên tài khoản đã tồn tại."));
-	        return response;
-	    }
+		try {
+			taikhoanService.checkTenTaiKhoan(taikhoan);
+			String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
+			session.setAttribute("registerPIN", pin);
+			response.put("success", true);
+			session.setAttribute("taikhoan", taikhoan);
+			return response;
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("errors", List.of("Tên tài khoản đã tồn tại."));
+			return response;
+		}
 	}
 
 	@GetMapping("/verify-register-pin")
@@ -256,15 +255,20 @@ public class TaiKhoanController {
 				// Kiểm tra mật khẩu đã mã hóa
 				if (BCrypt.checkpw(MatKhau, taikhoan.getMatKhau())) {
 					// Tạo session và lưu tên tài khoản
-					HttpSession session = request.getSession();
-					session.setAttribute("tentaikhoan", TenTaiKhoan);
-
-					// Redirect đến trang tương ứng dựa vào vai trò của người dùng
-					if (taikhoan.isRole()) {
-						return "redirect:/admin";
-					} else {
+					if(taikhoan.isRole())
+					{
 						return "redirect:/";
 					}
+					HttpSession session = request.getSession();
+					session.setAttribute("tentaikhoan", TenTaiKhoan);
+					System.out.println("TaiKhoanController4: "+TenTaiKhoan);
+					System.out.println("TaiKhoanController5: "+taikhoan);
+					System.out.println("TaiKhoanController6: "+session.getAttribute("tentaikhoan"));	
+					
+					// Redirect đến trang tương ứng dựa vào vai trò của người dùng
+					
+						return "redirect:/";
+					
 				} else {
 					model.addAttribute("checkpass", true);
 					return "user/dangnhap";
@@ -279,11 +283,45 @@ public class TaiKhoanController {
 		}
 	}
 
-	@GetMapping("/logout")
+	@RequestMapping("/loginAdmin")
+	public String loginAdmin(Model model,@RequestParam(value = "username",required = false)String username,
+			@RequestParam(value="password",required = false)  String password) {
+		try {
+			TaiKhoan taikhoan = taikhoanService.findById(username);
+			if(taikhoan != null) {
+				if (BCrypt.checkpw(password, taikhoan.getMatKhau())) {
+					HttpSession session = request.getSession();
+					session.setAttribute("user", taikhoan);
+					System.out.println("TaiKhoanController1: "+username);
+					System.out.println("TaiKhoanController2: "+taikhoan);
+					System.out.println("TaiKhoanController3: "+session.getAttribute("user"));	
+					if (taikhoan.isRole() ) {
+						return "redirect:/admin";
+					} else {
+						return "redirect:/";
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			model.addAttribute("message", "Tên người dùng sai");
+		}		
+		
+		return "/user/dangnhap_admin";
+		
+	}
+
+	@GetMapping("/logout2")
 	public String logout() {
 		HttpSession session = request.getSession();
 		session.removeAttribute("tentaikhoan");
-		return "redirect:/login";
+		return "redirect:/";
+	}
+	@GetMapping("/logout3")
+	public String logoutAdmin() {
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		return "redirect:/admin";
 	}
 
 }

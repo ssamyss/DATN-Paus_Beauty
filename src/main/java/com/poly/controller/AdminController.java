@@ -1,5 +1,6 @@
 package com.poly.controller;
 
+import java.net.http.HttpRequest;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -16,6 +17,8 @@ import com.poly.dao.TaiKhoanDao;
 import com.poly.entity.SanPham;
 import com.poly.service.DonHangService;
 import com.poly.service.SanPhamService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AdminController {
@@ -34,7 +37,7 @@ public class AdminController {
 
 	@Autowired
 	DonHangService donHangService;
-
+		
 	@GetMapping("/admin")
 	public String index(Model model) {
 		model.addAttribute("product_count", spdao.getCountSP());
