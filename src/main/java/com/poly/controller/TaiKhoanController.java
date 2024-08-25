@@ -145,6 +145,7 @@ public class TaiKhoanController {
 	        String pin = taikhoanService.generateAndSendPIN(taikhoan.getEmail());
 	        session.setAttribute("registerPIN", pin);
 	        response.put("success", true);
+	        session.setAttribute("taikhoan", taikhoan);
 	        return response;
 	    } catch (Exception e) {
 	        response.put("success", false);
