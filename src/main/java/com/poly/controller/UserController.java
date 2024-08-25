@@ -177,8 +177,8 @@ public class UserController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/chitietsanpham/{maSP}")
-	public String chitietsanpham(@PathVariable("maSP") Integer maSP) {
+	@GetMapping("/chitietsanpham")
+	public String chitietsanpham() {
 		return "user/chitietsanpham";
 	}
 

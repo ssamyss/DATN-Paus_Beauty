@@ -1,11 +1,13 @@
 const app = angular.module("app", []);
-app.controller("chitietsanpham-ctl", function($scope, $http, $location) {
+app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window) {
 	$scope.form = {};
 	$scope.items = [];
 	$scope.tentaikhoan = [];
 	$scope.giohang = [];
 	$scope.dem = 0;
 	$scope.sanpham = [];
+
+
 
 	$scope.reset = function() {
 		$scope.form = {};
@@ -15,11 +17,13 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location) {
 		themGH(item);
 		$window.location.href = "/cart";
 	}
-	
+
 	$scope.initialize = function() {
+
 		// Load sản phẩm
 		$http.get("/rest/sanpham").then(resp => {
 			$scope.items = resp.data;
+
 			$scope.items.forEach(item => {
 				item.createDate = new Date(item.createDate);
 			});
@@ -27,14 +31,14 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location) {
 			console.error("Lỗi khi tải sản phẩm:", error);
 		});
 
-		$http.get("/rest/sanpham/" + $location.absUrl().split("/")[4]).then(resp => {
+
+		$http.get("/rest/sanpham/" + $window.location.search.split("=")[1]).then(resp => {
 			$scope.sanpham = resp.data;
 			console.log($location.absUrl().split("/")[4]);
 			console.log($scope.sanpham);
 		}).catch(error => {
 			console.error("Lỗi khi tải sản phẩm:", error);
 		});
-
 
 		//Load tài khoản đăng nhập
 		$http.get("rest/taikhoan/tentaikhoan").then(resp => {
