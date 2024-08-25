@@ -16,7 +16,7 @@
         <!-- Navbar Right Menu-->
         <ul class="app-nav">
             <!-- User Menu-->
-            <li><a class="app-nav__item" th:href="@{admin/index}"><i class='bx bx-log-out bx-rotate-180'></i> </a></li>
+            <li><a class="app-nav__item" th:href="@{/logout}"><i class='bx bx-log-out bx-rotate-180'></i> </a></li>
         </ul>
     </header>
     <!-- Sidebar menu-->
@@ -28,7 +28,7 @@
                 width="50px" alt="User Image">
             <div>
                 <p class="app-sidebar__user-name">
-                    <b>Hoàng Mỹ</b>
+                    <b th:text="${session.tentaikhoan}"></b>
                 </p>
                 <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
             </div>
