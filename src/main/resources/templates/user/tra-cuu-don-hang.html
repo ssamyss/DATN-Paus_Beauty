@@ -1,10 +1,168 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
+<head>
+	<title>Paus Beauty - Tra cứu đơn hàng</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link th:insert="~{user/link/link.html}">
+	<!-- SweetAlert CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+	<!-- SweetAlert JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body ng-app="app" ng-controller="tracuudonhang-ctrl">
+	<span th:insert="~{user/common/header.html}"></span>
+
+	<form class="bg0 p-t-75 p-b-85">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+					<div class="m-l-15"><span
+							style="font-weight: bold; font-size: 25px; color: black; font-family: 'Times New Roman', Times, serif;">TRA
+							CỨU ĐƠN HÀNG</span>
+					</div>
+					<br>
+					<div class="m-l-25 m-r--38 m-lr-0-xl">
+						<div><span style="font-weight: bold; font-size: 20px; color: black;">Thông tin khách hàng</span>
+							<div class="tt-container row">
+								<div class="col col-lg-6">
+									<input type="text" name="hovaten" id="hovaten" placeholder="Họ và tên"
+										value="{{ taikhoan.hoVaTen }}" required disabled>
+								</div>
+								<div class="col col-lg-6">
+									<input type="text" name="diachi" id="diachi" placeholder="Địa chỉ"
+										value="{{ taikhoan.diaChi }}" required disabled>
+								</div>
+								<div class="col col-lg-6">
+									<input type="text" name="sdt" id="sdt" placeholder="Số điện thoại" value="{{ sdt }}"
+										required disabled>
+								</div>
+								<div class="col col-lg-6">
+									<input type="text" name="email" id="email" placeholder="Email" value="{{ email }}"
+										required disabled>
+								</div>
+
+							</div>
+						</div>
+
+						<div><span style="font-weight: bold; font-size: 20px; color: black;">Thông tin đơn hàng</span>
+							<div class="tt-container row">
+								<div class="col col-lg-6">
+									<input type="text" name="maDH" id="maDH" placeholder="Mã đơn hàng"
+										value="{{ taikhoan.hoVaTen }}" required disabled>
+								</div>
+								<div class="col col-lg-6">
+									<input type="text" name="ngayDatHang" id="ngayDatHang" placeholder="Ngày đặt hàng"
+										value="{{ taikhoan.diaChi }}" required disabled>
+								</div>
+								<div class="col col-lg-6">
+									<input type="text" name="tinhTrang" id="tinhTrang" placeholder="Tình trạng đơn hàng"
+										value="{{ sdt }}" required disabled>
+								</div>
+								<div class="col col-lg-6">
+									<input type="text" name="tong" id="tong" placeholder="Tổng giá" value="{{ email }}"
+										required disabled>
+								</div>
+							</div>
+						</div>
+
+						<div><span style="font-weight: bold; font-size: 20px; color: black;">Phương thức thanh
+								toán</span>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm shadow div-sticky">
+						<h4 class="mtext-109 cl2 p-b-30">Phương thức tìm kiếm</h4>
+
+						<div class="radiobox row">
+							<input class="col col-2" type="radio" name="pttc" value="1" required>
+							<input class="col" type="text" name="nhapmaDHnhap" id="nhapmaDH" placeholder="Nhập mã đơn hàng"
+								required>
+						</div>
+						<br>
+						<div class="radiobox row">
+							<input class="col col-2" type="radio" name="pttc" value="2" required>
+							<input class="col" type="text" name="email" id="email" placeholder="Nhập email" required>
+						</div>
+						<br>
+
+						<button ng-click="tracuu()"
+							class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+							Xác nhận
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<span th:insert="~{user/common/footer.html}"></span>
+	<!-- AngularJS -->
+	<script th:src="@{/user/angularjs/tracuudonhang.js}"></script>
+	<!-- link -->
+	<div th:insert="~{user/link/scriptIndex.html}"></div>
+
+	<style>
+		.tt-container input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.radiobox input[name="pttk"] {
+			margin-top: 5px;
+			height: 15px;
+		}
+
+		.radiobox input[type="text"] {
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.tt-container .radiobox {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.radiobox input[type="radio"],
+		.radiobox label {
+			display: inline-block;
+		}
+
+		.shadow {
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+			border-radius: 5%;
+		}
+
+		.anh,
+		.tenSP,
+		.slSP {
+			display: inline-block;
+			margin-bottom: 10px;
+		}
+
+		.tenSP {
+			margin-right: 20px;
+		}
+
+		.div-sticky {
+			position: sticky;
+			top: 80px;
+			margin-top: 20px;
+			z-index: 1;
+			transition: top 0.3s ease-in-out;
+		}
+	</style>
 </body>
+
 </html>
