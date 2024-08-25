@@ -49,10 +49,10 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 			console.error("Lỗi khi tải thương hiệu:", error);
 		});
 
-		//Load tài khoản đăng nhập
+		// Load tài khoản đăng nhập
 		$http.get("rest/taikhoan/tentaikhoan").then(resp => {
 			$scope.tentaikhoan = resp.data;
-			//Load giỏ hàng
+			// Load giỏ hàng
 			$http.get('/rest/giohang/byttk/' + $scope.tentaikhoan.tenTaiKhoan).then(resp => {
 				$scope.giohang = resp.data;
 				$scope.giohang.forEach(item => {
@@ -60,13 +60,14 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 				});
 				$scope.dem = $scope.giohang.length;
 				$scope.tong();
+				$scope.updateCartIcon();
 			}).catch(error => {
 				alert("Lỗi khi tải giỏ hàng!");
 			});
 		}).catch(error => {
 			console.error(error);
 		});
-		
+
 
 		$http.get("/rest/sanpham/randomProductsByCategory?categoryName=Trang điểm").then(resp => {
 			$scope.sanpham = resp.data;
@@ -85,7 +86,7 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		}).catch(error => {
 			console.error("Lỗi khi tải sản phẩm:", error);
 		});
-		
+
 		// Load sản phẩm
 		$http.get("/rest/thuonghieu/random").then(resp => {
 			$scope.thuonghieu = resp.data;
@@ -101,8 +102,12 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 	$scope.tong = function() {
 		$scope.tongtien = 0;
 		for (let i = 0; i < $scope.dem; i++) {
-			$scope.tongtien = $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong + $scope.tongtien;
+			$scope.tongtien += $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong;
 		}
+	};
+
+	$scope.updateCartIcon = function() {
+		$scope.dem = $scope.giohang.reduce((acc, item) => acc + item.soLuong, 0);
 	};
 
 	$scope.openQuickView = function(item) {
@@ -145,16 +150,16 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 			console.log("Error", error);
 		});
 	};
-	
+
 	// Lấy 5 chữ đầu
-		$scope.getFirstFiveWords = function(str) {
-			if (!str) return '';
-			var words = str.split(' ');
-			if (words.length > 5) {
-				return words.slice(0, 5).join(' ');
-			}
-			return str;
-		};
+	$scope.getFirstFiveWords = function(str) {
+		if (!str) return '';
+		var words = str.split(' ');
+		if (words.length > 5) {
+			return words.slice(0, 5).join(' ');
+		}
+		return str;
+	};
 
 
 	$scope.brandImageChanged = function(files) {
@@ -269,7 +274,7 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		} else if ($scope.selectedSortOption === 'newest') {
 			sortedItems.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
 		} else if ($scope.selectedSortOption === 'best_selling') {
-			
+
 		}
 
 		$scope.items = sortedItems;

@@ -1,7 +1,5 @@
 package com.poly.rest;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +41,25 @@ public class GioHangRestController {
 	
 	@PostMapping("/ghtontai")
 	public List<GioHang> add(@RequestBody SanPham sanpham, HttpSession session) {
-		GioHang giohang = new GioHang();
 		String tentaikhoan = (String) session.getAttribute("tentaikhoan");
+		GioHang giohang = new GioHang();
 		giohang.setTaiKhoan(taikhoanService.findById(tentaikhoan));
 		giohang.setSanPham(sanpham);
-		return giohangService.selectGioHang(giohang);
+		
+		// Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+		List<GioHang> gioHangTonTai = giohangService.selectGioHang(giohang);
+		if (!gioHangTonTai.isEmpty()) {
+			// Sản phẩm đã tồn tại, tăng số lượng sản phẩm
+			GioHang existingItem = gioHangTonTai.get(0);
+			existingItem.setSoLuong(existingItem.getSoLuong() + 1);
+			giohangService.update(existingItem);
+		} else {
+			// Sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
+			giohang.setSoLuong(1);
+			giohangService.create(giohang);
+		}
+
+		return giohangService.getGioHangByTenTaiKhoan(tentaikhoan);
 	}
 	
 	@GetMapping("/byttk/{tentaikhoan}")
