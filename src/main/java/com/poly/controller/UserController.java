@@ -177,15 +177,9 @@ public class UserController {
 		return ResponseEntity.notFound().build();
 	}
 
-	@GetMapping("/chitietsanpham")
-	public String chitietsanpham(@RequestParam(name = "maSP") Integer maSP, Model model) {
-		SanPham product = spService.findById(maSP);
-		if (product != null) {
-			model.addAttribute("product", product);
-			return "user/chitietsanpham";
-		} else {
-			return "redirect:/error";
-		}
+	@GetMapping("/chitietsanpham/{maSP}")
+	public String chitietsanpham(@PathVariable("maSP") Integer maSP) {
+		return "user/chitietsanpham";
 	}
 
 	@PostMapping("/sendEmail")
