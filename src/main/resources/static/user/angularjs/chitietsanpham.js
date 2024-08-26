@@ -6,12 +6,21 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 	$scope.giohang = [];
 	$scope.dem = 0;
 	$scope.sanpham = [];
-
+	$scope.sanpham2 = [];
 
 
 	$scope.reset = function() {
 		$scope.form = {};
 	};
+	
+	$http.get("/rest/sanpham/randomProductsByCategory2?categoryName=Trang điểm").then(resp => {
+				$scope.sanpham2 = resp.data;
+				$scope.sanpham2.forEach(item => {
+					item.createDate = new Date(item.createDate);
+				});
+			}).catch(error => {
+				console.error("Lỗi khi tải sản phẩm:", error);
+			});
 
 	$scope.shuffleItems = function(array) {
 	    for (let i = array.length - 1; i > 0; i--) {
@@ -19,40 +28,6 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 	        [array[i], array[j]] = [array[j], array[i]];
 	    }
 	};
-
-	// Pager object
-	$scope.pager = {
-	    page: 0,
-	    size: 10, // Hiển thị 10 sản phẩm trên mỗi trang
-	    get items() {
-	        var start = this.page * this.size;
-	        // Shuffle items before slicing
-	        $scope.shuffleItems($scope.items);
-	        return $scope.items.slice(start, start + this.size);
-	    },
-	    get count() {
-	        return Math.ceil(1.0 * $scope.items.length / this.size);
-	    },
-	    first() {
-	        this.page = 0;
-	    },
-	    prev() {
-	        this.page--;
-	        if (this.page < 0) {
-	            this.last();
-	        }
-	    },
-	    next() {
-	        this.page++;
-	        if (this.page >= this.count) {
-	            this.first();
-	        }
-	    },
-	    last() {
-	        this.page = this.count - 1;
-	    }
-	};
-
 
 	$scope.initialize = function() {
 

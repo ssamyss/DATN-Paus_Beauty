@@ -86,7 +86,7 @@
 		<h3 class="text-center mb-4">CÁC SẢN PHẨM KHÁC</h3>
 		<div class="row py-5">
 			<!-- Loop through similar products here -->
-			<div class="col-md-3 mb-4" ng-repeat="item in pager.items">
+			<div class="col-md-3 mb-4" ng-repeat="item in sanpham2">
 				<div class="card h-100 shadow-sm border-0">
 					<div class="overflow-hidden" style="height: 200px;">
 						<a href="/chitietsanpham?maSP={{item.maSP}}"><img
@@ -127,38 +127,57 @@
 
 </body>
 <style>
-/* Your existing styles here */
-.similar-products h4 {
-	margin-bottom: 20px;
+.similar-products {
+	padding: 20px;
+}
+
+.similar-products h3 {
+	font-size: 1.75rem;
 	font-weight: bold;
+	color: #333;
 }
 
 .similar-products .card {
-	margin-bottom: 20px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
+	border: none;
+	border-radius: 8px;
+	overflow: hidden;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.similar-products .card:hover {
+	transform: scale(1.03);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .similar-products .card-img-top {
-	height: 150px;
+	height: 200px;
 	object-fit: cover;
 }
 
 .similar-products .card-body {
-	padding: 10px;
+	padding: 15px;
 }
 
-.card {
-	transition: transform 0.2s ease-in-out;
+.similar-products .card-title {
+	font-size: 1.2rem;
+	margin-bottom: 10px;
 }
 
-.card:hover {
-	transform: scale(1.05);
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.similar-products .card-text {
+	font-size: 1rem;
+	margin-bottom: 15px;
+}
+
+.similar-products .text-danger {
+	color: #e74c3c;
+}
+
+.overflow-hidden {
+	overflow: hidden;
 }
 
 .img-zoom {
-	transition: transform 0.2s ease-in-out;
+	transition: transform 0.3s;
 }
 
 .img-zoom:hover {

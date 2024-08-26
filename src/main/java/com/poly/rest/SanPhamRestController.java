@@ -76,4 +76,9 @@ public class SanPhamRestController {
         return sanPhamService.findRandomByCategory(categoryName, PageRequest.of(0, 5));
     }
 	
+	@GetMapping("/randomProductsByCategory2")
+    public List<SanPham> getRandomProductsByCategory2(@RequestParam("categoryName") String categoryName) {
+        return sanPhamService.findRandomByCategory(categoryName, PageRequest.of(0, 8));
+    }
+	
 }
