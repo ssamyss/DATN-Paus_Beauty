@@ -67,12 +67,12 @@
 										<button ng-if="sanpham.tonKho > 0" ng-click="themGH(sanpham)"
 											class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m"
 											type="button" style="background-color: #fc9c9d"
-											th:if="${session.taikhoan != null}">Thêm vào giỏ hàng</button>
+											th:if="${session.tentaikhoan != null}">Thêm vào giỏ hàng</button>
 
 										<button ng-if="sanpham.tonKho > 0" ng-click="muangay(sanpham)"
 											class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m"
 											type="button" style="background-color: #fc9c9d"
-											th:if="${session.taikhoan != null}">Mua ngay</button>
+											th:if="${session.tentaikhoan != null}">Mua ngay</button>
 									</div>
 								</div>
 							</div>
