@@ -90,7 +90,7 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 
 	$scope.xoa = function(item) {
 		Swal.fire({
-			title: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+			title: 'Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?',
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
@@ -102,11 +102,8 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 				$http.delete('/rest/giohang/' + item.maGH).then(resp => {
 					// Xóa mục khỏi giỏ hàng trong frontend
 					var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
-					if (index !== -1) {
-						$scope.giohang.splice(index, 1);
-						$scope.tong();
-						$scope.updateCartIcon();
-					}
+					$scope.initialize();
+					$scope.reset();
 					Swal.fire('Xóa thành công!', '', 'success');
 				}).catch(error => {
 					Swal.fire('Lỗi khi xóa!', 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
