@@ -12,6 +12,8 @@ public interface DonHangChiTietService {
 	DonHangChiTiet findById(int maDHCT);
 
 	List<DonHangChiTiet> getDonHangChiTietByMaDH(String maDH);
+	
+	List<DonHangChiTiet> findByDonHang(DonHang donHang);
 
 	DonHangChiTiet create(DonHangChiTiet donhangchitiet);
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.poly.entity.DonHang;
 import com.poly.entity.DonHangChiTiet;
 import com.poly.service.DonHangChiTietService;
+import com.poly.service.DonHangService;
 
 @CrossOrigin("*")
 @RestController
@@ -25,6 +26,9 @@ public class DonHangChiTietRestController {
 
 	@Autowired
 	DonHangChiTietService donHangChiTietService;
+	
+	@Autowired
+	DonHangService donHangService;
 
 	@GetMapping()
 	public List<DonHangChiTiet> getAll() {
@@ -39,6 +43,13 @@ public class DonHangChiTietRestController {
 	@GetMapping("/bymadh/{maDH}")
 	public List<DonHangChiTiet> getDonHangChiTietByMaDH(@PathVariable String maDH) {
 		return donHangChiTietService.getDonHangChiTietByMaDH(maDH);
+	}
+	
+	@GetMapping("/bydh/{maDH}")
+	public List<DonHangChiTiet> findByDonHang(@PathVariable String maDH) {
+		DonHang donHang = new DonHang();
+		donHang = donHangService.findById(maDH);
+		return donHangChiTietService.findByDonHang(donHang);
 	}
 
 	@PostMapping()
