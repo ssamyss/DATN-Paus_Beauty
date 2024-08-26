@@ -142,7 +142,6 @@ app.controller("donhangchitiet-ctrl", function($scope, $http, $location) {
 	                    confirmButtonText: 'OK',
 	                    confirmButtonColor: '#28a745'
 	                }).then(() => {
-	                    // Tắt modal sau khi xác nhận thành công
 	                    $('#cancelOrderModal').modal('hide');
 	                });
 	            }).catch(error => {
