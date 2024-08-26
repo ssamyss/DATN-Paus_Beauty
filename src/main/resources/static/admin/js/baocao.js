@@ -64,69 +64,83 @@ app.controller("baocao-ctrl", function($scope, $http) {
 
 
 	$scope.XuatDTTheoThang = function() {
+	    // Gửi yêu cầu HTTP GET tới API để lấy dữ liệu doanh thu
 	    $http.get("/rest/donhang/doanhthu").then(resp => {
-	        const data = resp.data;
-	        const workbook = new ExcelJS.Workbook();
-	        const worksheet = workbook.addWorksheet('Doanh Thu Theo Tháng');
+	        const data = resp.data; // Lấy dữ liệu doanh thu từ phản hồi
 
+	        const workbook = new ExcelJS.Workbook(); // Tạo một trang tính mới
+	        const worksheet = workbook.addWorksheet('Doanh Thu Theo Tháng'); // Tạo một worksheet mới với tên "Doanh Thu Theo Tháng"
+
+	        // Định nghĩa các cột cho worksheet
 	        worksheet.columns = [
-	            { header: 'Tháng', key: 'month', width: 15 },
-	            { header: 'Doanh thu', key: 'revenue', width: 25, style: { numFmt: '#,##0 "VND"' } }, // Định dạng tiền tệ
+	            { header: 'Tháng', key: 'month', width: 15 }, // Cột tháng với độ rộng 15
+	            { header: 'Doanh thu', key: 'revenue', width: 25, style: { numFmt: '#,##0 "VND"' } }, // Cột doanh thu với định dạng tiền tệ
 	        ];
 
+	        // Lặp qua từng mục dữ liệu và thêm vào worksheet
 	        data.forEach(item => {
-	            worksheet.addRow({ month: `Tháng ${item[0]}`, revenue: item[1] });
+	            worksheet.addRow({ month: `Tháng ${item[0]}`, revenue: item[1] }); // Thêm một dòng với dữ liệu tháng và doanh thu
 	        });
 
+	        // Thiết lập bộ lọc tự động cho dữ liệu từ cột A1 đến B1
 	        worksheet.autoFilter = {
 	            from: 'A1',
 	            to: 'B1',
 	        };
 
+	        // Ghi trang tính vào bộ đệm dưới dạng file Excel
 	        workbook.xlsx.writeBuffer().then(buffer => {
-	            var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-	            var link = document.createElement('a');
-	            link.href = window.URL.createObjectURL(blob);
+	            var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); // Tạo một Blob từ buffer
+	            var link = document.createElement('a'); // Tạo một thẻ <a> ảo để tải xuống file
+	            link.href = window.URL.createObjectURL(blob); // Tạo URL cho Blob
 	            link.download = 'Doanh_Thu_Theo_Thang.xlsx';
 	            link.click();
 	        });
 	    }).catch(error => {
-	        console.error('Error exporting revenue data:', error);
+	        console.error('Error exporting revenue data:', error); 
 	    });
 	};
+
 	
 	
 	$scope.XuatDTTheoQuy = function() {
+	    // Gửi yêu cầu HTTP GET tới API để lấy dữ liệu doanh thu theo quý
 	    $http.get("/rest/donhang/doanhthu/quy").then(resp => {
-	        const data = resp.data;
-	        const workbook = new ExcelJS.Workbook();
-	        const worksheet = workbook.addWorksheet('Doanh Thu Theo Quý');
+	        const data = resp.data; // Lấy dữ liệu doanh thu từ phản hồi
 
+	        const workbook = new ExcelJS.Workbook(); // Tạo một trang tính mới
+	        const worksheet = workbook.addWorksheet('Doanh Thu Theo Quý'); // Tạo một worksheet mới với tên "Doanh Thu Theo Quý"
+
+	        // Định nghĩa các cột cho worksheet
 	        worksheet.columns = [
-	            { header: 'Quý', key: 'month', width: 15 },
-	            { header: 'Doanh thu', key: 'revenue', width: 25, style: { numFmt: '#,##0 "VND"' } }, // Định dạng tiền tệ
+	            { header: 'Quý', key: 'month', width: 15 }, // Cột quý với độ rộng 15
+	            { header: 'Doanh thu', key: 'revenue', width: 25, style: { numFmt: '#,##0 "VND"' } }, // Cột doanh thu với định dạng tiền tệ
 	        ];
 
+	        // Lặp qua từng mục dữ liệu và thêm vào worksheet
 	        data.forEach(item => {
-	            worksheet.addRow({ month: `Quý ${item[0]}`, revenue: item[1] });
+	            worksheet.addRow({ month: `Quý ${item[0]}`, revenue: item[1] }); // Thêm một dòng với dữ liệu quý và doanh thu
 	        });
 
+	        // Thiết lập bộ lọc tự động cho dữ liệu từ cột A1 đến B1
 	        worksheet.autoFilter = {
 	            from: 'A1',
 	            to: 'B1',
 	        };
 
+	        // Ghi trang tính vào bộ đệm dưới dạng file Excel
 	        workbook.xlsx.writeBuffer().then(buffer => {
-	            var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-	            var link = document.createElement('a');
-	            link.href = window.URL.createObjectURL(blob);
-	            link.download = 'Doanh_Thu_Theo_Thang.xlsx';
-	            link.click();
+	            var blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); // Tạo một Blob từ buffer
+	            var link = document.createElement('a'); // Tạo một thẻ <a> ảo để tải xuống file
+	            link.href = window.URL.createObjectURL(blob); // Tạo URL cho Blob
+	            link.download = 'Doanh_Thu_Theo_Quy.xlsx';
+	            link.click(); 
 	        });
 	    }).catch(error => {
 	        console.error('Error exporting revenue data:', error);
 	    });
 	};
+
 
 
 	
@@ -187,20 +201,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // doanh thu theo tháng
 document.addEventListener('DOMContentLoaded', function() {
+	// Gửi yêu cầu HTTP GET để lấy dữ liệu doanh thu hàng tháng từ API
 	fetch('/rest/donhang/doanhthu')
 		.then(response => response.json())
 		.then(data => {
-			const labels = data.map(item => `Tháng ${item[0]}`);
-			const revenues = data.map(item => item[1]);
+			
+			const labels = data.map(item => `Tháng ${item[0]}`); // Tạo mảng các nhãn cho biểu đồ từ dữ liệu phản hồi (danh sách các tháng)
+			const revenues = data.map(item => item[1]); // Tạo mảng doanh thu cho biểu đồ từ dữ liệu phản hồi
 
 			const ctx = document.getElementById('revenueChart').getContext('2d');
+			// Tạo biểu đồ mới sử dụng thư viện Chart.js
 			new Chart(ctx, {
-				type: 'bar',
+				type: 'bar', // Loại biểu đồ là biểu đồ cột (bar chart)
 				data: {
-					labels: labels,
+					labels: labels, // Đặt các nhãn là các tháng
 					datasets: [{
 						label: 'Doanh Thu Hàng Tháng',
-						data: revenues,
+						data: revenues, // Dữ liệu doanh thu hàng tháng
 						backgroundColor: [
 							'rgba(255, 99, 132, 0.2)',
 							'rgba(54, 162, 235, 0.2)',
@@ -235,15 +252,15 @@ document.addEventListener('DOMContentLoaded', function() {
 				options: {
 					plugins: {
 						legend: {
-							display: false
+							display: false // Ẩn chú thích biểu đồ
 						}
 					},
 					scales: {
 						x: {
-							beginAtZero: true
+							beginAtZero: true  // Bắt đầu từ 0
 						},
 						y: {
-							beginAtZero: true
+							beginAtZero: true  // Bắt đầu trục từ 0
 						}
 					}
 				}

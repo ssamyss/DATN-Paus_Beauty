@@ -103,7 +103,7 @@
 									<td>{{item.diaChi}}</td>
 									<td>{{item.tongGia | currency:'':0}} VND</td>
 									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
-									<td><span style="color: #FFFF00">{{getStatusText(item.trangThai)}}</span></td>
+									<td><span style="color: #DAA520; font-weight: bold;">{{getStatusText(item.trangThai)}}</span></td>
 									<td><a th:href="@{/chitietdonhang/{{item.maDH}}}"><button
 												class="btn btn-primary btn-sm edit" type="button"
 												title="Xem">
