@@ -73,8 +73,10 @@
 										<a th:href="@{/chitietsanpham(maSP=${item.maSP})}"
 											class="product-name" th:text="${item.tenSP}"></a>
 									</h5>
-									<p class="text-danger font-weight-bold"
-										th:text="${item.gia + ' VNĐ'}"></p>
+									<p class="text-danger font-weight-bold">
+										<span class="formatted-price" th:text="${item.gia}"></span>
+										VNĐ
+									</p>
 								</div>
 							</div>
 						</div>
@@ -208,7 +210,7 @@
                             <img src="/assets/images/sanpham/${item.anh}" class="card-img-top" alt="${item.tenSP}">
                             <div class="card-body text-center">
                                 <h5 class="card-title">${item.tenSP}</h5>
-                                <p class="text-danger font-weight-bold">${item.gia} VNĐ</p>
+                                <p class="text-danger font-weight-bold">${formatCurrency(item.gia)}</p>
                             </div>
                             <div class="hover-text" onclick="openQuickView(${item.id})" data-toggle="modal" data-target="#quickViewModal">Xem nhanh</div>
                         </div>
@@ -217,6 +219,7 @@
             });
         }
     }
+
 
     function openQuickView(productId) {
         // Fetch and display product details in the modal
@@ -231,7 +234,28 @@
                 console.error('Error fetching product details:', error);
             });
     }
+    
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VNĐ'
+        }).format(amount);
+    }
 </script>
+
+	<script th:inline="javascript">
+		$(document).ready(function () {
+			// Lặp qua tất cả các phần tử có class là "formatted-price"
+			$(".formatted-price").each(function () {
+				// Lấy nội dung hiện tại của phần tử
+				var price = $(this).text();
+				// Định dạng giá thành dạng có dấu chấm
+				var formattedPrice = parseFloat(price).toLocaleString("vi-VN");
+				// Đặt lại nội dung của phần tử với giá đã được định dạng
+				$(this).text(formattedPrice);
+			});
+		});
+	</script>
 
 	<style>
 /* CSS Custom Styles */
@@ -255,9 +279,10 @@
 
 .card-header {
 	background-color: #ff4081;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #fffdfe;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #fffdfe;
+	text-transform: uppercase;
 }
 
 .list-group-item {
