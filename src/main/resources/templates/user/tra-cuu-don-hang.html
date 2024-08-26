@@ -28,18 +28,22 @@
 						<div><span style="font-weight: bold; font-size: 20px; color: black;">Thông tin khách hàng</span>
 							<div class="tt-container row">
 								<div class="col col-lg-6">
+									<label>Họ và tên</label>
 									<input type="text" name="hovaten" id="hovaten" placeholder="Họ và tên"
 										value="{{ taikhoantimkiem.hoVaTen }}" required disabled>
 								</div>
 								<div class="col col-lg-6">
+									<label>Địa chỉ</label>
 									<input type="text" name="diachi" id="diachi" placeholder="Địa chỉ"
 										value="{{ taikhoantimkiem.diaChi }}" required disabled>
 								</div>
 								<div class="col col-lg-6">
+									<label>Số điện thoại</label>
 									<input type="text" name="sdt" id="sdt" placeholder="Số điện thoại" value="{{ sdt }}"
 										required disabled>
 								</div>
 								<div class="col col-lg-6">
+									<label>Email</label>
 									<input type="text" name="email" id="email" placeholder="Email" value="{{ email }}"
 										required disabled>
 								</div>
@@ -50,18 +54,22 @@
 						<div><span style="font-weight: bold; font-size: 20px; color: black;">Thông tin đơn hàng</span>
 							<div class="tt-container row">
 								<div class="col col-lg-6">
+									<label>Mã đơn hàng</label>
 									<input type="text" name="maDH" id="maDH" placeholder="Mã đơn hàng"
 										value="{{ donhang.maDH }}" required disabled>
 								</div>
 								<div class="col col-lg-6">
+									<label>Ngày đặt hàng</label>
 									<input type="text" name="ngayDatHang" id="ngayDatHang" placeholder="Ngày đặt hàng"
 										value="{{ donhang.createDate }}" required disabled>
 								</div>
 								<div class="col col-lg-6">
+									<label>Trạng thái đơn hàng</label>
 									<input type="text" name="trangThai" id="trangThai" placeholder="Trạng thái đơn hàng"
 										value="{{ donhang.trangThai }}" required disabled>
 								</div>
 								<div class="col col-lg-6">
+									<label>Tổng tiền</label>
 									<input type="text" name="tong" id="tong" placeholder="Tổng giá" value="{{ donhang.tongGia | currency:'':0 }} VND"
 										required disabled>
 								</div>
@@ -117,9 +125,13 @@
 		.tt-container input[type="text"] {
 			width: 100%;
 			padding: 10px;
-			margin: 10px 0;
+			margin: 0px 0px 15px 0px;
 			border: 1px solid #ccc;
 			border-radius: 4px;
+		}
+		
+		.tt-container label {
+			margin: 10px 0px 0px 10px;
 		}
 
 		.radiobox input[name="pttk"] {
