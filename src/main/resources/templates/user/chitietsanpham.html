@@ -41,7 +41,7 @@
 							<hr>
 							<div style="display: flex;">
 								<p style="font-weight: bold;">Giá bán:</p>
-								<p style="color:#fc9c9d; font-weight: bold; margin-left: 10px;">
+								<p style="color: #fc9c9d; font-weight: bold; margin-left: 10px;">
 									<span>{{sanpham.gia | currency:'' : 0}} VNĐ</span>
 								</p>
 							</div>
@@ -54,8 +54,8 @@
 							<hr>
 
 							<div style="display: flex; align-items: flex-start;">
-								<div style="font-weight: bold; color: gray; margin-right: 10px;">Mô tả:
-									{{sanpham.mota}}</div>
+								<div style="font-weight: bold; color: gray; margin-right: 10px;">Mô
+									tả: {{sanpham.mota}}</div>
 								<div style="max-width: 100%;"></div>
 							</div>
 							<hr>
@@ -63,14 +63,16 @@
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
 									<div class="text-center mt-3">
-										<!-- Kiểm tra tồn kho để hiển thị nút -->
+										<!-- Kiểm tra tồn kho và trạng thái đăng nhập để hiển thị nút -->
 										<button ng-if="sanpham.tonKho > 0" ng-click="themGH(sanpham)"
 											class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m"
-											type="button" style="background-color: #fc9c9d">Thêm vào giỏ hàng</button>
+											type="button" style="background-color: #fc9c9d"
+											th:if="${session.taikhoan != null}">Thêm vào giỏ hàng</button>
 
 										<button ng-if="sanpham.tonKho > 0" ng-click="muangay(sanpham)"
 											class="btn-add-to-cart cl8 hov-btn3 trans-04 flex-c-m"
-											type="button" style="background-color: #fc9c9d">Mua ngay</button>
+											type="button" style="background-color: #fc9c9d"
+											th:if="${session.taikhoan != null}">Mua ngay</button>
 									</div>
 								</div>
 							</div>
