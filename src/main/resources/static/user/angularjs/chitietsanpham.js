@@ -13,6 +13,46 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 		$scope.form = {};
 	};
 
+	$scope.shuffleItems = function(array) {
+	    for (let i = array.length - 1; i > 0; i--) {
+	        const j = Math.floor(Math.random() * (i + 1));
+	        [array[i], array[j]] = [array[j], array[i]];
+	    }
+	};
+
+	// Pager object
+	$scope.pager = {
+	    page: 0,
+	    size: 10, // Hiển thị 10 sản phẩm trên mỗi trang
+	    get items() {
+	        var start = this.page * this.size;
+	        // Shuffle items before slicing
+	        $scope.shuffleItems($scope.items);
+	        return $scope.items.slice(start, start + this.size);
+	    },
+	    get count() {
+	        return Math.ceil(1.0 * $scope.items.length / this.size);
+	    },
+	    first() {
+	        this.page = 0;
+	    },
+	    prev() {
+	        this.page--;
+	        if (this.page < 0) {
+	            this.last();
+	        }
+	    },
+	    next() {
+	        this.page++;
+	        if (this.page >= this.count) {
+	            this.first();
+	        }
+	    },
+	    last() {
+	        this.page = this.count - 1;
+	    }
+	};
+
 
 	$scope.initialize = function() {
 
@@ -37,35 +77,35 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 		});
 
 		// Load tài khoản đăng nhập
-		    $http.get("rest/taikhoan/tentaikhoan").then(resp => {
-		        $scope.tentaikhoan = resp.data;
-		        // Load giỏ hàng
-		        $http.get('/rest/giohang/byttk/' + $scope.tentaikhoan.tenTaiKhoan).then(resp => {
-		            $scope.giohang = resp.data;
-		            $scope.giohang.forEach(item => {
-		                item.createDate = new Date(item.createDate);
-		            });
-		            $scope.dem = $scope.giohang.length;
-		            $scope.tong();
-		            $scope.updateCartIcon();
-		        }).catch(error => {
-		            alert("Lỗi khi tải giỏ hàng!");
-		        });
-		    }).catch(error => {
-		        console.error(error);
-		    });
-		};
+		$http.get("rest/taikhoan/tentaikhoan").then(resp => {
+			$scope.tentaikhoan = resp.data;
+			// Load giỏ hàng
+			$http.get('/rest/giohang/byttk/' + $scope.tentaikhoan.tenTaiKhoan).then(resp => {
+				$scope.giohang = resp.data;
+				$scope.giohang.forEach(item => {
+					item.createDate = new Date(item.createDate);
+				});
+				$scope.dem = $scope.giohang.length;
+				$scope.tong();
+				$scope.updateCartIcon();
+			}).catch(error => {
+				alert("Lỗi khi tải giỏ hàng!");
+			});
+		}).catch(error => {
+			console.error(error);
+		});
+	};
 
-		$scope.tong = function() {
-		    $scope.tongtien = 0;
-		    for (let i = 0; i < $scope.dem; i++) {
-		        $scope.tongtien += $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong;
-		    }
-		};
+	$scope.tong = function() {
+		$scope.tongtien = 0;
+		for (let i = 0; i < $scope.dem; i++) {
+			$scope.tongtien += $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong;
+		}
+	};
 
-		$scope.updateCartIcon = function() {
-		    $scope.dem = $scope.giohang.reduce((acc, item) => acc + item.soLuong, 0);
-		};
+	$scope.updateCartIcon = function() {
+		$scope.dem = $scope.giohang.reduce((acc, item) => acc + item.soLuong, 0);
+	};
 
 	$scope.openQuickView = function(item) {
 		$scope.form = angular.copy(item);
@@ -182,15 +222,15 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 
 	// Thêm giỏ hàng
 	$scope.themGH = function(item) {
-	    $http.post('/rest/giohang/ghtontai', item).then(resp => {
-	        $scope.giohang = resp.data;
-	        alert("Sản phẩm đã được thêm vào giỏ hàng!");
-	        $scope.initialize();
-	        $scope.reset();
-	    }).catch(error => {
-	        console.error("Lỗi khi thêm sản phẩm vào giỏ hàng: ", error);
-	        alert("Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng!");
-	    });
+		$http.post('/rest/giohang/ghtontai', item).then(resp => {
+			$scope.giohang = resp.data;
+			alert("Sản phẩm đã được thêm vào giỏ hàng!");
+			$scope.initialize();
+			$scope.reset();
+		}).catch(error => {
+			console.error("Lỗi khi thêm sản phẩm vào giỏ hàng: ", error);
+			alert("Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng!");
+		});
 	};
 
 
