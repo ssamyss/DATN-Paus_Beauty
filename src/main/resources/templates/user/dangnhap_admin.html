@@ -1,15 +1,37 @@
-
-	
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<!--   <link rel="stylesheet" -->
+<!-- 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
   <title>Login</title>
+  <script th:src="@{/user/js/jquery.min.js}"></script>
+<!-- Custom Theme files -->
+<link th:href="@{/user/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
   </head>
 <body>
-  <div class="container">
+<div class="header">
+		<div class="header-main">
+		       <h1>Đăng Nhập Admin</h1>
+			<div class="header-bottom">
+				<div class="header-right w3agile">
+					
+					<div class="header-left-bottom agileinfo">
+						
+					 <form action="/loginAdmin" method="post">
+						<input type="text"  value="User name" name="username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'User name';}"/>
+					<input type="password"  value="Password" name="password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}"/>
+					  <button type="submit">Đăng nhập</button>
+					</form>	
+				</div>
+				</div>
+			  
+			</div>
+		</div>
+</div>
+
+
+<!--   <div class="container">
     <div class="row">
       <div class="col-md-4 offset-md-4">
         <div class="card">
@@ -38,7 +60,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH008WP72hvF4hK9KrEaK3kO4lH+vZle8fZu6oC9zl750w+m5T6wErgWo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
