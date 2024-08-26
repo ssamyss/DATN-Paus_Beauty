@@ -4,6 +4,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 	$scope.donhang = [];
 	$scope.donhangchitiet = [];
 	$scope.donhangnho = [];
+	$scope.sanpham = [];
 	$scope.taikhoan = [];
 	$scope.giohang = [];
 	$scope.tongtien = 0;
@@ -19,6 +20,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 	};
 
 	$scope.initialize = function() {
+
 		//Load tài khoản đăng nhập
 		$http.get("rest/taikhoan/tentaikhoan").then(resp => {
 			$scope.taikhoan = resp.data;
@@ -32,6 +34,16 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			});
 		}).catch(error => {
 			console.error("Lỗi khi tải tên tài khoản :", error);
+		});
+
+		// Load sản phẩm
+		$http.get("/rest/sanpham").then(resp => {
+			$scope.sanpham = resp.data;
+			$scope.sanpham.forEach(item => {
+				item.createDate = new Date(item.createDate);
+			});
+		}).catch(error => {
+			console.error("Lỗi khi tải sản phẩm:", error);
 		});
 	};
 
@@ -102,12 +114,25 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 
 			var donhangchitiet = angular.copy($scope.form);
 			$scope.themDHCT(donhangchitiet);
+			$scope.reset();
 		}).catch(error => {
 			alert("Lỗi khi tải đơn hàng chi tiết!");
 		});
 	};
 
+	$scope.giamTonKho = function(item) {
+		var dhct = angular.copy(item);
+		dhct.sanPham.tonKho = dhct.sanPham.tonKho - dhct.soLuong;
+		$http.put('/rest/sanpham/' + dhct.sanPham.maSP, dhct.sanPham).then(resp => {
+			var index = $scope.sanpham.findIndex(p => p.maSP == dhct.sanPham.maSP);
+			$scope.sanpham[index] = angular.copy(dhct.sanPham);
+		}).catch(error => {
+			alert("Lỗi khi sửa tồn kho!");
+		});
+	};
+
 	$scope.themDHCT = function(donhangchitiet) {
+		$scope.giamTonKho(donhangchitiet);
 		$http.post('/rest/donhangchitiet', donhangchitiet).then(resp => {
 			$scope.donhangchitiet.push(resp.data);
 			$scope.reset();
@@ -117,12 +142,11 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 	};
 
 	$scope.xoaGH = function() {
-		console.log($scope.taikhoan.tenTaiKhoan);
 		var items = $scope.giohang;
 		var tentaikhoan = $scope.taikhoan.tenTaiKhoan;
 		$http.delete('/rest/giohang/deleteByTTK/' + tentaikhoan).then(resp => {
 			$scope.initialize();
-			
+
 		}).catch(error => {
 			alert("Lỗi xóa giỏ hàng dữ liệu!");
 		});
@@ -140,7 +164,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 	};
 
 	$scope.goTo = function() {
-		// Lấy tất cả các element có name là "myRadio" (ví dụ)
+		// Lấy tất cả các element có name là "myRadio"
 		const radios = document.getElementsByName("pttt");
 		$scope.selectedValue = 0;
 
@@ -152,6 +176,7 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 				break; // Thoát vòng lặp khi tìm thấy giá trị
 			}
 		}
+		$scope.create();
 		if ($scope.selectedValue == 1) {
 			Swal.fire({
 				icon: 'success',
@@ -162,7 +187,6 @@ app.controller("donhang-ctrl", function($scope, $http, $window) {
 			}).then(result => {
 				$window.location.href = "/hoa-don/" + $scope.maDH;
 			});
-			$scope.create();
 		} else if ($scope.selectedValue == 2) {
 			$window.location.href = '/vn-pay';
 		}

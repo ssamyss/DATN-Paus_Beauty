@@ -51,15 +51,22 @@ app.controller("tracuudonhang-ctrl", function($scope, $http, $window) {
 				$scope.donhangchitiet = resp.data;
 				xuatDuLieu($scope.donhang);
 			}).catch(error => {
-				alert("Đơn hàng chi tiết của bạn không tồn tại!");
+				console.log("Lỗi đơn hàng chi tiết: " + error);
 			});
 		}).catch(error => {
-			alert("Đơn hàng của bạn không tồn tại!");
+			Swal.fire({
+				icon: 'error',
+				title: 'Đơn hàng không tồn tại!',
+				confirmButtonText: 'OK',
+				confirmButtonColor: '#28a745'
+			}).then(result => {
+				
+			});
 		});
 	};
 
 	async function xuatDuLieu(item) {
-		
+
 		$scope.taikhoantimkiem = await item.taiKhoan;
 		anSDT();
 

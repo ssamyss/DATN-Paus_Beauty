@@ -32,8 +32,9 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 
 	$scope.tong = function() {
 		$scope.tongtien = 0;
-		for (let i = 0; i < $scope.dem; i++) {
-			$scope.tongtien += $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong;
+		var i = 0;
+		for (i; i < $scope.dem; i++) {
+			$scope.tongtien = $scope.giohang[i].sanPham.gia * $scope.giohang[i].soLuong;
 		}
 	};
 
@@ -66,27 +67,24 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 			});
 			return;
 		}
-		$http.put('/rest/giohang/' + sanpham.maGH, sanpham).then(resp => {
-			var index = $scope.giohang.findIndex(p => p.maGH == sanpham.maGH);
-			$scope.giohang[index] = angular.copy(sanpham);
-			$scope.tong();
-		}).catch(error => {
-			alert("Lỗi giảm số lượng!");
-		});
+		$scope.congtruGH(sanpham);
 	};
-
 
 	$scope.cong = function(item) {
 		var sanpham = angular.copy(item);
 		sanpham.soLuong = sanpham.soLuong + 1;
-		$http.put('/rest/giohang/' + sanpham.maGH, sanpham).then(resp => {
-			var index = $scope.giohang.findIndex(p => p.maGH == sanpham.maGH);
-			$scope.giohang[index] = angular.copy(sanpham);
+		$scope.congtruGH(sanpham);
+	};
+
+	$scope.congtruGH = function(item) {
+		$http.put('/rest/giohang/' + item.maGH, item).then(resp => {
+			var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
+			$scope.giohang[index] = angular.copy(item);
 			$scope.tong();
 		}).catch(error => {
-			alert("Lỗi giảm số lượng!");
+			console.log(error);
 		});
-	};
+	}
 
 	$scope.xoa = function(item) {
 		Swal.fire({
