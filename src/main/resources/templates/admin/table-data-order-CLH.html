@@ -37,7 +37,7 @@
 	<link rel="shortcut icon" th:href="@{/assets/images/logo.png}" type="image/x-icon">
 </head>
 
-<body ng-app="app" ng-controller="donhangHD-ctrl" onload="time()"
+<body ng-app="app" ng-controller="donhangCLH-ctrl" onload="time()"
 	class="app sidebar-mini rtl">
 
 	<div th:insert="~{admin/menu.html}"></div>
@@ -46,7 +46,7 @@
 		<div class="app-title">
 			<ul class="app-breadcrumb breadcrumb side">
 				<li class="breadcrumb-item active"><a href="#"><b>Danh
-							sách đơn hàng đã hủy</b></a></li>
+							sách đơn hàng chờ xử lý</b></a></li>
 			</ul>
 			<div id="clock"></div>
 		</div>
@@ -103,7 +103,7 @@
 									<td>{{item.diaChi}}</td>
 									<td>{{item.tongGia | currency:'':0}} VND</td>
 									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
-									<td><span style="color: #FF0000">{{getStatusText(item.trangThai)}}</span></td>
+									<td><span style="color: #0000FF">{{getStatusText(item.trangThai)}}</span></td>
 									<td><a th:href="@{/chitietdonhang/{{item.maDH}}}"><button
 												class="btn btn-primary btn-sm edit" type="button"
 												title="Xem">
@@ -136,7 +136,7 @@
 		</div>
 	</main>
 
-	<script th:src="@{/admin/js/donhang3.js}"></script>
+	<script th:src="@{/admin/js/donhang4.js}"></script>
 	<script>
 		//Thời Gian
 		function time() {

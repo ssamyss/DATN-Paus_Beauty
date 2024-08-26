@@ -89,15 +89,35 @@
 					<div class="tile-body">
 						<div class="row element-button">
 							<div class="col-sm-2">
-								<a class="btn btn-add btn-sm" th:href="@{/dataOrder/pending}">Quay
+								<a class="btn btn-add btn-sm" ng-if="form.trangThai === 'Đang Xử Lý'" th:href="@{/dataOrder/xacnhan}">Quay
+									lại</a>
+									<a class="btn btn-add btn-sm" ng-if="form.trangThai === 'Chờ Lấy Hàng'" th:href="@{/dataOrder/cholayhang}">Quay
+									lại</a>
+									<a class="btn btn-add btn-sm" ng-if="form.trangThai === 'Đang Giao Hàng'" th:href="@{/dataOrder/danggiaohang}">Quay
+									lại</a>
+									<a class="btn btn-add btn-sm" ng-if="form.trangThai === 'Hoàn Thành'" th:href="@{/dataOrder/hoanthanh}">Quay
+									lại</a>
+									<a class="btn btn-add btn-sm" ng-if="form.trangThai === 'Đã Hủy'" th:href="@{/dataOrder/huydon}">Quay
 									lại</a>
 							</div>
 							<div class="col-sm-10 d-flex justify-content-end">
 								<button class="btn btn-update btn-sm mr-2"
 									ng-if="form.trangThai === 'Đang Xử Lý'" ng-click="update()">Cập
 									nhật</button>
+									<button class="btn btn-update btn-sm mr-2"
+									ng-if="form.trangThai === 'Chờ Lấy Hàng'" ng-click="updateCLH()">Cập
+									nhật</button>
+									<button class="btn btn-update btn-sm mr-2"
+									ng-if="form.trangThai === 'Đang Giao Hàng'" ng-click="updateDGH()">Cập
+									nhật</button>
 								<button class="btn btn-cancel btn-sm"
 									ng-if="form.trangThai === 'Đang Xử Lý'" data-bs-toggle="modal"
+									data-bs-target="#cancelOrderModal">Hủy đơn</button>
+									<button class="btn btn-cancel btn-sm"
+									ng-if="form.trangThai === 'Chờ Lấy Hàng'" data-bs-toggle="modal"
+									data-bs-target="#cancelOrderModal">Hủy đơn</button>
+									<button class="btn btn-cancel btn-sm"
+									ng-if="form.trangThai === 'Đang Giao Hàng'" data-bs-toggle="modal"
 									data-bs-target="#cancelOrderModal">Hủy đơn</button>
 							</div>
 						</div>

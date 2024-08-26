@@ -28,6 +28,10 @@ public interface DonHangService {
 	
 	List<DonHang> findAllByTrangThaiDangXuLy();
 	
+	List<DonHang> findAllByTrangThaiChoLayHang();
+
+	List<DonHang> findAllByTrangThaiDangGiaoHang();
+	
 	List<DonHang> findAllByTrangThaiHoanThanh();
 
 	List<DonHang> findAllByTrangThaiHuyDon();

@@ -5,7 +5,7 @@ app.controller("donhangHT-ctrl", function($scope, $http) {
 	};;
 	$scope.accounts = [];
 	$scope.items = [];
-	
+
 	$scope.dhdangxuly = [];
 
 	$scope.reset = function() {
@@ -26,7 +26,7 @@ app.controller("donhangHT-ctrl", function($scope, $http) {
 			console.error("Lỗi khi tải đơn hàng:", error);
 		});
 	};
-	
+
 	//xóa tất cả đơn hàng
 	$scope.deleteAll = function() {
 		Swal.fire({
@@ -40,9 +40,9 @@ app.controller("donhangHT-ctrl", function($scope, $http) {
 			cancelButtonText: 'Hủy'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				
+
 				$http.delete('/rest/donhang').then(resp => {
-					$scope.items = []; 
+					$scope.items = [];
 					Swal.fire({
 						icon: 'success',
 						title: 'Thành công',
@@ -50,7 +50,7 @@ app.controller("donhangHT-ctrl", function($scope, $http) {
 						confirmButtonText: 'OK',
 						confirmButtonColor: '#28a745'
 					});
-					$scope.initialize(); 
+					$scope.initialize();
 				}).catch(error => {
 					alert("Lỗi khi xóa tất cả đơn hàng!");
 					console.log("Error", error);
@@ -58,7 +58,7 @@ app.controller("donhangHT-ctrl", function($scope, $http) {
 			}
 		});
 	};
-	
+
 	//xóa sản phẩm theo mã đơn hàng
 	$scope.delete = function(item) {
 		Swal.fire({
@@ -72,7 +72,7 @@ app.controller("donhangHT-ctrl", function($scope, $http) {
 			cancelButtonText: 'Hủy'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				
+
 				$http.delete('/rest/donhang/' + item.maDH, item).then(resp => {
 					var index = $scope.items.findIndex(p => p.maDH == item.maDH);
 					$scope.items.splice(index, 1);
@@ -92,20 +92,24 @@ app.controller("donhangHT-ctrl", function($scope, $http) {
 			}
 		});
 	};
-	
+
 	$scope.getStatusText = function(status) {
-	            switch(status) {
-	                case 'DANG_XU_LY':
-	                    return 'Đang xử lý';
-	                case 'HOAN_TAT':
-	                    return 'Hoàn thành';
-	                case 'HUY_DON':
-	                    return 'Đã hủy';
-	                default:
-	                    return 'Chưa rõ';
-	            }
-	        };
-	
+		switch (status) {
+			case 'DANG_XU_LY':
+				return 'Đang xử lý';
+			case 'CHO_LAY_HANG':
+				return 'Chờ lấy hàng';
+			case 'DANG_GIAO_HANG':
+				return 'Đang giao hàng';
+			case 'HOAN_TAT':
+				return 'Hoàn thành';
+			case 'HUY_DON':
+				return 'Đã hủy';
+			default:
+				return 'Chưa rõ';
+		}
+	};
+
 	//phân trang tất đơn hàng tất cả trạng thái		
 	$scope.pager = {
 		page: 0,

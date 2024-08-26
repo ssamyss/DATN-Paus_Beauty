@@ -58,17 +58,27 @@ public class AdminController {
 		return "admin/table-data-product";
 	}
 
-	@GetMapping("/dataOrder/pending")
+	@GetMapping("/dataOrder/xacnhan")
 	public String dataOrderDangxuly() {
 		return "admin/table-data-order-DXL";
 	}
 	
-	@GetMapping("/dataOrder/completed")
+	@GetMapping("/dataOrder/cholayhang")
+	public String dataOrderChoLayHang() {
+		return "admin/table-data-order-CLH";
+	}
+	
+	@GetMapping("/dataOrder/danggiaohang")
+	public String dataOrderDangGiaoHang() {
+		return "admin/table-data-order-DGH";
+	}
+	
+	@GetMapping("/dataOrder/hoanthanh")
 	public String dataOrderHoanthanh() {
 		return "admin/table-data-order-HT";
 	}
 
-	@GetMapping("/dataOrder/cancelled")
+	@GetMapping("/dataOrder/huydon")
 	public String dataOrderHuydon() {
 		return "admin/table-data-order-HD";
 	}

@@ -76,6 +76,16 @@ public class DonHangRestController {
     public List<DonHang> getDangXuLyOrders() {
         return donHangService.findAllByTrangThaiDangXuLy();
     }
+    
+    @GetMapping("/cholayhang")
+    public List<DonHang> getChoLayHangOrders() {
+        return donHangService.findAllByTrangThaiChoLayHang();
+    }
+    
+    @GetMapping("/danggiaohang")
+    public List<DonHang> getDangGiaoHangOrders() {
+        return donHangService.findAllByTrangThaiDangGiaoHang();
+    }
 
     @GetMapping("/hoanthanh")
     public List<DonHang> getHoanThanhOrders() {

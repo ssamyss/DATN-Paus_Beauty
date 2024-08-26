@@ -94,17 +94,21 @@ app.controller("donhang-ctrl", function($scope, $http) {
 	};
 	
 	$scope.getStatusText = function(status) {
-	            switch(status) {
-	                case 'DANG_XU_LY':
-	                    return 'Đang xử lý';
-	                case 'HOAN_TAT':
-	                    return 'Hoàn thành';
-	                case 'HUY_DON':
-	                    return 'Đã hủy';
-	                default:
-	                    return 'Chưa rõ';
-	            }
-	        };
+		switch (status) {
+			case 'DANG_XU_LY':
+				return 'Đang xử lý';
+			case 'CHO_LAY_HANG':
+				return 'Chờ lấy hàng';
+			case 'DANG_GIAO_HANG':
+				return 'Đang giao hàng';
+			case 'HOAN_TAT':
+				return 'Hoàn thành';
+			case 'HUY_DON':
+				return 'Đã hủy';
+			default:
+				return 'Chưa rõ';
+		}
+	};
 	
 	//phân trang tất đơn hàng tất cả trạng thái		
 	$scope.pager = {

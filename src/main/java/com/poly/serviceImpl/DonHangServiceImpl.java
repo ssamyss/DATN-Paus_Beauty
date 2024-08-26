@@ -88,5 +88,17 @@ public class DonHangServiceImpl implements DonHangService {
 		return dhdao.findAllByTrangThaiHuyDon();
 	}
 
+	@Override
+	public List<DonHang> findAllByTrangThaiChoLayHang() {
+		// TODO Auto-generated method stub
+		return dhdao.findAllByTrangThaiChoLayHang();
+	}
+
+	@Override
+	public List<DonHang> findAllByTrangThaiDangGiaoHang() {
+		// TODO Auto-generated method stub
+		return dhdao.findAllByTrangThaiDangGiaoHang();
+	}
+
 
 }

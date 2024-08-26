@@ -41,6 +41,12 @@ public interface DonHangDao extends JpaRepository<DonHang, String> {
     
     @Query("SELECT dh FROM DonHang dh WHERE dh.trangThai = 'DANG_XU_LY'")
     List<DonHang> findAllByTrangThaiDangXuLy();
+    
+    @Query("SELECT dh FROM DonHang dh WHERE dh.trangThai = 'CHO_LAY_HANG'")
+    List<DonHang> findAllByTrangThaiChoLayHang();
+    
+    @Query("SELECT dh FROM DonHang dh WHERE dh.trangThai = 'DANG_GIAO_HANG'")
+    List<DonHang> findAllByTrangThaiDangGiaoHang();
 
     @Query("SELECT dh FROM DonHang dh WHERE dh.trangThai = 'HOAN_TAT'")
     List<DonHang> findAllByTrangThaiHoanThanh();
