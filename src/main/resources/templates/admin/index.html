@@ -139,6 +139,35 @@
 							</div>
 						</div>
 					</div>
+					<br>
+										<!-- col-12 -->
+					<div class="col-md-12">
+						<div class="tile">
+							<h3 class="tile-title">SẢN PHẨM SẮP HẾT HÀNG</h3>
+							<div>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Tên sản phẩm</th>
+											<th>Ảnh</th>
+											<th>Giá tiền</th>
+											<th>Số lượng</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="item in items">
+											<td>{{ getFirstFiveWords(item.tenSP) }}</td>
+											<td><img ng-src="/assets/images/sanpham/{{item.anh}}"
+												alt="" width="100px;"></td>
+											<td>{{item.gia | currency:'':0}} VND</td>
+											<td><span class="badge bg-danger">{{item.tonKho}}</span></td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!--END left-->

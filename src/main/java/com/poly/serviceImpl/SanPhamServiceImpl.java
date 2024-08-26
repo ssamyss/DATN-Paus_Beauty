@@ -114,6 +114,12 @@ public class SanPhamServiceImpl implements SanPhamService {
         return sanphamPage;
     }
 
+	@Override
+	public List<SanPham> findSapHetHang() {
+		// TODO Auto-generated method stub
+		return spdao.findBySapHetHang(10);
+	}
+
 	
 	
 }

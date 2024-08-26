@@ -81,4 +81,9 @@ public class SanPhamRestController {
         return sanPhamService.findRandomByCategory(categoryName, PageRequest.of(0, 8));
     }
 	
+	@GetMapping("/sapHetHang")
+	public List<SanPham> getSapHetHang() {
+	    return sanPhamService.findSapHetHang();
+	}
+	
 }

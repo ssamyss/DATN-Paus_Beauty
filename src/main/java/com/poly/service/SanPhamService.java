@@ -25,6 +25,8 @@ public interface SanPhamService {
 	List<SanPham> getTop5SanPhamBanChay();
 	
 	List<SanPham> findHetHang();
+	
+	List<SanPham> findSapHetHang();
 
 	public List<Object[]> getTotalProductsByDanhMuc();
 

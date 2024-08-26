@@ -48,6 +48,9 @@ public interface SanPhamDao extends JpaRepository<SanPham, Integer> {
 
 	@Query("SELECT sp FROM SanPham sp WHERE sp.tonKho = 0")
 	List<SanPham> findByTonKho(@Param("tonKho") Integer tonKho);
+	
+	@Query("SELECT sp FROM SanPham sp WHERE sp.tonKho <= 10")
+	List<SanPham> findBySapHetHang(@Param("tonKho") Integer tonKho);
 
 	@Query("SELECT dm.tenLSP, COUNT(sp) FROM SanPham sp JOIN sp.loaiSanPham lsp JOIN lsp.danhMucLoaiSanPham dm GROUP BY dm.tenLSP")
 	List<Object[]> getTotalProductsByDanhMuc();
