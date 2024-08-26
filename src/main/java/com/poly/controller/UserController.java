@@ -113,7 +113,7 @@ public class UserController {
 	@GetMapping("/category/{maLSP}")
 	public String getProductByCategory(@PathVariable("maLSP") Integer maLSP, Model model,
 			@RequestParam(value = "page", defaultValue = "1") int page) {
-		int pageSize = 50;
+		int pageSize = 200;
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
 		Page<SanPham> sanphamPage = spDao.findByDanhMucLoaiSanPhamMaLSP(maLSP, pageable);
 		model.addAttribute("sanphamPage", sanphamPage);

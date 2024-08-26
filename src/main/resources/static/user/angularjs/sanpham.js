@@ -11,7 +11,7 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 	$scope.sanpham = [];
 	$scope.sanphambanchay = [];
 	$scope.thuonghieu = [];
-
+	$scope.sanpham2 = [];
 
 	$scope.reset = function() {
 		$scope.form = {};
@@ -72,6 +72,14 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		$http.get("/rest/sanpham/randomProductsByCategory?categoryName=Trang điểm").then(resp => {
 			$scope.sanpham = resp.data;
 			$scope.sanpham.forEach(item => {
+				item.createDate = new Date(item.createDate);
+			});
+		}).catch(error => {
+			console.error("Lỗi khi tải sản phẩm:", error);
+		});
+		$http.get("/rest/sanpham/randomProductsByCategory?categoryName=Chăm sóc cơ thể").then(resp => {
+			$scope.sanpham2 = resp.data;
+			$scope.sanpham2.forEach(item => {
 				item.createDate = new Date(item.createDate);
 			});
 		}).catch(error => {

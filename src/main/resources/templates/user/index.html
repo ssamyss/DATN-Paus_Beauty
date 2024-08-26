@@ -69,6 +69,28 @@ p:hover {
 	<!-- Product -->
 	<section class="bg0 p-t-23 p-b-140">
 		<div class="container">
+			<div class="flex-w flex-sb-m p-b-52">
+
+				<div class="flex-w flex-c-m m-tb-10">
+					<div
+						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+						<i
+							class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+						Tìm kiếm
+					</div>
+				</div>
+
+				<!-- Search product -->
+				<div class="dis-none panel-search w-full p-t-10 p-b-15">
+					<div class="bor8 dis-flex p-l-15">
+						<form action="/search" method="get">
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
+								name="keyword" placeholder="Search">
+						</form>
+					</div>
+				</div>
+			</div>
 			<h1 class="heading">XU HƯỚNG LÀM ĐẸP</h1>
 
 			<div class="categories">
@@ -131,42 +153,31 @@ p:hover {
 				</div>
 			</div>
 
-
-			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					<!-- Button for all products -->
-					<a href="/product"
-						class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1">Tất
-						cả sản phẩm</a>
-
-					<!-- Button for each category -->
-					<th:block th:each="category : ${categories}">
-						<a th:href="@{/category/{maLSP}(maLSP=${category.maLSP})}"
-							class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
-							th:text="${category.tenLSP}"></a>
-					</th:block>
-				</div>
-
-				<div class="flex-w flex-c-m m-tb-10">
-					<div
-						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-						<i
-							class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Tìm kiếm
+	<br>
+		<h1 class="heading">CHĂM SÓC CƠ THỂ</h1>
+			<div class="products">
+				<div class="product-card" ng-repeat="item in sanpham2">
+					<div class="product-image">
+						<img ng-src="/assets/images/sanpham/{{item.anh}}"
+							alt="Product Image">
+						<div class="quick-view" ng-click="openQuickView(item)">Xem
+							nhanh</div>
 					</div>
-				</div>
-
-				<!-- Search product -->
-				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<div class="bor8 dis-flex p-l-15">
-						<form action="/search" method="get">
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
-								name="keyword" placeholder="Search">
-						</form>
+					<div class="product-info">
+						<h2>{{item.thuongHieu.tenTH}}</h2>
+						<a class="product-name"
+							ng-href="/chitietsanpham?maSP={{item.maSP}}"><p>{{getFirstFiveWords(item.tenSP)}}</p>
+						</a>
+						<div class="price">{{item.gia | currency:'':0}} VNĐ</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="view-all-container">
+				<a class="view-all" href="/category/3">Xem tất cả</a>
+			</div>
+
+		
 
 			<div class="row" id="product-list">
 				<div ng-repeat="item in pager.items"
@@ -188,27 +199,6 @@ p:hover {
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="flex-c-m flex-w w-full p-t-45">
-				<nav aria-label="Page navigation">
-					<ul class="pagination justify-content-center">
-						<li class="page-item" ng-class="{disabled: pager.page === 0}">
-							<a class="page-link" ng-click="pager.first()">First</a>
-						</li>
-						<li class="page-item" ng-class="{disabled: pager.page === 0}">
-							<a class="page-link" ng-click="pager.prev()">Previous</a>
-						</li>
-						<li class="page-item active"><a class="page-link">{{pager.page
-								+ 1}}</a></li>
-						<li class="page-item"
-							ng-class="{disabled: pager.page >= pager.count - 1}"><a
-							class="page-link" ng-click="pager.next()">Next</a></li>
-						<li class="page-item"
-							ng-class="{disabled: pager.page >= pager.count - 1}"><a
-							class="page-link" ng-click="pager.last()">Last</a></li>
-					</ul>
-				</nav>
 			</div>
 
 			<div class="flex-c-m flex-w w-full p-t-45">
