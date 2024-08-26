@@ -71,9 +71,9 @@
 									<td>{{item.createDate | date:'dd-MM-yyyy'}}</td>
 									<td>{{item.trangThai}}</td>
 									<td>
-										<button ng-click="prepareHuyDon(item)" class="btn btn-primary btn-sm trash"
+										<button ng-if="item.trangThai != 'HUY_DON'" ng-click="prepareHuyDon(item)" class="btn btn-primary btn-sm trash"
 											type="button" title="Xóa" data-bs-toggle="modal"
-											data-bs-target="#cancelOrderModal">
+											data-bs-target="#cancelOrderModal" id="btnXoa">
 											<i class="fas fa-trash-alt" data-bs-toggle="modal"
 												data-bs-target="#cancelOrderModal"> </i>
 										</button>
@@ -111,6 +111,7 @@
 			</div>
 		</div>
 	</main>
+	
 	<!-- Cancel Order Modal -->
 	<div>
 		<div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog"
@@ -143,6 +144,12 @@
 		</div>
 	</div>
 	<script th:src="@{/user/angularjs/quanlydonhang.js}"></script>
+
+	<style>
+		.hidden {
+			display: none;
+		}
+	</style>
 
 	<script>
 		//Thời Gian

@@ -3,6 +3,7 @@ app.controller("quanlydonhang-ctrl", function($scope, $http) {
 	$scope.accounts = [];
 	$scope.donhang = [];
 	$scope.dhchitiets = [];
+	$scope.check = true;
 
 	$scope.reset = function() {
 		$scope.form = {
@@ -17,9 +18,11 @@ app.controller("quanlydonhang-ctrl", function($scope, $http) {
 			$scope.donhang.forEach(item => {
 				item.createDate = new Date(item.createDate);
 			});
+			console.log($scope.donhang);
 		}).catch(error => {
 			console.error("Lỗi khi tải đơn hàng:", error);
 		});
+		
 	};
 
 	$scope.pager = {
