@@ -190,35 +190,43 @@ app.controller("sanpham-index", function($scope, $http, $location) {
 		});
 	};
 
+
 	$scope.themGH = function(item) {
-		$http.post('/rest/giohang/ghtontai', item).then(resp => {
-			$scope.ghtontai = resp.data;
-			var count = $scope.ghtontai.length;
-			if (count == 0) {
-				$http.post('/rest/giohang', item).then(resp => {
-					$scope.giohang.push(resp.data);
-					$('.js-modal1').removeClass('show-modal1');
-					alert("Sản phẩm đã được thêm vào giỏ hàng!");
-					$scope.initialize();
-					$scope.reset();
-				}).catch(error => {
-					console.error("Lỗi khi thêm mới sp vào giỏ hàng: ", error);
-				});
-			} else {
-				$http.put('/rest/giohang/create2/' + $scope.ghtontai[0].maGH, $scope.ghtontai[0]).then(resp => {
-					// Update the item in the items array
-					var index = $scope.giohang.findIndex(p => p.maGH == $scope.ghtontai[0].maGH);
-					$scope.giohang[index].soLuong = $scope.giohang[index].soLuong + 1;
-					$('.js-modal1').removeClass('show-modal1');
-					alert("Thêm sp vào giỏ hàng thành công!");
-				}).catch(error => {
-					console.error("Lỗi khi thêm sp vào giỏ hàng: ", error);
-				});
-			}
-		}).catch(error => {
-			console.error("Lỗi khi lấy giỏ hàng tồn tại: ", error);
-		});
+	    $http.post('/rest/giohang/ghtontai', item).then(resp => {
+	        $scope.giohang = resp.data;
+
+	        // Hiển thị thông báo thành công
+	        Swal.fire({
+	            icon: 'success',
+	            title: 'Thành công!',
+	            text: 'Sản phẩm đã được thêm vào giỏ hàng!',
+	            confirmButtonText: 'OK'
+	        }).then(() => {
+	            // Đóng modal và reset nội dung
+	            $('#quickViewModal').modal('hide'); // Sử dụng đúng ID của modal
+	            $scope.resetModal();
+
+	            // Thực hiện các hành động khác nếu cần
+	            $scope.initialize();
+	        });
+	    }).catch(error => {
+	        console.error("Lỗi khi thêm sản phẩm vào giỏ hàng: ", error);
+	        // Hiển thị thông báo lỗi
+	        Swal.fire({
+	            icon: 'error',
+	            title: 'Có lỗi xảy ra!',
+	            text: 'Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng!',
+	            confirmButtonText: 'OK'
+	        });
+	    });
 	};
+
+	// Hàm để reset nội dung modal
+	$scope.resetModal = function() {
+	    $scope.form = {};  // Reset form nếu form là một object chứa dữ liệu modal
+	};
+
+
 
 	$scope.pager = {
 		page: 0,
