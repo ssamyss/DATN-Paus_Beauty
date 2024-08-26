@@ -34,6 +34,11 @@ public class DonHangChiTietServiceImpl implements DonHangChiTietService{
         donHang.setMaDH(maDH);
         return dhctdao.findByDonHang(donHang);
     }
+	
+	@Override
+	public List<DonHangChiTiet> findByDonHang(DonHang donHang) {
+		return dhctdao.findByDonHang(donHang);
+	}
 
 	@Override
 	public DonHangChiTiet create(DonHangChiTiet donHangChiTiet) {
