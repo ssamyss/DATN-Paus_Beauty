@@ -255,18 +255,16 @@ public class TaiKhoanController {
 				// Kiểm tra mật khẩu đã mã hóa
 				if (BCrypt.checkpw(MatKhau, taikhoan.getMatKhau())) {
 					// Tạo session và lưu tên tài khoản
-					if(taikhoan.isRole())
-					{
+					if (taikhoan.isRole()) {
 						return "redirect:/";
 					}
 					HttpSession session = request.getSession();
 					session.setAttribute("tentaikhoan", TenTaiKhoan);
-					
-					
+
 					// Redirect đến trang tương ứng dựa vào vai trò của người dùng
-					
-						return "redirect:/";
-					
+
+					return "redirect:/";
+
 				} else {
 					model.addAttribute("checkpass", true);
 					return "user/dangnhap";
@@ -277,21 +275,21 @@ public class TaiKhoanController {
 			}
 		} catch (Exception e) {
 			model.addAttribute("checkpass", true);
-			return "user/login";
+			return "user/dangnhap"; 
 		}
 	}
 
 	@RequestMapping("/loginAdmin")
-	public String loginAdmin(Model model,@RequestParam(value = "username",required = false)String username,
-			@RequestParam(value="password",required = false)  String password) {
+	public String loginAdmin(Model model, @RequestParam(value = "username", required = false) String username,
+			@RequestParam(value = "password", required = false) String password) {
 		try {
 			TaiKhoan taikhoan = taikhoanService.findById(username);
-			if(taikhoan != null) {
+			if (taikhoan != null) {
 				if (BCrypt.checkpw(password, taikhoan.getMatKhau())) {
 					HttpSession session = request.getSession();
 					session.setAttribute("user", taikhoan);
-					
-					if (taikhoan.isRole() ) {
+
+					if (taikhoan.isRole()) {
 						return "redirect:/admin";
 					} else {
 						return "redirect:/";
@@ -301,10 +299,10 @@ public class TaiKhoanController {
 		} catch (Exception e) {
 			// TODO: handle exception
 			model.addAttribute("message", "Tên người dùng sai");
-		}		
-		
+		}
+
 		return "/user/dangnhap_admin";
-		
+
 	}
 
 	@GetMapping("/logout2")
@@ -313,6 +311,7 @@ public class TaiKhoanController {
 		session.removeAttribute("tentaikhoan");
 		return "redirect:/";
 	}
+
 	@GetMapping("/logout3")
 	public String logoutAdmin() {
 		HttpSession session = request.getSession();
