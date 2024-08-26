@@ -12,21 +12,21 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 	$scope.reset = function() {
 		$scope.form = {};
 	};
-	
+
 	$http.get("/rest/sanpham/randomProductsByCategory2?categoryName=Trang điểm").then(resp => {
-				$scope.sanpham2 = resp.data;
-				$scope.sanpham2.forEach(item => {
-					item.createDate = new Date(item.createDate);
-				});
-			}).catch(error => {
-				console.error("Lỗi khi tải sản phẩm:", error);
-			});
+		$scope.sanpham2 = resp.data;
+		$scope.sanpham2.forEach(item => {
+			item.createDate = new Date(item.createDate);
+		});
+	}).catch(error => {
+		console.error("Lỗi khi tải sản phẩm:", error);
+	});
 
 	$scope.shuffleItems = function(array) {
-	    for (let i = array.length - 1; i > 0; i--) {
-	        const j = Math.floor(Math.random() * (i + 1));
-	        [array[i], array[j]] = [array[j], array[i]];
-	    }
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
 	};
 
 	$scope.initialize = function() {
@@ -195,16 +195,23 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 		);
 	};
 
-	// Thêm giỏ hàng
 	$scope.themGH = function(item) {
 		$http.post('/rest/giohang/ghtontai', item).then(resp => {
 			$scope.giohang = resp.data;
-			alert("Sản phẩm đã được thêm vào giỏ hàng!");
+			Swal.fire({
+				icon: 'success',
+				title: 'Thành công',
+				text: 'Sản phẩm đã được thêm vào giỏ hàng!'
+			});
 			$scope.initialize();
 			$scope.reset();
 		}).catch(error => {
 			console.error("Lỗi khi thêm sản phẩm vào giỏ hàng: ", error);
-			alert("Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng!");
+			Swal.fire({
+				icon: 'error',
+				title: 'Lỗi',
+				text: 'Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng!'
+			});
 		});
 	};
 
