@@ -2,48 +2,58 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paus Beauty - Thông Tin Cá Nhân</title>
-<link th:insert="~{user/link/link.html}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paus Beauty - Thông Tin Cá Nhân</title>
+    <link th:insert="~{user/link/link.html}">
 </head>
 
 <body ng-app="app" ng-controller="thongtincanhan-ctrl">
 
-	<span th:insert="~{user/common/header.html}"></span>
-	<center>
-		<div class="signup-container">
-			<h1>Thông tin cá nhân</h1>
-			<br>
+    <span th:insert="~{user/common/header.html}"></span>
+    <center>
+        <div class="signup-container">
+            <h1>Thông tin cá nhân</h1>
+            <br>
 
-			<form id="signupForm" ng-submit="saveTaiKhoan()">
-				<div class="row" style="margin-left: 50px;">
-					<div class="col col-6">
-						<label>Họ và tên:</label> <input type="text" name="hoVaTen"
-							ng-model="taikhoan.hoVaTen" required> <label>Email:</label>
-						<input type="email" name="email" ng-model="taikhoan.email"
-							required disabled>
-					</div>
-					<div class="col col-6">
-						<label>Địa chỉ:</label> <input type="text" name="DiaChi"
-							ng-model="taikhoan.diaChi" required> <label>Số
-							điện thoại:</label> <input type="text" name="SDT" ng-model="taikhoan.sdt"
-							required>
-					</div>
-				</div>
-				<button type="submit"
-					class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
-					style="margin-left: 75%; padding: 0px 20px; margin-top: 15px; font-size: 20px;">
-					Lưu</button>
-			</form>
-		</div>
-	</center>
-	
-	<span th:insert="~{user/common/footer.html}"></span>
-	<!-- AngularJS -->
-	<script th:src="@{/user/angularjs/thongtincanhan.js}"></script>
-	<!-- link -->
-	<div th:insert="~{user/link/scriptIndex.html}"></div>
+            <form id="signupForm" name="signupForm" ng-submit="saveTaiKhoan()" novalidate>
+                <div class="row" style="margin-left: 50px;">
+                    <div class="col col-6">
+                        <label>Họ và tên:</label>
+                        <input type="text" name="hoVaTen" ng-model="taikhoan.hoVaTen" required>
+                        
+                        <label>Email:</label>
+                        <input type="email" name="email" ng-model="taikhoan.email" required disabled>
+                        <div ng-show="signupForm.email.$touched && signupForm.email.$invalid" style="color:red;">
+                            Email không hợp lệ.
+                        </div>
+                    </div>
+                    <div class="col col-6">
+                        <label>Địa chỉ:</label>
+                        <input type="text" name="DiaChi" ng-model="taikhoan.diaChi" required>
+                        
+                        <label>Số điện thoại:</label>
+                        <input type="text" name="SDT" ng-model="taikhoan.sdt" required ng-pattern="/^[0-9]{10,11}$/">
+                        <div ng-show="signupForm.SDT.$touched && signupForm.SDT.$invalid" style="color:red;">
+                         Số điện thoại không hợp lệ. Số điện thoại phải có 10-11 chữ số!
+                        </div>
+                    </div>
+                </div>
+                <button type="submit"
+                    class="flex-c-m stext-101 cl0 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                    style="margin-left: 75%; padding: 0px 20px; margin-top: 15px; font-size: 20px;"
+                    ng-disabled="signupForm.$invalid">
+                    Lưu
+                </button>
+            </form>
+        </div>
+    </center>
+    
+    <span th:insert="~{user/common/footer.html}"></span>
+    <!-- AngularJS -->
+    <script th:src="@{/user/angularjs/thongtincanhan.js}"></script>
+    <!-- link -->
+    <div th:insert="~{user/link/scriptIndex.html}"></div>
 
 
 	<style>
