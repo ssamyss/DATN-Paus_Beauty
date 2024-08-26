@@ -201,11 +201,6 @@ p:hover {
 				</div>
 			</div>
 
-			<div class="flex-c-m flex-w w-full p-t-45">
-				<a ng-click="showAll()"
-					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Xem nhiều </a>
-			</div>
 		</div>
 	</section>
 
@@ -230,18 +225,38 @@ p:hover {
                         </div>
                         <!-- Thông tin sản phẩm -->
                         <div class="col-md-6 product-details">
-                            <h4 class="text-primary font-weight-bold mb-3">{{form.tenSP}}</h4>
-                            <p class="price text-danger font-weight-bold mb-4">Giá: {{form.gia | currency:'' :0}} VNĐ</p>
+                            <h4  style=" color: #5a6268; font-weight: bold;" >{{form.tenSP}}</h4>
+                            <p style="color: #fc9c9d; font-weight: bold; ">Giá: {{form.gia | currency:'' :0}} VNĐ</p>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <p class="text-muted mb-0">Còn lại: {{form.tonKho}}</p>
                             </div>
+                            
+                                <div class="modal-top">
+    <div class="modal-top-item">
+        <img th:src="@{/user/images/anh4.png}" width="60px"; height="60px" "Thanh toán khi nhận hàng">
+        <p>Thanh toán khi nhận hàng</p>
+    </div>
+    <div class="modal-top-item">
+        <img th:src="@{/user/images/anh3.png}" width="60px"; height="60px" alt="Giao nhanh miễn phí 2H">
+        <p>Giao nhanh miễn phí 2H</p>
+    </div>
+    <div class="modal-top-item">
+        <img th:src="@{/user/images/anh2.png}" width="60px"; height="60px" alt="30 ngày đổi trả miễn phí">
+        <p>30 ngày đổi trả miễn phí</p>
+    </div>
+    <div class="modal-top-item">
+        <img th:src="@{/user/images/anh1.png}" width="60px"; height="60px" alt="Thương hiệu uy tín toàn cầu">
+        <p>Thương hiệu uy tín toàn cầu</p>
+    </div>
+</div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer justify-content-between">
-                <a href="/chitietsanpham?maSP={{form.maSP}}" class="btn btn-danger">Chi tiết sản phẩm</a>
-                <button th:if="${session.tentaikhoan != null}" ng-click="themGH(form)" class="btn btn-danger">Thêm vào giỏ hàng</button>
+                <a style="background-color: #fc9c9d;" href="/chitietsanpham?maSP={{form.maSP}}" class="btn btn-danger">Chi tiết sản phẩm</a>
+                <button th:if="${session.tentaikhoan != null}" ng-click="themGH(form)" class="btn btn-danger"style="background-color: #fc9c9d;">Thêm vào giỏ hàng</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
