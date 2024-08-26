@@ -151,48 +151,64 @@ app.controller("chitietsanpham-ctl", function($scope, $http, $location, $window)
 		});
 	};
 
-	//Thêm nhanh
-	$scope.themNhanh = function(item, successCallback, errorCallback) {  // Thêm successCallback và errorCallback
-		$http.post('/rest/giohang/ghtontai', item).then(resp => {
-			$scope.ghtontai = resp.data;
-			var count = $scope.ghtontai.length;
-			if (count === 0) {
-				$http.post('/rest/giohang', item).then(resp => {
-					$scope.giohang.push(resp.data);
-					console.log("Sản phẩm đã được thêm vào giỏ hàng!"); // Log message không chặn
-					$scope.initialize();
-					$scope.reset();
-					if (successCallback) successCallback();  // Gọi successCallback nếu có
-				}).catch(error => {
-					console.error("Lỗi khi thêm mới sản phẩm vào giỏ hàng: ", error);
-					if (errorCallback) errorCallback();  // Gọi errorCallback nếu có lỗi
-				});
-			} else {
-				$http.put('/rest/giohang/create2/' + $scope.ghtontai[0].maGH, $scope.ghtontai[0]).then(resp => {
-					var index = $scope.giohang.findIndex(p => p.maGH == $scope.ghtontai[0].maGH);
-					$scope.giohang[index].soLuong += 1;
-					console.log("Thêm sản phẩm vào giỏ hàng thành công!"); // Log message không chặn
-					if (successCallback) successCallback();  // Gọi successCallback nếu có
-				}).catch(error => {
-					console.error("Lỗi khi thêm sản phẩm vào giỏ hàng: ", error);
-					if (errorCallback) errorCallback();  // Gọi errorCallback nếu có lỗi
-				});
-			}
-		}).catch(error => {
-			console.error("Lỗi khi lấy giỏ hàng tồn tại: ", error);
-			if (errorCallback) errorCallback();  // Gọi errorCallback nếu có lỗi
-		});
-	};
+	$scope.themNhanh = function(item, successCallback, errorCallback) {
+	    console.log('Thêm nhanh sản phẩm:', item);
 
+	    // Kiểm tra xem đối tượng item có giá trị không
+	    if (!item || !item.maSP) {
+	        console.error('Sản phẩm không hợp lệ:', item);
+	        if (errorCallback) errorCallback();
+	        return;
+	    }
+
+	    $http.post('/rest/giohang/ghtontai', item).then(resp => {
+	        console.log('Phản hồi khi kiểm tra giỏ hàng tồn tại:', resp.data);
+	        $scope.ghtontai = resp.data;
+	        var count = $scope.ghtontai.length;
+
+	        if (count === 0) {
+	            // Nếu giỏ hàng chưa có sản phẩm, thêm sản phẩm mới vào giỏ hàng
+	            $http.post('/rest/giohang', item).then(resp => {
+	                console.log('Sản phẩm đã được thêm vào giỏ hàng:', resp.data);
+	                $scope.giohang.push(resp.data);
+	                $scope.initialize();
+	                $scope.reset();
+	                if (successCallback) successCallback();
+	            }).catch(error => {
+	                console.error('Lỗi khi thêm mới sản phẩm vào giỏ hàng:', error);
+	                if (errorCallback) errorCallback();
+	            });
+	        } else {
+	            // Nếu sản phẩm đã tồn tại, cập nhật số lượng
+	            $http.put('/rest/giohang/create2/' + $scope.ghtontai[0].maGH, $scope.ghtontai[0]).then(resp => {
+	                console.log('Sản phẩm đã được cập nhật trong giỏ hàng:', resp.data);
+	                var index = $scope.giohang.findIndex(p => p.maGH == $scope.ghtontai[0].maGH);
+	                if (index !== -1) {
+	                    $scope.giohang[index].soLuong += 1;
+	                }
+	                if (successCallback) successCallback();
+	            }).catch(error => {
+	                console.error('Lỗi khi cập nhật sản phẩm vào giỏ hàng:', error);
+	                if (errorCallback) errorCallback();
+	            });
+	        }
+	    }).catch(error => {
+	        console.error('Lỗi khi kiểm tra giỏ hàng tồn tại:', error);
+	        if (errorCallback) errorCallback();
+	    });
+	};
+	
 	$scope.muangay = function(item) {
-		$scope.themNhanh(item,
-			function() {  // successCallback
-				$window.location.href = "/cart";
-			},
-			function() {  // errorCallback
-				alert("Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại sau."); // Hiển thị thông báo lỗi cho người dùng
-			}
-		);
+	    console.log('Mua ngay sản phẩm:', item);
+	    $scope.themNhanh(item,
+	        function() {  // successCallback
+	            console.log('Thêm sản phẩm vào giỏ hàng thành công, chuyển hướng đến giỏ hàng.');
+	            $window.location.href = "/cart";
+	        },
+	        function() {  // errorCallback
+	            alert("Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại sau.");
+	        }
+	    );
 	};
 
 	$scope.themGH = function(item) {

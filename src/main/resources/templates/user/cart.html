@@ -2,14 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Paus Beauty - Giỏ hàng</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link th:insert="~{user/link/link.html}">
-	<!-- SweetAlert CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-	<!-- SweetAlert JS -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<title>Paus Beauty - Giỏ hàng</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link th:insert="~{user/link/link.html}">
+<!-- SweetAlert CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -17,82 +18,75 @@
 	<!-- Shoping Cart -->
 	<span th:insert="~{user/common/header.html}"></span>
 
-	<form class="bg0 p-t-75 p-b-85">
+	<form class="bg-light p-4 rounded shadow-sm">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-					<div class="m-l-25 m-r--38 m-lr-0-xl">
-						<div class="wrap-table-shopping-cart shadow">
-							<table class="table-shopping-cart">
-								<thead>
-									<tr>
-										<th class="column-1">Ảnh</th>
-										<th class="column-2">Tên sản phẩm</th>
-										<th class="column-3">Giá</th>
-										<th class="column-4">Số lượng</th>
-										<th class="column-5">Tổng</th>
-										<th class="column-6"></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="sanPham in giohang" class="table_row">
-										<td class="column-1">
-											<div class="how-itemcart1">
-												<img ng-src="/assets/images/sanpham/{{sanPham.sanPham.anh}}" alt="IMG">
-											</div>
-										</td>
-										<td class="column-2">{{ sanPham.sanPham.tenSP }}</td>
-										<td class="column-3">{{ sanPham.sanPham.gia | currency:'':0 }}đ</td>
-										<td class="column-4">
-											<div>
-												<div class="row">
-													<div class="col-md-1">
-														<button ng-click="tru(sanPham)">-</button>
-													</div>
-													<div class="col-md-1">
-														<span>{{ sanPham.soLuong }}</span>
-													</div>
-													<div class="col-md-1">
-														<button ng-click="cong(sanPham)">+</button>
-													</div>
-												</div>
-											</div>
-										</td>
-										<td class="column-5">{{ sanPham.sanPham.gia * sanPham.soLuong | currency:'': 0}}đ</td>
-										<td class="column-5"><a ng-click="xoa(sanPham.maSP)" style="margin-left: 1px;"
-												class="close">&times;</a></td>
-
-									</tr>
-								</tbody>
-							</table>
-						</div>
+				<!-- Giỏ hàng -->
+				<div class="col-lg-12 col-xl-7 mx-auto mb-4">
+					<div class="wrap-table-shopping-cart shadow-sm rounded">
+						<table class="table-shopping-cart">
+							<thead>
+								<tr class="header-row">
+									<th class="column-1">Ảnh</th>
+									<th class="column-2">Tên sản phẩm</th>
+									<th class="column-3">Giá</th>
+									<th class="column-4">Số lượng</th>
+									<th class="column-5">Tổng</th>
+									<th class="column-6"></th>
+									<th class="column-7"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="sanPham in giohang" class="table_row">
+									<td class="column-1">
+										<div class="how-itemcart1">
+											<img ng-src="/assets/images/sanpham/{{sanPham.sanPham.anh}}"
+												alt="IMG">
+										</div>
+									</td>
+									<td class="column-2">{{ sanPham.sanPham.tenSP }}</td>
+									<td class="column-3">{{ sanPham.sanPham.gia |
+										currency:'':0 }} đ</td>
+									<td class="column-4">
+										<div class="d-flex align-items-center justify-content-center">
+											<button ng-click="tru(sanPham)"
+												class="button quantity-button">-</button>
+											<span class="mx-2 quantity-text">{{sanPham.soLuong}}</span>
+											<button ng-click="cong(sanPham)"
+												class="button quantity-button">+</button>
+										</div>
+									</td>
+									<td class="column-5">{{ sanPham.sanPham.gia *
+										sanPham.soLuong | currency:'': 0 }} đ</td>
+									<td class="column-6">
+										<button ng-click="xoa(sanPham)" class="btn btn-danger">&times;</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 
-				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm shadow">
-						<h4 class="mtext-109 cl2 p-b-30">Thông tin đơn hàng</h4>
+				<!-- Thông tin đơn hàng -->
+				<div class="col-sm-10 col-lg-7 col-xl-5 mx-auto mb-4">
+					<div class="bor10 p-4 rounded shadow-sm">
+						<h4 class="mtext-109 cl2 mb-4">Thông tin đơn hàng</h4>
 
-						<div class="flex-w flex-t bor12 p-b-13">
-							<div class="size-208">
-								<span class="stext-110 cl2" style="font-size: 20px;"> Tổng tiền: </span>
-							</div>
-
-							<div class="size-209">
-								<span class="formatted-price" style="font-size: 20px;">{{ tongtien | currency:'':0 }}
-									VNĐ</span>
-							</div>
+						<div
+							class="d-flex justify-content-between border-bottom pb-3 mb-3">
+							<span class="stext-110 cl2" style="font-size: 20px;">Tổng
+								tiền:</span> <span class="formatted-price" style="font-size: 20px;">{{
+								tongtien | currency:'':0 }} VNĐ</span>
 						</div>
 
-						<button ng-click="goToPage()"
-							class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Tiếp tục
-						</button>
+						<button ng-click="goToPage()" class="btn btn-primary w-100">Tiếp
+							tục</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</form>
+
 
 	<span th:insert="~{user/common/footer.html}"></span>
 	<!-- AngularJS -->
@@ -101,23 +95,117 @@
 	<div th:insert="~{user/link/scriptIndex.html}"></div>
 
 	<script>
-
+		
 	</script>
+
 	<style>
-		.shadow {
-			box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-			border-radius: 5%;
-		}
+.header-row {
+    background-color: #ff4081;
+    color: #ffffff;
+}
 
-		.table-name-col {
-			margin: 5px 5px;
-			height: 10px;
-		}
+.table-shopping-cart {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center; /* Căn giữa nội dung của tất cả các ô */
+}
 
-		.column-2 {
-			margin-right: 200px;
-		}
-	</style>
+.btn-danger {
+    color: #fff;
+    background-color: #ff4081;
+    border-color: #ff4081;
+}
+
+.table-shopping-cart .column-3 {
+    width: 500px;
+    font-size: 16px;
+}
+
+.table-shopping-cart th, .table-shopping-cart td {
+	padding: 12px;
+	vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+
+/* Căn giữa tiêu đề và nội dung của các ô */
+.column-1, .column-2, .column-3, .column-4, .column-5, .column-6 {
+	text-align: center;
+}
+
+/* Căn giữa hình ảnh trong ô */
+.how-itemcart1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: #ff4081;
+	border-color: #ff4081;
+}
+
+.how-itemcart1 img {
+	max-width: 100px; /* Điều chỉnh kích thước hình ảnh theo nhu cầu */
+	height: auto;
+}
+
+.table-shopping-cart .column-4 {
+	width: 145px;
+	text-align: center;
+}
+
+.table-shopping-cart .column-5 {
+	width: 650px;
+	padding-right: 50px;
+	text-align: center;
+	font-size: 16px;
+}
+
+.wrap-table-shopping-cart {
+    overflow-x: hidden; /* Ẩn thanh cuộn ngang */
+}
+
+/* Căn giữa các nút + và - */
+.quantity-button {
+	background-color: #ff4081;
+	color: #fff;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-size: 1.2rem;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+	margin: 0 5px;
+}
+
+.quantity-button:hover {
+	background-color: #ff4081;
+	transform: scale(1.1);
+}
+
+.quantity-button:focus {
+	outline: none;
+}
+
+/* Căn giữa văn bản số lượng */
+.quantity-text {
+	font-size: 1.2rem;
+	line-height: 1.5;
+}
+
+/* Căn giữa các liên kết xóa */
+.close {
+	font-size: 1.5rem;
+	color: #dc3545;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.close:hover {
+	color: #c82333;
+}
+</style>
+
 </body>
 
 </html>
