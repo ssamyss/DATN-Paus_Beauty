@@ -75,6 +75,7 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 		});
 	};
 
+
 	$scope.cong = function(item) {
 		var sanpham = angular.copy(item);
 		sanpham.soLuong = sanpham.soLuong + 1;
@@ -84,6 +85,33 @@ app.controller("giohang-ctrl", function($scope, $http, $window) {
 			$scope.tong();
 		}).catch(error => {
 			alert("Lỗi giảm số lượng!");
+		});
+	};
+
+	$scope.xoa = function(item) {
+		Swal.fire({
+			title: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Xóa',
+			cancelButtonText: 'Hủy'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$http.delete('/rest/giohang/' + item.maGH).then(resp => {
+					// Xóa mục khỏi giỏ hàng trong frontend
+					var index = $scope.giohang.findIndex(p => p.maGH == item.maGH);
+					if (index !== -1) {
+						$scope.giohang.splice(index, 1);
+						$scope.tong();
+						$scope.updateCartIcon();
+					}
+					Swal.fire('Xóa thành công!', '', 'success');
+				}).catch(error => {
+					Swal.fire('Lỗi khi xóa!', 'Có lỗi xảy ra, vui lòng thử lại.', 'error');
+				});
+			}
 		});
 	};
 
